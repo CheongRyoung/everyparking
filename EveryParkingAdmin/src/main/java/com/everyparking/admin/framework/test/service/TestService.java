@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.everyparking.admin.framework.test.mapper.TestSqlDao;
+import com.everyparking.admin.framework.test.dao.TestSqlDao;
 
 @Service
 public class TestService {

@@ -1,4 +1,4 @@
-package com.everyparking.admin.framework.test.mapper;
+package com.everyparking.admin.framework.test.dao;
 
 import java.util.ArrayList;
 import java.util.Map;

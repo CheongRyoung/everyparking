@@ -1,15 +1,14 @@
 package com.everyparking.admin.framework.common.controller;
 
-import com.everyparking.admin.framework.common.vo.AjaxType;
+import com.everyparking.admin.framework.common.vo.Ajax;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.json.AbstractJackson2View;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.List;
 
+@Controller
 public class BaseController {
 
     @Autowired
@@ -20,7 +19,7 @@ public class BaseController {
      * @return
      */
     public ModelAndView createMav(){
-        return createMav(AjaxType.SEARCH.TEXT+"."+AjaxType.TPYE_SUCCESS);
+        return createMav(Ajax.SEARCH.TEXT+"."+Ajax.TPYE_SUCCESS);
     }
 
 
@@ -29,7 +28,7 @@ public class BaseController {
      * @return
      */
     public ModelAndView createMav(List list){
-        ModelAndView mav = createMav(AjaxType.SEARCH.TEXT+"."+AjaxType.TPYE_SUCCESS);
+        ModelAndView mav = createMav(Ajax.SEARCH.TEXT+"."+Ajax.TPYE_SUCCESS);
         setList(mav, list);
         return mav;
     }
@@ -40,7 +39,7 @@ public class BaseController {
      * @return
      */
     public ModelAndView createMav(List list, int totalCnt){
-        ModelAndView mav = createMav(AjaxType.SEARCH.TEXT+"."+AjaxType.TPYE_SUCCESS);
+        ModelAndView mav = createMav(Ajax.SEARCH.TEXT+"."+Ajax.TPYE_SUCCESS);
         setList(mav, list, totalCnt);
         return mav;
     }
@@ -52,7 +51,7 @@ public class BaseController {
      * @return
      */
     public ModelAndView createMav(Object data){
-        ModelAndView mav = createMav(AjaxType.SEARCH.TEXT+"."+AjaxType.TPYE_SUCCESS);
+        ModelAndView mav = createMav(Ajax.SEARCH.TEXT+"."+Ajax.TPYE_SUCCESS);
         setData(mav, data);
         return mav;
     }
@@ -94,33 +93,33 @@ public class BaseController {
     public ModelAndView createMav(String type){
         ModelAndView mav = new ModelAndView(jsonView);
 
-        if(type.indexOf(AjaxType.TPYE_SUCCESS) > -1){
-            if(type.indexOf(AjaxType.SEARCH.TEXT) > -1) {
-                mav.addObject(AjaxType.MASSAGE, AjaxType.SEARCH.SUCCESS);
-                mav.addObject(AjaxType.CODE, AjaxType.SUCCESS);
-            } else if(type.indexOf(AjaxType.SAVE.TEXT) > -1) {
-                mav.addObject(AjaxType.MASSAGE, AjaxType.SAVE.SUCCESS);
-                mav.addObject(AjaxType.CODE, AjaxType.SUCCESS);
-            } else if(type.indexOf(AjaxType.DELETE.TEXT) > -1){
-                mav.addObject(AjaxType.MASSAGE, AjaxType.DELETE.SUCCESS);
-                mav.addObject(AjaxType.CODE, AjaxType.SUCCESS);
-            } else if(type.indexOf(AjaxType.UPDATE.TEXT) > -1) {
-                mav.addObject(AjaxType.MASSAGE, AjaxType.UPDATE.SUCCESS);
-                mav.addObject(AjaxType.CODE, AjaxType.SUCCESS);
+        if(type.indexOf(Ajax.TPYE_SUCCESS) > -1){
+            if(type.indexOf(Ajax.SEARCH.TEXT) > -1) {
+                mav.addObject(Ajax.MASSAGE, Ajax.SEARCH.SUCCESS);
+                mav.addObject(Ajax.CODE, Ajax.SUCCESS);
+            } else if(type.indexOf(Ajax.SAVE.TEXT) > -1) {
+                mav.addObject(Ajax.MASSAGE, Ajax.SAVE.SUCCESS);
+                mav.addObject(Ajax.CODE, Ajax.SUCCESS);
+            } else if(type.indexOf(Ajax.DELETE.TEXT) > -1){
+                mav.addObject(Ajax.MASSAGE, Ajax.DELETE.SUCCESS);
+                mav.addObject(Ajax.CODE, Ajax.SUCCESS);
+            } else if(type.indexOf(Ajax.UPDATE.TEXT) > -1) {
+                mav.addObject(Ajax.MASSAGE, Ajax.UPDATE.SUCCESS);
+                mav.addObject(Ajax.CODE, Ajax.SUCCESS);
             }
         }else{
-            if(type.indexOf(AjaxType.SEARCH.TEXT) > -1) {
-                mav.addObject(AjaxType.MASSAGE, AjaxType.SEARCH.FAIL);
-                mav.addObject(AjaxType.CODE, AjaxType.FAIL);
-            } else if(type.indexOf(AjaxType.SAVE.TEXT) > -1) {
-                mav.addObject(AjaxType.MASSAGE, AjaxType.SAVE.FAIL);
-                mav.addObject(AjaxType.CODE, AjaxType.FAIL);
-            } else if(type.indexOf(AjaxType.DELETE.TEXT) > -1){
-                mav.addObject(AjaxType.MASSAGE, AjaxType.DELETE.FAIL);
-                mav.addObject(AjaxType.CODE, AjaxType.FAIL);
-            } else if(type.indexOf(AjaxType.UPDATE.TEXT) > -1) {
-                mav.addObject(AjaxType.MASSAGE, AjaxType.UPDATE.FAIL);
-                mav.addObject(AjaxType.CODE, AjaxType.FAIL);
+            if(type.indexOf(Ajax.SEARCH.TEXT) > -1) {
+                mav.addObject(Ajax.MASSAGE, Ajax.SEARCH.FAIL);
+                mav.addObject(Ajax.CODE, Ajax.FAIL);
+            } else if(type.indexOf(Ajax.SAVE.TEXT) > -1) {
+                mav.addObject(Ajax.MASSAGE, Ajax.SAVE.FAIL);
+                mav.addObject(Ajax.CODE, Ajax.FAIL);
+            } else if(type.indexOf(Ajax.DELETE.TEXT) > -1){
+                mav.addObject(Ajax.MASSAGE, Ajax.DELETE.FAIL);
+                mav.addObject(Ajax.CODE, Ajax.FAIL);
+            } else if(type.indexOf(Ajax.UPDATE.TEXT) > -1) {
+                mav.addObject(Ajax.MASSAGE, Ajax.UPDATE.FAIL);
+                mav.addObject(Ajax.CODE, Ajax.FAIL);
             }
         }
         return mav;
