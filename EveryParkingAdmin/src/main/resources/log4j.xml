@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.everyparking.myapp">
+	<logger name="com.everyparking.admin">
 		<level value="info" />
 	</logger>
 	
@@ -65,7 +65,7 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="info" />
 		<appender-ref ref="console" />
 	</root>
 	

@@ -92,7 +92,16 @@ public class BaseController {
      */
     public ModelAndView createMav(String type){
         ModelAndView mav = new ModelAndView(jsonView);
+        setMessage(mav, type);
+        return mav;
+    }
 
+    /**
+     * 메세지, 코드 셋팅
+     * @param mav
+     * @param type
+     */
+    public void setMessage(ModelAndView mav, String type){
         if(type.indexOf(Ajax.TPYE_SUCCESS) > -1){
             if(type.indexOf(Ajax.SEARCH.TEXT) > -1) {
                 mav.addObject(Ajax.MASSAGE, Ajax.SEARCH.SUCCESS);
@@ -122,7 +131,6 @@ public class BaseController {
                 mav.addObject(Ajax.CODE, Ajax.FAIL);
             }
         }
-        return mav;
     }
 
 

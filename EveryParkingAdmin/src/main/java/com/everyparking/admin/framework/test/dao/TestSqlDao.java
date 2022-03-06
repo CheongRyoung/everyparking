@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TestSqlDao {
 	public void DBTest();
-	public void DBUploadTest(@Param("editorData") String editorData);
+	public int DBUploadTest(@Param("editorData") String editorData);
 	public ArrayList<Map<String, Object>> getDBTest();
 	public Map<String, Object> getUploadFile();
 }

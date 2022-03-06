@@ -18,8 +18,8 @@ public class TestService {
 		testSqlDao.DBTest();
 	}
 	
-	public void DBUploadTest(String editorData) {
-		testSqlDao.DBUploadTest(editorData);
+	public int DBUploadTest(String editorData) {
+		return testSqlDao.DBUploadTest(editorData);
 	}
 	
 	public Map<String, Object> getUploadFile() {

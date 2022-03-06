@@ -370,36 +370,46 @@ Common = function(){
 
     /**
      * 공통 confirm
-     * 작성자 김세영
      */
     this.confirmFlag=false;
-    this.confirmModal;
-    this.confirm = function(message, callbk, callbk2){
-        if(!this.confirmModal){
-            var modalHtml='';
-            modalHtml+='<div class="modal" tabindex="-1" role="dialog" id="commonConfirm">';
-            modalHtml+='  <div class="modal-dialog" role="document">';
-            modalHtml+='    <div class="modal-content">';
-            modalHtml+='      <div class="modal-header">';
-            modalHtml+='        <h5 class="modal-title">확인</h5>';
-            modalHtml+='        <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-            modalHtml+='          <span aria-hidden="true">&times;</span>';
-            modalHtml+='        </button>';
-            modalHtml+='      </div>';
-            modalHtml+='      <div class="modal-body">';
-            modalHtml+='      </div>';
-            modalHtml+='      <div class="modal-footer">';
-            modalHtml+='        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="Y">네</button>';
-            modalHtml+='        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="N">아니요</button>';
-            modalHtml+='      </div>';
-            modalHtml+='    </div>';
-            modalHtml+='  </div>';
-            modalHtml+='</div>';
-            $("body").append(modalHtml);
-            this.confirmModal = $('#commonConfirm').modal({backdrop: 'static', keyboard: false});
+    this.confirmModal=null;
+    this.confirm = function(title, message, callbk, callbk2, option){
+        let btn1 = "확인";
+        let btn2 = "취소";
+        if(option){
+            btn1 = option.btn1;
+            btn2 = option.btn2;
         }
-        this.confirmModal.find('.modal-body').html('<p>'+message+'</p>');
+        if(!this.confirmModal){
+            var modalHtml=``;
+            modalHtml+=`<div class="modalStyle modal fade" id="confirmModal" data-bs-backdrop="show" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">`;
+            modalHtml+=`    <div class="modal-dialog">`;
+            modalHtml+=`        <div class="modal-content">`;
+            modalHtml+=`            <div class="modal-body">`;
+            modalHtml+=`                <h6 class="modal-title" id="confirmModalLabel">`;
+            modalHtml+=`                    <i class="bi bi-dash-circle"></i>${title}`;
+            modalHtml+=`                </h6>`;
+            modalHtml+=`                <hr>`;
+            modalHtml+=`                <span id="confirmModalContent">${message}</span>`;
+            modalHtml+=`            </div>`;
+            modalHtml+=`            <div class="modal-footer" style="border: none;">`;
+            modalHtml+=`                <button type="button" id="N" class="modalBtn btn btn-secondary" style="background-color: #e0e0e0; color: #000;" data-bs-dismiss="modal">${btn2}</button>`;
+            modalHtml+=`                <button type="button" id="Y" class="modalBtn btn btn-danger">${btn1}</button>`;
+            modalHtml+=`            </div>`;
+            modalHtml+=`        </div>`;
+            modalHtml+=`    </div>`;
+            modalHtml+=`</div>`;
+            $("body").append(modalHtml);
+            this.confirmModal = $('#confirmModal')
+        }
+        this.confirmModal.find('#confirmModalLabel').html(`<i class="bi bi-dash-circle"></i>${title}`);
+        this.confirmModal.find('#confirmModalContent').html(`${message}`);
+        this.confirmModal.find('#Y').text(`${btn1}`);
+        this.confirmModal.find('#N').text(`${btn2}`);
         this.confirmModal.modal('show');
+        var modal = bootstrap.Modal.getOrCreateInstance(this.confirmModal[0])
+        modal.show()
+
         this.confirmFlag = true;
         var that =this;
         this.confirmModal.find("#Y").off().click(function(){
