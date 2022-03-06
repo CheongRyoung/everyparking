@@ -1,0 +1,36 @@
+a{
+    color: black;
+    text-decoration-line: none;
+}
+.backgroundColorwhite {
+    background-color: white;
+}
+
+.adminBorder {
+    border: solid 1px rgb(190, 190, 190);
+    border-bottom: solid 0px;
+}
+.borderBottom {
+    border-bottom: solid 1px rgb(190, 190, 190);
+}
+.bodyBox {
+    width: 1200px; 
+    margin: auto;
+}
+.verticalMiddle {
+    vertical-align: middle;
+}
+input{
+    border: solid 1px #ced4da;
+    border-bottom: solid 1px #ced4da;
+    border-radius: 0.25rem;
+    color: rgb(94, 94, 94);
+    font-size: 15px;
+}
+.daterangepicker select.secondselect, .daterangepicker select.ampmselect{
+    display: none;
+}
+.inputPlusSelectBox{
+    color: rgb(94, 94, 94);
+    font-size: 15px;
+}

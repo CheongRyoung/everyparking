@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+	<!-- definition name에 test/*/*을 하면 test/{1}/{2} 이렇게 작성해주면 됨 -->
+	
+  <definition name="parkingManage/*" template="/WEB-INF/views/inc/parkingCommonManageLayout.jsp">
+    <put-attribute name="title" value="우주 관리자" />
+    <put-attribute name="aside" value="/WEB-INF/views/inc/aside.jsp" />
+    <put-attribute name="body" value="/WEB-INF/views/parkingManage/{1}.jsp" />
+    <put-attribute name="modal" value="/WEB-INF/views/inc/modal.jsp" />
+    
+  </definition>
+  
+  <definition name="parkingBlock/*" template="/WEB-INF/views/inc/parkingBlockManageLayout.jsp">
+    <put-attribute name="title" value="우주 관리자" />
+    <put-attribute name="aside" value="/WEB-INF/views/inc/aside.jsp" />
+    <put-attribute name="body" value="/WEB-INF/views/parkingBlockManage/{1}.jsp" />
+    <put-attribute name="modal" value="/WEB-INF/views/inc/modal.jsp" />
+  </definition>
+  
+  
+  <definition name="profitCost/*" template="/WEB-INF/views/inc/profitCostManageLayout.jsp">
+    <put-attribute name="title" value="우주 관리자" />
+    <put-attribute name="aside" value="/WEB-INF/views/inc/aside.jsp" />
+    <put-attribute name="body" value="/WEB-INF/views/profitCostManage/{1}.jsp" />
+    <put-attribute name="modal" value="/WEB-INF/views/inc/modal.jsp" />
+  </definition>
+</tiles-definitions>
