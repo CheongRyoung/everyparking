@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.everyparking.admin.framework.test.mapper.TestSqlDao">
+	<insert id="DBTest">
+		insert into test values (2)
+	</insert>
+	
+	<select id="getDBTest" resultType="java.util.LinkedHashMap">
+		/*TestSQLMapper.getDBTest [작성자/작성일] 기능내용 */
+		SELECT
+			next_not_cached_value
+			, minimum_value
+			, maximum_value
+            , start_value
+            , increment
+            , cache_size
+            , cycle_option
+            , cycle_count
+		FROM member_no
+		WHERE 1=1
+	</select>
+
+	<insert id="DBUploadTest">
+		/*TestSQLMapper.DBUploadTest [작성자/작성일] 기능내용 */
+		INSERT INTO uplaodTest
+		VALUES (#{editorData}, NOW())
+	</insert>
+	
+	<select id="getUploadFile" resultType="map">
+		/*TestSQLMapper.getUploadFile [작성자/작성일] 기능내용 */
+		select * from uplaodTest where test_no = 8
+	</select>
+</mapper>
