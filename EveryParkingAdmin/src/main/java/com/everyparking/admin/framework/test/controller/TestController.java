@@ -3,9 +3,13 @@ package com.everyparking.admin.framework.test.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.everyparking.admin.framework.common.controller.BaseController;
+import com.everyparking.admin.framework.common.util.SessionUtil;
 import com.everyparking.admin.framework.common.vo.ImageFolerName;
+import com.everyparking.admin.framework.file.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/test")
-public class TestController {
+public class TestController extends BaseController {
 	
 	@Autowired
 	private TestService testService;
@@ -30,6 +34,9 @@ public class TestController {
 	
 	@Autowired
 	private FileUtil fileUtil;
+
+	@Autowired
+	private FileService fileService;
 	
 	@RequestMapping("/adminHome")
 	public String test1() {
@@ -135,11 +142,12 @@ public class TestController {
  *
  *
  * **/
+		HashMap<String,Object> params = new HashMap();
 		PoiExcelDown test = new PoiExcelDown();
-		test.excelDown(testService.getDBTest(), "테스트시트명", "test파일명123!@#_", response);
+		test.excelDown(testService.getDBTest(params), "테스트시트명", "test파일명123!@#_", response);
 
 		Map<String,Object> excelMap = new HashMap<String,Object>();
-		excelMap.put("DBdata", testService.getDBTest());
+		excelMap.put("DBdata", testService.getDBTest(params));
 		excelMap.put("sheetName", "테스트시트명");
 		excelMap.put("filename", "test파일명123!@#_");
 		// ExcelDounloadUtil 객체의 excelDownload메소드를 사용 응답을 해줘야 되니 response 꼭 필요
@@ -175,6 +183,30 @@ public class TestController {
 		}
 		return data;
 	}
+
+	@RequestMapping("/fileUploadTestForm")
+	public String fileUploadTestForm(){
+		return "/test/fileUploadTestForm";
+	}
+
+	@ResponseBody
+	@RequestMapping("/testlogin")
+	public ModelAndView testlogin(HttpServletRequest request) throws Exception {
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("member_no", 0);
+		SessionUtil.setSessionData(request, "member", params );
+		return super.createMav("success");
+	}
+
+
+	@RequestMapping("/uploadFileSubmit")
+	public String fileUploadTestForm(HttpServletRequest request) throws Exception {
+		fileService.uploadFile(request, "/test");
+		return "redirect:/test/fileUploadTestForm";
+	}
+
+	@RequestMapping("/test")
+	public void test(){}
 	
 	//uploadTest (ckeditor)
 	@ResponseBody
