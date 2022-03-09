@@ -2,7 +2,7 @@
 <div class="col-2"><!-- 왼편 네비바 -->
     <div class="row backgroundColorwhite">
         <div class="col px-0 text-center adminBorder">
-            <img src="../img/admin.png">
+            <img src="/resources/img/admin.png">
         </div>
     </div>
     <div class="row mb-5 backgroundColorwhite">

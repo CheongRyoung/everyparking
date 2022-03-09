@@ -33,7 +33,7 @@
 
 			<div class="row mt-3">
 				<div class="col-4 px-0">
-					<img class="img-fluid" src="../img/image1.png">
+					<img class="img-fluid" src="/resources/img/image1.png">
 				</div>
 
 				<div class="col ms-1">
@@ -51,7 +51,7 @@
 					<div class="row me-3 mt-3">
 						<div class="col-4 mt-1">차단 시간</div>
 						<div class="col">
-							<input type="text" name="daterange" class="datepicker"
+							<input type="text" id="datepickerR" name="daterange" class="datepicker"
 								style="width: 100%; height: 35px; padding-left: 10px;" />
 						</div>
 					</div>

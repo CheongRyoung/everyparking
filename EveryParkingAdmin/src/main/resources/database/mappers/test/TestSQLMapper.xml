@@ -9,17 +9,8 @@
 	
 	<select id="getDBTest" resultType="java.util.LinkedHashMap">
 		/*TestSQLMapper.getDBTest [작성자/작성일] 기능내용 */
-		SELECT
-			next_not_cached_value
-			, minimum_value
-			, maximum_value
-            , start_value
-            , increment
-            , cache_size
-            , cycle_option
-            , cycle_count
-		FROM member_no
-		WHERE 1=1
+		select test_no, title, datestring, reason, area
+		from testparkingblock
 	</select>
 
 	<insert id="DBUploadTest">

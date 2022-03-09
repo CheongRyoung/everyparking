@@ -32,10 +32,10 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		logger.info(pooledPBEStringEncryptor.encrypt("org.mariadb.jdbc.Driver"));
-		logger.info(pooledPBEStringEncryptor.encrypt("jdbc:mariadb://yonghwi.synology.me:12126/everyparking"));
-		logger.info(pooledPBEStringEncryptor.encrypt("dev_parking"));
-		logger.info(pooledPBEStringEncryptor.encrypt("tJ2*9Igd7["));
+		logger.info(pooledPBEStringEncryptor.encrypt("빈에 등록된 객체가"));
+		logger.info(pooledPBEStringEncryptor.encrypt("암호화를 해줍니다"));
+		logger.info(pooledPBEStringEncryptor.encrypt("소금도 있습니다"));
+		logger.info(pooledPBEStringEncryptor.encrypt("환경변수에 복호화키를 저장합시다"));
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -46,29 +46,4 @@ public class HomeController {
 		
 		return "home";
 	}
-	
-	public void 청룡메소드() {
-		System.out.println("이건 어디로 들어갈까??");
-	}
-	
-	
-	int 청룡변수 = 100;
-	
-	String 청룡문자 = "아입니다";
-	public void jmboard() {
-		
-		int number = 10;
-		String name = "jm";
-		
-		String result = number + name;
-	}
-
-	// 테스트 중이니까 짜증나게 하지 말고 그냥 잘 되도록 합시다
-
-	
-	public void 청룡메소드1() {
-		int aaaaa = 123123123;
-		
-	}
-	
 }

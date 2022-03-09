@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @RestController
 @RequestMapping("/test")
@@ -24,10 +26,21 @@ public class TestRestController extends BaseController {
     private TestService testService;
 
     @RequestMapping("/testAjax")
-    public ModelAndView testAjax(@RequestBody HashMap<String,Object> params){
+    public ModelAndView testAjax(@RequestBody HashMap<String, Object> params){
+        // grid ajax를 호출하게 되면 파라미터로 row개수("CNT")와 시작 page("START")를 던저준다.
+        int count = (Integer) params.get("CNT");
+        int page = (Integer) params.get("START");
+        ArrayList<LinkedHashMap<String, Object>> result = testService.getDBTest();
+        ArrayList<LinkedHashMap<String, Object>> responseData = new ArrayList<>();
+        for(int i=0; i<count; i++){
+            responseData.add(result.get(i));
+        }
+
+
+
         ModelAndView mav = createMav();
         try {
-            mav = createMav(testService.getDBTest());
+            mav = createMav(responseData, result.size());
         }catch (Exception e){
             logger.error(e.getMessage());
             super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);

@@ -114,7 +114,7 @@ public class TestController {
 	
 	@RequestMapping("/noticeInsertForm")
 	public String test18() {
-		return ".parkingManage/noticeInsertForm";
+		return "/parkingManage/noticeInsertForm";
 	}
 	
 	//엑셀  파일 다운로드 request 
@@ -136,7 +136,7 @@ public class TestController {
 	}
 	
 	
-	//
+	// 에디터용
 	@ResponseBody
 	@RequestMapping("imageUpload")
 	public Map<String, Object> imageUpload(@RequestParam("upload") MultipartFile image) {
@@ -168,4 +168,5 @@ public class TestController {
 		model.addAttribute("uploadFile", test.getUploadFile());
 		return "/test/uploadFileRead";
 	}
+
 }

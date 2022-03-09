@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<form action="">
-		<div class="row mt-4  align-items-center">
+		<div class="row mt-4 align-items-center">
 			<!-- 검색 옵션 구역-->
 			<div class="col-2 px-0">
 				<select class="form-select" aria-label="Default select example">
@@ -27,10 +27,10 @@
 				</select>
 			</div>
 			<div class="col px-0">
-				<div class="row align-items-center">
+				<div class="row">
 					<div class="col-2"></div>
 					<div class="col text-center">
-						<input type="text" name="daterange" class="datepicker"
+						<input type="text" id='datepickerN' name="daterange" class="datepicker"
 							style="width: 250px; height: 35px; border-style: none; text-align: center;" />
 						<button class="btn btn-primary mb-1 ms-3 btn-sm" type="button"
 							style="height: 35px;">검색</button>
@@ -49,8 +49,49 @@
 	<div class="row mt-2 adminBorder borderBottom">
 		<!-- 테이블 구역 -->
 		<div class="col px-0" style="background-color: white; height: 600px;">
-			<!-- Chart API 가져올 구역-->
-
+			<table class="table table-bordered text-center mb-0"
+				style="background-color: white;">
+				<thead>
+					<tr>
+						<th scope="col">번호</th>
+						<th scope="col">주차장명</th>
+						<th scope="col">예약 차량</th>
+						<th scope="col">예약 기간</th>
+						<th scope="col">예약 금액</th>
+						<th scope="col">발생일</th>
+						<th scope="col">비고</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">1</th>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th scope="row">2</th>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th scope="row">3</th>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

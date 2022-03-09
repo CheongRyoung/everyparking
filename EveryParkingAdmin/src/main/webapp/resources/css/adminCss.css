@@ -34,3 +34,13 @@ input{
     color: rgb(94, 94, 94);
     font-size: 15px;
 }
+
+body{background-color: #e0e0e0;}
+
+body>div.mb-5{
+    margin: auto;
+}
+
+.ck-editor__editable {
+    min-height: 300px;
+}

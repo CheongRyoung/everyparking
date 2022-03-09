@@ -1,28 +1,3 @@
-$(function(){
-    $('input[name="daterange"]').daterangepicker({
-        maxDate: new Date(),                     // 누르는 시점의 날짜의 객체를 생성해서 그 이후 날짜는 선택을 못하게(minDate로 하면 당일 기준 이전 날짜는 선택 불가하게 가능)
-
-        locale: {
-            "separator": " ~ ",                      // 시작일시와 종료일시 구분자
-            "format": 'YYYY-MM-DD',                  // 일시 노출 포맷
-            "applyLabel": "확인",                    // 확인 버튼 텍스트
-            "cancelLabel": "취소",                   // 취소 버튼 텍스트
-            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-        },
-
-        showDropdowns: true
-
-    });
-
-    $('input[name="daterange"]').on('show.daterangepicker', function (ev, picker) {
-        $(".yearselect").css("float", "left");
-        $(".monthselect").css("float", "right");
-        $(".cancelBtn").css("float", "right");
-    });
-})
-
-
 /******************************************************************************
  * 공통 AJAX 호출
  * 작성자  : 임용휘
@@ -374,8 +349,8 @@ Common = function(){
     this.confirmFlag=false;
     this.confirmModal=null;
     this.confirm = function(title, message, callbk, callbk2, option){
-        let btn1 = "확인";
-        let btn2 = "취소";
+        let btn1 = "취소";
+        let btn2 = "삭제";
         if(option){
             btn1 = option.btn1;
             btn2 = option.btn2;
@@ -393,8 +368,8 @@ Common = function(){
             modalHtml+=`                <span id="confirmModalContent">${message}</span>`;
             modalHtml+=`            </div>`;
             modalHtml+=`            <div class="modal-footer" style="border: none;">`;
-            modalHtml+=`                <button type="button" id="N" class="modalBtn btn btn-secondary" style="background-color: #e0e0e0; color: #000;" data-bs-dismiss="modal">${btn2}</button>`;
-            modalHtml+=`                <button type="button" id="Y" class="modalBtn btn btn-danger">${btn1}</button>`;
+            modalHtml+=`                <button type="button" id="N" class="modalBtn btn btn-secondary" style="background-color: #e0e0e0; color: #000;" data-bs-dismiss="modal">${btn1}</button>`;
+            modalHtml+=`                <button type="button" id="Y" class="modalBtn btn btn-danger">${btn2}</button>`;
             modalHtml+=`            </div>`;
             modalHtml+=`        </div>`;
             modalHtml+=`    </div>`;

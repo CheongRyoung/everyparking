@@ -23,7 +23,7 @@
 
 			<div class="row mt-3">
 				<div class="col-4 px-0">
-					<img class="img-fluid" src="../img/image1.png">
+					<img class="img-fluid" src="/resources/img/image1.png">
 				</div>
 
 				<div class="col ms-1">

@@ -38,7 +38,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<div id="writeEditor" style="display: none;"></div>
+							<textarea id="writeEditor" style="display: none;" placeholder=";testdlqslek;"></textarea>
 						</div>
 					</div>
 					<div class="row my-3">

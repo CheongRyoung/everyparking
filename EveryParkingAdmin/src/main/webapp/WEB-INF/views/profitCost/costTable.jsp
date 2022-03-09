@@ -32,7 +32,7 @@
 				<div class="row">
 					<div class="col-2"></div>
 					<div class="col text-center">
-						<input type="text" name="daterange" class="datepicker"
+						<input type="text" id='datepickerN' name="daterange" class="datepicker"
 							style="width: 250px; height: 35px; border-style: none; text-align: center;" />
 						<button class="btn btn-primary mb-1 ms-3 btn-sm" type="button"
 							style="height: 35px;">검색</button>

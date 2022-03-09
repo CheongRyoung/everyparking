@@ -4,48 +4,22 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
        
 <tiles-definitions>
-  <!-- 템플릿에 설정된 페이지의 구성 요소에 대한 실제 파일을 지정합니다. -->
-  <definition name="tiles.layouts.type1" template="/WEB-INF/config/tiles/layout/type1.jsp">
-    <put-attribute name="title" value="/WEB-INF/config/tiles/type1/title.jsp"></put-attribute>
-    <put-attribute name="menu" value="/WEB-INF/config/tiles/type1/menu.jsp"></put-attribute>
-    <put-attribute name="body" value="/WEB-INF/config/tiles/type1/body.jsp"></put-attribute>
-    <put-attribute name="modal" value="/WEB-INF/config/tiles/type1/modal.jsp"></put-attribute>
+
+<!--  일반 타일입니다-->
+  <definition name="tiles.layouts.component" template="/WEB-INF/config/tiles/layout/commonType.jsp">
+    <put-attribute name="title" value="/WEB-INF/config/tiles/component/title.jsp"></put-attribute>
+    <put-attribute name="menu" value="/WEB-INF/config/tiles/component/menu.jsp"></put-attribute>
+    <put-attribute name="body" value="/WEB-INF/config/tiles/component/body.jsp"></put-attribute>
+    <put-attribute name="modal" value="/WEB-INF/config/tiles/component/modal.jsp"></put-attribute>
   </definition>
 
-  <definition name="*" extends="tiles.layouts.type1">
+  <definition name="/*" extends="tiles.layouts.component">
     <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
   </definition>
-  <definition name="*/*" extends="tiles.layouts.type1">
+  <definition name="/*/*" extends="tiles.layouts.component">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
   </definition>
-  <definition name="*/*/*" extends="tiles.layouts.type1">
+  <definition name="/*/*/*" extends="tiles.layouts.component">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
   </definition>
-
-  <definition name="tiles.layout.type2" template="/WEB-INF/config/tiles/layout/type2.jsp"></definition>
-  <definition name="/popup/*">
-    <put-attribute name="body" value="/WEB-INF/views/popup/{1}.jsp"></put-attribute>
-  </definition>
-
-<!--  <definition name="parkingManage/*" template="/WEB-INF/views/inc/parkingCommonManageLayout.jsp">-->
-<!--    <put-attribute name="title" value="우주 관리자" />-->
-<!--    <put-attribute name="aside" value="/WEB-INF/views/inc/aside.jsp" />-->
-<!--    <put-attribute name="body" value="/WEB-INF/views/parkingManage/{1}.jsp" />-->
-<!--    <put-attribute name="modal" value="/WEB-INF/views/inc/modal.jsp" />-->
-<!--  </definition>-->
-<!--  -->
-<!--  <definition name="parkingBlock/*" template="/WEB-INF/views/inc/parkingBlockManageLayout.jsp">-->
-<!--    <put-attribute name="title" value="우주 관리자" />-->
-<!--    <put-attribute name="aside" value="/WEB-INF/views/inc/aside.jsp" />-->
-<!--    <put-attribute name="body" value="/WEB-INF/views/parkingBlockManage/{1}.jsp" />-->
-<!--    <put-attribute name="modal" value="/WEB-INF/views/inc/modal.jsp" />-->
-<!--  </definition>-->
-<!--  -->
-<!--  -->
-<!--  <definition name="profitCost/*" template="/WEB-INF/views/inc/profitCostManageLayout.jsp">-->
-<!--    <put-attribute name="title" value="우주 관리자" />-->
-<!--    <put-attribute name="aside" value="/WEB-INF/views/inc/aside.jsp" />-->
-<!--    <put-attribute name="body" value="/WEB-INF/views/profitCostManage/{1}.jsp" />-->
-<!--    <put-attribute name="modal" value="/WEB-INF/views/inc/modal.jsp" />-->
-<!--  </definition>-->
 </tiles-definitions>

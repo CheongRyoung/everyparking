@@ -26,7 +26,7 @@ public class FileUtil {
 	public void folderPath() {
 		
 		// 앞단은 자신의 경로로 수정해주세요(맥북은 모르겠는데 아마 하실줄 믿고 있겠습니다)
-		String folder = "C:/everyparking/EveryParkingAdmin/src/main/webapp/resources/uploadimage";
+		String folder = root;
 		String folderPath = "";
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");

@@ -2,22 +2,20 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <html>
 <head>
-    <jsp:include page="./commInclude.jsp"></jsp:include>
+    <jsp:include page="headPart/commInclude.jsp"></jsp:include>
     <tiles:insertAttribute name="title"/>
 </head>
     <body>
         <div class="mb-5">
             <div class="container-fluid">
                 <div class="row mt-5 bodyBox">
-                    <!-- aside 부분  -->
-                    <div class="nav">
+                    <!-- 왼편 사이드바 -->
                         <tiles:insertAttribute name="menu"/>
-                    </div>
-                    <div class="content">
+                    <!-- 본문 -->
                         <tiles:insertAttribute name="body"/>
-                    </div>
                 </div>
             </div>
         </div>
     </body>
+    <jsp:include page="bottomPart/commInclude.jsp"></jsp:include>
 </html>
