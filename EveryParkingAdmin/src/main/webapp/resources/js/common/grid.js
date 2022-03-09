@@ -60,7 +60,7 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
     this.totalCnt = 0;
     this.codes = {}
     this.onRowClick = '';
-    this.colWidth=10;
+    this.colWidth = 10;
     this.showCols = 0;
     this.orderCol = '';
     this.orderType = '';
@@ -100,18 +100,18 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
     if(options.pagingEl){
         this.$pagingEl = $(options.pagingEl);
     }
-    if(typeof options.getParam == 'function'){
+    if (typeof options.getParam == 'function') {
         this.getParam = options.getParam;
     }
-    if(options.onRowClick){
+    if (options.onRowClick) {
         this.onRowClick = options.onRowClick;
     }
-    if(options.pagingOpt){
-        if(options.pagingOpt.page)
+    if (options.pagingOpt) {
+        if (options.pagingOpt.page)
             this.pagingOpt.page = options.pagingOpt.page;
-        if(options.pagingOpt.rowCnt)
+        if (options.pagingOpt.rowCnt)
             this.pagingOpt.rowCnt = options.pagingOpt.rowCnt;
-        if(options.pagingOpt.blockCnt)
+        if (options.pagingOpt.blockCnt)
             this.pagingOpt.blockCnt = options.pagingOpt.blockCnt;
     }
     /**
@@ -384,4 +384,26 @@ function findGrid(gridSelector){
  */
 function girdPageMove(gridSelector, page){
     findGrid(gridSelector).search(page);
+}
+
+/**
+ * 오더변경 전역
+ * @param obj
+ * @param gridSelector
+ * @param colIdx
+ */
+function changeOrder(obj, gridSelector, colIdx){
+    let $this = findGrid(gridSelector);
+    if($this.orderCol == $this.cols[colIdx].name){
+        if($this.orderType == 'ASC'){
+            $this.orderType = 'DESC';
+        } else {
+            $this.orderType = 'ASC';
+        }
+    }else{
+        $this.orderCol = $this.cols[colIdx].name;
+        $this.orderType = 'ASC';
+    }
+    $this.drawHeaderClass();
+    $this.reSearch();
 }
