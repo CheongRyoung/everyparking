@@ -31,6 +31,7 @@
 			</list>
 		</property>
 	</bean>
+	
 	<util:properties id="db" location="classpath:/property/${spring.profiles.active}/db.properties"/>
 	<util:properties id="file" location="classpath:/property/${spring.profiles.active}/file.properties"/>
 

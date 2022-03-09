@@ -28,6 +28,9 @@ public class TestController {
 	@Autowired
 	private PoiExcelDown poiExcelDown;
 	
+	@Autowired
+	private FileUtil fileUtil;
+	
 	@RequestMapping("/adminHome")
 	public String test1() {
 		return "/parkingManage/adminHome";
@@ -158,9 +161,8 @@ public class TestController {
 			 * **/
 
 			/**  new FileUtil(MultipartFile image, enum객체로 폴더 선택)     **/
-			FileUtil imgSaveFolder = new FileUtil(image, ImageFolerName.NOTIFICATION);
 
-			String imgPath = imgSaveFolder.imgSave();
+			String imgPath = fileUtil.folderPath(image, ImageFolerName.NOTIFICATION);
 			/**
 			 *   -------------------------------
 			 *   db에 이미지 url저장
@@ -169,7 +171,7 @@ public class TestController {
 
 			data.put("uploaded", 1);
 			data.put("fileName", originalName);
-			data.put("url", "http://localhost:8123" + imgPath);
+			data.put("url", "http://localhost:8123/uploadImage/" + imgPath);
 		}
 		return data;
 	}
