@@ -16,6 +16,8 @@
  *          - type       = "컬럼유형 (text(기본), number(콤마추가), date(날짜형, 포맷자동변환/기본YYYY-MM-DD)"
  *          - filter     = "커스텀 필터링 (데이터 변환)"
  *          - codeFilter = "코드값으로 변환해줌"
+ *          - order      = "정렬이 필요한 컬럼"
+ *          - align      = "text-align 지정 (right, center, left)"
  * @pagingEl - 페이징 영역 element선택자 / 없을시 페이징 안그림;
  * @getParam - 조회할때 필요한 파라미터 반환 함수명 ( 페이지내 메서드 구현필요;)
  * @onRowClick - row클릭 이벤트 함수명 파라미터 기본(rowIdx, element)반환
@@ -47,8 +49,10 @@
  *
  *
  */
-var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
-    this.$tbl = $(tblEl);
+let grids = [];
+var Grid = function(tblEl, options, searchApiUrl, searchFunc){
+    this.selector = tblEl;
+    this.$tbl = $(this.selector);
     this.url = searchApiUrl;
     this.$pagingEl = null;
     this.cols = [];
@@ -56,64 +60,67 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
     this.totalCnt = 0;
     this.codes = {}
     this.onRowClick = '';
-    this.colWidth = 10;
+    this.colWidth=10;
     this.showCols = 0;
+    this.orderCol = '';
+    this.orderType = '';
+
 
     this.pagingOpt = {
-        page: 1,       //현재페이지
-        total: 0,      //총게시물수
-        rowCnt: 10,    //페이지당 보여질 데이터수
-        blockCnt: 10,  // 페이징 블록의 크기 ex) 10 >>  < 1 2 3 4 5 6 7 8 9 10 >
-        start: 1,      // 블록의 시작점   ex )  1
-        end: 1,        // 블록의 종료시점  ex ) 10
-        max: 1,        // 끝페이지 마지막 페이지
-        next: 1,       // 다음블록
-        prev: 1        // 이전블록
+        page : 1,       //현재페이지
+        total : 0,      //총게시물수
+        rowCnt : 10,    //페이지당 보여질 데이터수
+        blockCnt : 10,  // 페이징 블록의 크기 ex) 10 >>  < 1 2 3 4 5 6 7 8 9 10 >
+        start : 1,      // 블록의 시작점   ex )  1
+        end : 1,        // 블록의 종료시점  ex ) 10
+        max : 1,        // 끝페이지 마지막 페이지
+        next : 1,       // 다음블록
+        prev : 1        // 이전블록
     }
 
-    if (options.cols) {
+    if(options.cols){
         this.cols = options.cols;
         let cnt = 0;
         let hiddenCnt = 0;
         let size = 0;
-        this.cols.forEach((col) => {
-            if (col.type == 'hidden') {
-                hiddenCnt++;
-            } else if (col.hasOwnProperty("colWidth")) {
-                cnt++;
+        this.cols.forEach((col)=>{
+            if(col.type=='hidden'){
+                hiddenCnt ++;
+            }else if(col.hasOwnProperty("colWidth")){
+                cnt ++;
                 size += col.colWidth;
             }
 
         })
         this.showCols = this.cols.length - hiddenCnt;
-        let nonSizeCnt = this.showCols - cnt;//자동계산될 사이즈
-        this.colWidth = (100 - size) / nonSizeCnt;
+        let nonSizeCnt = this.showCols -cnt;//자동계산될 사이즈
+        this.colWidth = (100 - size)/nonSizeCnt;
     }
 
-    if (options.pagingEl) {
+    if(options.pagingEl){
         this.$pagingEl = $(options.pagingEl);
     }
-    if (typeof options.getParam == 'function') {
+    if(typeof options.getParam == 'function'){
         this.getParam = options.getParam;
     }
-    if (options.onRowClick) {
+    if(options.onRowClick){
         this.onRowClick = options.onRowClick;
     }
-    if (options.pagingOpt) {
-        if (options.pagingOpt.page)
+    if(options.pagingOpt){
+        if(options.pagingOpt.page)
             this.pagingOpt.page = options.pagingOpt.page;
-        if (options.pagingOpt.rowCnt)
+        if(options.pagingOpt.rowCnt)
             this.pagingOpt.rowCnt = options.pagingOpt.rowCnt;
-        if (options.pagingOpt.blockCnt)
+        if(options.pagingOpt.blockCnt)
             this.pagingOpt.blockCnt = options.pagingOpt.blockCnt;
     }
     /**
      * 코드 필터링 적용하기 위해 목록 조회
      */
-    this.initCode = function () {
+    this.initCode = function(){
         let $this = this;
-        $this.cols.forEach((item, index) => {
-            if (item.hasOwnProperty("codeFilter")) {
+        $this.cols.forEach((item,index)=>{
+            if(item.hasOwnProperty("codeFilter")) {
                 cmm.searchCode(item.codeFilter, function (data) {
                     $this.codes[item.codeFilter] = data.list;
                 })
@@ -128,10 +135,10 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
      * @param data
      * @returns {*}
      */
-    this.codeFilter = function (code, data) {
+    this.codeFilter = function(code, data){
         let $this = this;
         let code_name = data;
-        if ($this.codes.hasOwnProperty(code)) {
+        if($this.codes.hasOwnProperty(code)) {
             $this.codes[code].forEach((item, index) => {
                 if (item.CODE == data) {
                     code_name = item.CODE_NM;
@@ -141,48 +148,83 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
         return code_name;
     }
 
-    this.drawColGroup = function () {
+    this.drawColGroup =function(){
         this.$tbl.find('colgroup').remove();
         let $this = this;
         let colgroup = `<colgroup>`;
-        this.cols.forEach((item, index) => {
+        this.cols.forEach((item, index)=>{
             colgroup += `<col style="width:${item.colWidth ? item.colWidth : $this.colWidth}%;">`
         });
-        colgroup += `</colgorup>`;
+        colgroup+=`</colgorup>`;
         this.$tbl.append(colgroup);
     }
 
     /**
      * 헤더 그리기
      */
-    this.drawHeaders = function () {
+    this.drawHeaders = function(){
         this.$tbl.find('thead').remove();
         let html = '<thead>';
 
         let $this = this;
-        this.cols.forEach((item, index) => {
-            html += `<th class="${item.className ? item.className : ''}"> ${item.title} </th>`
-
+        this.cols.forEach((item, index)=>{
+            html += `<th class="${item.className?item.className:''}" `;
+            if(item.order)
+                html += `onclick="changeOrder(this, '${$this.selector}',${index})" `;
+            html += `> ${item.title} </th>`;
         })
         html += '</tr>';
         html += '</thead>';
         this.$tbl.append(html);
+        $this.drawHeaderClass();
+    }
+
+    this.drawHeaderClass = function(){
+        let $this = this;
+        this.$tbl.find('thead tr th').toArray().forEach((item,index)=>{
+            if($this.cols[index].order){
+                $(item).removeClass("ASC");
+                $(item).removeClass("DESC");
+                $(item).removeClass("ORDER");
+                if($this.orderCol == $this.cols[index].name) {
+                    if($this.orderType == 'ASC'){
+                        $(item).addClass("DESC")
+                    }else{
+                        $(item).addClass("ASC")
+                    }
+                }else{
+                    $(item).addClass("ORDER");
+                }
+            }
+        })
+    }
+
+    /**
+     * order 옵션 초기화
+     */
+    this.clearOrder = function(){
+        this.orderCol=null;
+        this.orderType=null;
     }
 
     /**
      * 조회
      * @param page
      */
-    this.search = function (page) {
+    this.search = function(page){
         let $this = this;
         let params = $this.getParam();
-        if (!page) {
+        if(!page){
             page = 1;
         }
-        if (this.$pagingEl) {
-            params.PAGING_YN = 'Y';
-            params.START = (page - 1) * $this.pagingOpt.rowCnt;
-            params.CNT = $this.pagingOpt.rowCnt;
+        if(this.$pagingEl){
+            params.PAGING_YN    = 'Y';
+            params.START        = (page-1) * $this.pagingOpt.rowCnt;
+            params.CNT          = $this.pagingOpt.rowCnt;
+        }
+        if(this.orderCol){
+            params.ORDER = this.orderCol;
+            params.ORDER_TYPE = this.orderType;
         }
         this.pagingOpt.page = page;
         ajaxCall($this.url, params, function (data) {
@@ -198,7 +240,7 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
      * @param
      * @return
      */
-    this.reSearch = function () {
+    this.reSearch = function(){
         this.search(this.pagingOpt.page);
     }
 
@@ -207,7 +249,7 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
      * @param ridx
      * @returns {*}
      */
-    this.getRowData = function (ridx) {
+    this.getRowData = function(ridx){
         return this.list[ridx];
     }
 
@@ -216,7 +258,7 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
      * @param ridx
      * @returns {*}
      */
-    this.getColData = function (cidx) {
+    this.getColData = function(cidx){
         return this.cols[cidx];
     }
 
@@ -224,11 +266,11 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
     /**
      * 데이터 행 그리기
      */
-    this.drawList = function () {
+    this.drawList = function(){
         this.$tbl.find('tbody').remove();
         let $this = this;
         let html = `<tbody>`;
-        if ($this.list && this.list.length > 0) {
+        if($this.list && this.list.length > 0) {
             $this.list.forEach((row, ridx) => {
                 html += `<tr onclick="${this.onRowClick + '(' + ridx} ,this)">`
                 $this.cols.forEach((col, cidx) => {
@@ -236,7 +278,7 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
                 })
                 html += `</tr>`
             })
-        } else {
+        }else{
             html += `<tr><td colspan="${this.showCols}">조회된 데이터가 없습니다.</td></tr>`;
         }
         html += `</tbody>`
@@ -249,25 +291,25 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
      * @param rowData
      * @returns {string}
      */
-    this.drawColumn = function (col, rowData, ridx, cidx) {
-        let html = `<td>`
+    this.drawColumn = function(col, rowData, ridx, cidx){
+        let html = `<td ${col.align? "style=\"text-align:"+col.align+"\"":""}>`
         let $this = this;
-        if (!col.type) {
+        if(!col.type){
             col.type = 'text';
         }
         let data = rowData[col.name] != null ? rowData[col.name] : col.defaultData ? col.defaultData : '';
-        if (typeof col.filter == 'function') {    // 커스텀 필터 있을경우
+        if(typeof col.filter == 'function'){    // 커스텀 필터 있을경우
             data = col.filter(data, rowData, ridx, cidx, $this);
         }
-        if (col.codeFilter) {                    // 코드필터 적용시
+        if(col.codeFilter){                    // 코드필터 적용시
             data = $this.codeFilter(col.codeFilter, data);
         }
-        switch (col.type) {
+        switch (col.type){
             case 'number' :
                 html += cmm.attachComma(data);
                 break;
             case 'date' :
-                html += moment(data).format(col.format ? col.format : 'YYYY-MM-DD');
+                html += moment(data).format(col.format ? col.format :'YYYY-MM-DD');
                 break;
             case 'text' :
             default :
@@ -281,21 +323,21 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
     /**
      * 페이징영역 그리기
      */
-    this.drawPaging = function () {
+    this.drawPaging = function(){
         let $this = this;
-        if ($this.$pagingEl) {
+        if($this.$pagingEl) {
             $this.$pagingEl.empty();
             $this.setRange();
             let html = ``;
             html += `<ul>`;
             html += `    <li>`;
-            html += `        <button type="button" onclick="${searchFunc + '(' + ($this.pagingOpt.page - 1) + ')'} ${$this.pagingOpt.page == 1 ? 'disabled="disabled"' : ''}"><span class="icon arrow prev"></span></button>`;
+            html += `        <button type="button" onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page-1})" ${$this.pagingOpt.page == 1 ? 'disabled="disabled"' : ''}"><span class="icon arrow prev"></span></button>`;
             html += `    </li>`;
             html += `    <li>`;
             html += `        <span>${this.pagingOpt.page}</span> / <span>${this.pagingOpt.max}</span>`;
             html += `    </li>`;
             html += `    <li>`;
-            html += `        <button type="button"  onclick="${searchFunc + '(' + ($this.pagingOpt.page + 1) + ')'} ${$this.pagingOpt.page == $this.pagingOpt.max ? 'disabled="disabled"' : ''}"><span class="icon arrow next"></span></button>`;
+            html += `        <button type="button"  onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page+1})" ${$this.pagingOpt.page == $this.pagingOpt.max ? 'disabled="disabled"' : ''}"><span class="icon arrow next"></span></button>`;
             html += `    </li>`;
             html += `</ul>`;
             this.$pagingEl.html(html);
@@ -304,23 +346,42 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc) {
     /**
      * 페이징 변수 계산
      */
-    this.setRange = function () {
+    this.setRange = function(){
         this.pagingOpt.max = Math.ceil(this.pagingOpt.total / this.pagingOpt.rowCnt);
         this.pagingOpt.end = Math.ceil(this.pagingOpt.page / this.pagingOpt.blockCnt) * this.pagingOpt.blockCnt;
-        this.pagingOpt.start = this.pagingOpt.end - (this.pagingOpt.blockCnt - 1);
-        if (this.pagingOpt.end > this.pagingOpt.max) this.pagingOpt.end = this.pagingOpt.max;
-        if (this.pagingOpt.end == 0 || isNaN(this.pagingOpt.end)) {
-            this.pagingOpt.end = 1;
-        }
-        if (this.pagingOpt.max == 0 || isNaN(this.pagingOpt.max)) {
-            this.pagingOpt.max = 1;
-        }
-        this.pagingOpt.next = this.pagingOpt.end + 1;
-        this.pagingOpt.prev = this.pagingOpt.start - 1;
+        this.pagingOpt.start = this.pagingOpt.end - (this.pagingOpt.blockCnt-1);
+        if(this.pagingOpt.end > this.pagingOpt.max) this.pagingOpt.end = this.pagingOpt.max;
+        if(this.pagingOpt.end == 0 || isNaN(this.pagingOpt.end)){this.pagingOpt.end = 1;}
+        if(this.pagingOpt.max == 0 || isNaN(this.pagingOpt.max)){this.pagingOpt.max = 1;}
+        this.pagingOpt.next = this.pagingOpt.end+1;
+        this.pagingOpt.prev = this.pagingOpt.start-1;
     }
 
     this.drawColGroup();
     this.drawHeaders();
     this.search();
+    grids.push(this);
     return this;
+}
+
+/**
+ * 그리드 선택자로 그리드 찾기
+ * @param gridSelector
+ * @return {null|*}
+ */
+function findGrid(gridSelector){
+    for(let i in grids){
+        if(grids[i].selector == gridSelector)
+            return grids[i]
+    }
+    return null;
+}
+
+/**
+ * 페이지이동 전역
+ * @param gridSelector
+ * @param page
+ */
+function girdPageMove(gridSelector, page){
+    findGrid(gridSelector).search(page);
 }
