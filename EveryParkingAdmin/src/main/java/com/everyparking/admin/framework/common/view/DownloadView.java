@@ -16,7 +16,5 @@ public class DownloadView extends AbstractView{
         /*TODO 파일 다운로드 구현할것 */
 
 
-
-
     }
 }

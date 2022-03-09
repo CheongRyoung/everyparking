@@ -14,20 +14,22 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
-public class ExcelView extends AbstractView {
+public class PoiExcelDown {
 
-	private ArrayList<Map<String, Object>> data;
+	private ArrayList<LinkedHashMap<String, Object>> data;
 	private String sheetName;
 	private String fileName;
 
-	@Override
-	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		this.data = (ArrayList<Map<String, Object>>) model.get("DBdata");
-		this.sheetName = (String) model.get("sheetName");
-		this.fileName = (String) model.get("filename");
+
+	public void excelDown(ArrayList<LinkedHashMap<String, Object>> DBdata, String sheetName, String fileName, HttpServletResponse response) throws Exception {
+		this.data = DBdata;
+		this.sheetName = sheetName;
+		this.fileName = fileName;
+
 		Iterator<String> keys = data.get(0).keySet().iterator();
 
 		Workbook wb = new XSSFWorkbook();

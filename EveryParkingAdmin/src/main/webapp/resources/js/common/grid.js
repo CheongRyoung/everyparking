@@ -322,6 +322,9 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
 
     /**
      * 페이징영역 그리기
+     * 수정자: 김청룡
+     * 수정: page css 부트스트랩 적용
+     * 수정일: 22-03-09
      */
     this.drawPaging = function(){
         let $this = this;
@@ -329,18 +332,20 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
             $this.$pagingEl.empty();
             $this.setRange();
             let html = ``;
-            html += `<ul>`;
-            html += `    <li>`;
-            html += `        <button type="button" onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page-1})" ${$this.pagingOpt.page == 1 ? 'disabled="disabled"' : ''}"><span class="icon arrow prev"></span></button>`;
-            html += `    </li>`;
-            html += `    <li>`;
-            html += `        <span>${this.pagingOpt.page}</span> / <span>${this.pagingOpt.max}</span>`;
-            html += `    </li>`;
-            html += `    <li>`;
-            html += `        <button type="button"  onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page+1})" ${$this.pagingOpt.page == $this.pagingOpt.max ? 'disabled="disabled"' : ''}"><span class="icon arrow next"></span></button>`;
-            html += `    </li>`;
-            html += `</ul>`;
-            this.$pagingEl.html(html);
+            html += `<nav>`
+            html += `    <ul class="pagination">`;
+            html += `        <li class="page-item">`;
+            html += `            <a class="page-link" type="button" onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page-1})" ${$this.pagingOpt.page == 1 ? 'disabled="disabled"' : ''}"><span aria-hidden="true">&laquo;</span></a>`;
+            html += `        </li>`;
+            html += `        <li class="page-item">`;
+            html += `            <span class="page-link"><span>${this.pagingOpt.page}</span> / <span>${this.pagingOpt.max}</span></span>`;
+            html += `        </li>`;
+            html += `        <li class="page-item">`;
+            html += `            <a class="page-link" type="button"  onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page+1})" ${$this.pagingOpt.page == $this.pagingOpt.max ? 'disabled="disabled"' : ''}"><span aria-hidden="true">&raquo;</span></a>`;
+            html += `        </li>`;
+            html += `    </ul>`;
+            html += `</nav>`
+            this.$pagingEl.append(html).trigger("create");
         }
     }
     /**
@@ -357,7 +362,8 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
         this.pagingOpt.prev = this.pagingOpt.start-1;
     }
 
-    this.drawColGroup();
+    /** 수정자: 김청룡   수정 부트스트랩 중앙정렬 class 적용 **/
+    // this.drawColGroup();   미사용
     this.drawHeaders();
     this.search();
     grids.push(this);
