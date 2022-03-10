@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import com.everyparking.admin.framework.common.vo.ImageFolerName;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,15 +14,13 @@ public class FileUtil {
 	private MultipartFile mf;
 	private String folder;
 	private String folderPath;
-	private ImageFolerName imageFolerName;
 
 	@Value("#{file['file.root']}")
 	private String root;
 
 
-	public FileUtil(MultipartFile mf, ImageFolerName imageFolerName) {
+	public FileUtil(MultipartFile mf) {
 		this.mf = mf;
-		this.imageFolerName = imageFolerName;
 	}
 	
 	public void folderPath() {
@@ -37,7 +34,7 @@ public class FileUtil {
 		
 		this.folderPath = folderPath;
 		this.folder = folder;
-		File todayFolder = new File(folder+ imageFolerName +folderPath);
+		File todayFolder = new File(folder+folderPath);
 		
 		if(!todayFolder.exists()) {
 			todayFolder.mkdirs();
@@ -57,7 +54,7 @@ public class FileUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return imageFolerName + folderPath + newfileName;
+		return folderPath + newfileName;
 		
 	}
 }

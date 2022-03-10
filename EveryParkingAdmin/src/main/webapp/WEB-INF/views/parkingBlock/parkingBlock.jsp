@@ -36,8 +36,48 @@
 	<div class="row mb-3 backgroundColorwhite adminBorder borderBottom"
 		style="height: 600px;">
 		<div class="col px-0">
-			<table id="testGrid" class="table table-bordered text-center mb-0"></table>
-			<div id="pagingBlock" style="display: flex; justify-content : center;"></div>
+			<table class="table table-bordered text-center mb-0">
+				<thead>
+					<tr>
+						<th scope="col">번호</th>
+						<th scope="col">주차장명</th>
+						<th scope="col">사용불가 시간</th>
+						<th scope="col">차단 사유</th>
+						<th scope="col">차단 영역</th>
+						<th scope="col">수정</th>
+						<th scope="col">삭제</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">1</th>
+						<td>a 주차장</td>
+						<td>2022-02-02 15시 ~ 2022-02-02 17시</td>
+						<td data-bs-toggle="modal" data-bs-target="#blockreasonModal" style="cursor: pointer;">나무가 쓰려져서 건물이...</td>
+						<td>일반 구역 2칸</td>
+						<td><a href="#" class="btn btn-outline-primary btn-sm">수정</a></td>
+						<td><a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</a></td>
+					</tr>
+					<tr>
+						<th scope="row">2</th>
+						<td>a 주차장</td>
+						<td>2022-02-02 20시 ~ 2022-02-02 21시</td>
+						<td data-bs-toggle="modal" data-bs-target="#blockreasonModal" style="cursor: pointer;">나무가 쓰려져서 건물이...</td>
+						<td>일반 구역 4칸</td>
+						<td><a href="#" class="btn btn-outline-primary btn-sm">수정</a></td>
+						<td><a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</a></td>
+					</tr>
+					<tr>
+						<th scope="row">3</th>
+						<td>a 주차장</td>
+						<td>2022-02-02 22시 ~ 2022-02-02 23시</td>
+						<td data-bs-toggle="modal" data-bs-target="#blockreasonModal" style="cursor: pointer;">나무가 쓰려져서 건물이...</td>
+						<td>전기차 구역 2칸</td>
+						<td><a href="#" class="btn btn-outline-primary btn-sm">수정</a></td>
+						<td><a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</a></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 
