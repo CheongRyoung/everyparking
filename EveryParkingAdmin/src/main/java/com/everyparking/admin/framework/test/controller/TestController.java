@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.everyparking.admin.framework.common.controller.BaseController;
 import com.everyparking.admin.framework.common.util.SessionUtil;
-import com.everyparking.admin.framework.common.vo.ImageFolerName;
 import com.everyparking.admin.framework.file.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -158,28 +157,23 @@ public class TestController extends BaseController {
 	// 에디터용
 	@ResponseBody
 	@RequestMapping("imageUpload")
-	public Map<String, Object> imageUpload(@RequestParam("upload") MultipartFile image) {
+	public Map<String, Object> imageUpload(
+			@RequestParam("upload") MultipartFile image,
+			HttpServletRequest request) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		if(image != null) {
+
+			/** 요청 url 가져오기  **/
+			String url = request.getRequestURL().toString();
+			url = url.substring(0, url.indexOf("/", 7));
+			url += "/" + "uploadImage";
+
+			String imgPath = fileUtil.editorImg(image, "editor");
+
 			String originalName = image.getOriginalFilename();
-			/**
-			 *   -------------------------------
-			 *   db에 이미지 기존 이름 저장
-			 *   -------------------------------
-			 * **/
-
-			/**  new FileUtil(MultipartFile image, enum객체로 폴더 선택)     **/
-
-			String imgPath = fileUtil.folderPath(image, ImageFolerName.NOTIFICATION);
-			/**
-			 *   -------------------------------
-			 *   db에 이미지 url저장
-			 *   -------------------------------
-			 * **/
-
 			data.put("uploaded", 1);
 			data.put("fileName", originalName);
-			data.put("url", "http://localhost:8123/uploadImage/" + imgPath);
+			data.put("url", url + "/" + imgPath);
 		}
 		return data;
 	}

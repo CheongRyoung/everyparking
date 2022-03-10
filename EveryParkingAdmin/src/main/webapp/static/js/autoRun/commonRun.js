@@ -96,7 +96,7 @@ if(writeEditor){
     ClassicEditor
         .create( document.querySelector( '#writeEditor' ) , {
             ckfinder: {
-                uploadUrl: 'http://localhost:8123/admin/test/imageUpload'
+                uploadUrl: 'http://localhost:8123/test/imageUpload'
             }
         } )
         .then( newEditor => {
@@ -195,28 +195,30 @@ function transGeocode() {
 let testGrid;
 
 /** 이부분은 gird.js의 상단 부분에 설명이 나와있습니다.   **/
-$(function(){
-    let gridOption = {
-        cols:[
-            {title:"번호", name:"test_no", type:"number", order:true}
-            , {title:"제목", name:"title", order:true}
-            , {title:"시간", name:"datestring", order:true}
-            , {title:"사유", name:"reason", order:true}
-            , {title:"위치", name:"area", order:true}
-            , {title:"수정", name:"button", defaultData:"Y",
-                filter:function(){return '<button onclick="clickTest()" class="btn btn-outline-primary btn-sm">수정</button>'}}
-            , {title:"삭제", name:"button", defaultData:"Y",
-                filter:function(){return '<button onclick="clickTest()" class="btn btn-outline-danger btn-sm">삭제</button>'}}
-        ],
+if($('#testGrid')){
+    $(function(){
+        let gridOption = {
+            cols:[
+                {title:"번호", name:"test_no", type:"number", order:true}
+                , {title:"제목", name:"title", order:true}
+                , {title:"시간", name:"datestring", order:true}
+                , {title:"사유", name:"reason", order:true}
+                , {title:"위치", name:"area", order:true}
+                , {title:"수정", name:"button", defaultData:"Y",
+                    filter:function(){return '<button onclick="clickTest()" class="btn btn-outline-primary btn-sm">수정</button>'}}
+                , {title:"삭제", name:"button", defaultData:"Y",
+                    filter:function(){return '<button onclick="clickTest()" class="btn btn-outline-danger btn-sm">삭제</button>'}}
+            ],
 
-        /** row클릭 이벤트가 필요할 때 넣어야합니다.   원하는 이벤트명으로 변경할 수 있습니다.   **/
-        onRowClick: "onRowClick",
-        /** pagingEl에 페이징 숫자를 넣을 공간에 담을 수 있습니다. 안담게 되면 null을 반환해서 생성하지 않습니다.**/
-        pagingEl : '#pagingBlock',
-        getParam : getParam
-    };
-    testGrid = new Grid("#testGrid", gridOption, "/test/testAjax" /*, search */);
-})
+            /** row클릭 이벤트가 필요할 때 넣어야합니다.   원하는 이벤트명으로 변경할 수 있습니다.   **/
+            onRowClick: "onRowClick",
+            /** pagingEl에 페이징 숫자를 넣을 공간에 담을 수 있습니다. 안담게 되면 null을 반환해서 생성하지 않습니다.**/
+            pagingEl : '#pagingBlock',
+            getParam : getParam
+        };
+        testGrid = new Grid("#testGrid", gridOption, "/test/testAjax" /*, search */);
+    })
+}
 function getParam(){
     return {}
 }

@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.everyparking.admin.HomeController;
-import com.everyparking.admin.framework.common.vo.ImageFolerName;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.bouncycastle.util.Arrays;
@@ -49,7 +48,7 @@ public class FileUtil {
 					SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd");
 					folderPath = sdf.format(date);
 
-					String fullPath =  filePath+"/"+folderPath+"/";
+					String fullPath =  filePath +"/"+folderPath+"/";
 					File path = new File(rootPath + fullPath);
 					File file = new File(rootPath + fullPath+fileConvertName);
 
@@ -84,19 +83,7 @@ public class FileUtil {
 		return uuid.toString();
 	}
 
-	private MultipartFile mf;
-	private String folder;
-	private String folderPath;
-	private ImageFolerName imageFolerName;
-
-	public String folderPath(MultipartFile mf, ImageFolerName imageFolerName) {
-		// C:/everyparking/EveryParkingAdmin/src/main/webapp/static/uploadimage/
-		// 앞단은 자신의 경로로 수정해주세요(맥북은 모르겠는데 아마 하실줄 믿고 있겠습니다)
-		this.mf = mf;
-		this.imageFolerName = imageFolerName;
-
-		// static 경로
-		String folder = rootPath;
+	public String editorImg(MultipartFile mf, String contextPath) {
 
 		// 오늘 날짜 폴더 생성
 		String folderPath = "";
@@ -105,10 +92,7 @@ public class FileUtil {
 		folderPath = sdf.format(date);
 
 
-		this.folderPath = folderPath;
-		this.folder = folder;
-
-		File todayFolder = new File(folder+ imageFolerName +folderPath);
+		File todayFolder = new File(rootPath + contextPath + folderPath);
 
 		if(!todayFolder.exists()) {
 			todayFolder.mkdirs();
@@ -122,14 +106,13 @@ public class FileUtil {
 
 		// 파일 전송
 		try {
-			mf.transferTo(new File(folder + imageFolerName + folderPath + newfileName));
+			mf.transferTo(new File(rootPath+ contextPath + folderPath + newfileName));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// 파일 url 리턴
-		return imageFolerName + folderPath + newfileName;
-
+		return  contextPath + folderPath + newfileName;
 	}
 
 }
