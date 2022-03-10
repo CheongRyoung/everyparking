@@ -6,11 +6,53 @@
 	<insert id="DBTest">
 		insert into test values (2)
 	</insert>
-	
-	<select id="getDBTest" resultType="java.util.LinkedHashMap">
+
+	<sql id="testparkingBlockSql">
+		SELECT
+			test_no
+		    , title
+		    , datestring
+		    , reason
+		    , area
+		FROM testparkingblock
+		WHERE 1=1
+	</sql>
+	<sql id="searchTestparkingBlockSql">
+		<if test='test_no != null and !test_no.equals("")'>
+			AND test_no = #{test_no}
+		</if>
+		<if test='searchKey != null and !searchKey.equals("")'>
+			AND
+			(	title  LIKE CONCAT('%', #{searchKey}, '%')
+			 OR reason LIKE CONCAT('%', #{searchKey}, '%')
+			)
+		</if>
+		<if test='area != null and !area.equals("")'>
+			AND area = #{area}
+		</if>
+	</sql>
+	<select id="getDBTest" resultType="hashMap" parameterType="hashMap">
 		/*TestSQLMapper.getDBTest [작성자/작성일] 기능내용 */
-		select test_no, title, datestring, reason, area
-		from testparkingblock
+		<include refid="testparkingBlockSql"></include>
+		<include refid="searchTestparkingBlockSql"></include>
+		<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+			<if test='ORDER != null and !ORDER.equals("")'>
+				ORDER BY ${ORDER} ${ORDER_TYPE}
+			</if>
+			LIMIT #{START}, #{CNT}
+		</if>
+	</select>
+	<select id="getDBTestCount" resultType="int" parameterType="hashMap">
+		/*TestSQLMapper.getDBTestCount [작성자/작성일] 기능내용 */
+		SELECT COUNT(*) FROM(
+			<include refid="testparkingBlockSql"></include>
+			<include refid="searchTestparkingBlockSql"></include>
+		)Z
+	</select>
+	<select id="getDBTestDetail" resultType="hashMap" parameterType="hashMap">
+		/*TestSQLMapper.getDBTestDetail [작성자/작성일] 기능내용 */
+		<include refid="testparkingBlockSql"></include>
+		AND test_no = #{test_no}
 	</select>
 
 	<insert id="DBUploadTest">

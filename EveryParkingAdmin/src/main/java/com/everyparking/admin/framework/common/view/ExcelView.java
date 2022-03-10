@@ -6,28 +6,25 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.view.AbstractView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @Component
-public class ExcelView extends AbstractView {
+public class PoiExcelDown {
 
-	private ArrayList<Map<String, Object>> data;
+	private List<HashMap<String, Object>> data;
 	private String sheetName;
 	private String fileName;
 
-	@Override
-	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		this.data = (ArrayList<Map<String, Object>>) model.get("DBdata");
-		this.sheetName = (String) model.get("sheetName");
-		this.fileName = (String) model.get("filename");
+
+	public void excelDown(List<HashMap<String, Object>> DBdata, String sheetName, String fileName, HttpServletResponse response) throws Exception {
+		this.data = DBdata;
+		this.sheetName = sheetName;
+		this.fileName = fileName;
+
 		Iterator<String> keys = data.get(0).keySet().iterator();
 
 		Workbook wb = new XSSFWorkbook();

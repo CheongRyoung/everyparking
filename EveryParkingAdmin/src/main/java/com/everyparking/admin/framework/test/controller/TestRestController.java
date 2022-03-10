@@ -27,20 +27,10 @@ public class TestRestController extends BaseController {
 
     @RequestMapping("/testAjax")
     public ModelAndView testAjax(@RequestBody HashMap<String, Object> params){
-        // grid ajax를 호출하게 되면 파라미터로 row개수("CNT")와 시작 page("START")를 던저준다.
-        int count = (Integer) params.get("CNT");
-        int page = (Integer) params.get("START");
-        ArrayList<LinkedHashMap<String, Object>> result = testService.getDBTest();
-        ArrayList<LinkedHashMap<String, Object>> responseData = new ArrayList<>();
-        for(int i=0; i<count; i++){
-            responseData.add(result.get(i));
-        }
-
-
 
         ModelAndView mav = createMav();
         try {
-            mav = createMav(responseData, result.size());
+            mav = createMav(testService.getDBTest(params), testService.getDBTestCount(params));
         }catch (Exception e){
             logger.error(e.getMessage());
             super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);

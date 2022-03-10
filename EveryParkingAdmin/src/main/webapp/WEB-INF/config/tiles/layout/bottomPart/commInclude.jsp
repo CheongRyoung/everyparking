@@ -3,5 +3,5 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9172cdc2957ac573fa666cf07db8587&libraries=services"></script>
 
 <script type="text/javascript"
-        src="/resources/js/autoRun/commonRun.js"></script>
+        src="/js/autoRun/commonRun.js"></script>
 

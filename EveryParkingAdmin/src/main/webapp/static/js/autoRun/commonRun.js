@@ -186,41 +186,36 @@ function transGeocode() {
 }
 
 
-/*
-작성자:
-수정자:
-작성일:
-수정일:
-*/
-
-
 /**
- *  test입니다.
+ *  작성자: 김청룡
+ *  작성일: 22-03-09
+ *  프로젝트에 필요한 그리드 상세 사용법 예시
  *
  * **/
-
-var teatTemp;
-
 let testGrid;
 
+/** 이부분은 gird.js의 상단 부분에 설명이 나와있습니다.   **/
 $(function(){
     let gridOption = {
         cols:[
-            {title:"test_no", name:"test_no", type:"number"}
-            , {title:"title", name:"title"}
-            , {title:"datestring", name:"datestring"}
-            , {title:"reason", name:"reason"}
-            , {title:"area", name:"area"}
+            {title:"번호", name:"test_no", type:"number", order:true}
+            , {title:"제목", name:"title", order:true}
+            , {title:"시간", name:"datestring", order:true}
+            , {title:"사유", name:"reason", order:true}
+            , {title:"위치", name:"area", order:true}
             , {title:"수정", name:"button", defaultData:"Y",
                 filter:function(){return '<button onclick="clickTest()" class="btn btn-outline-primary btn-sm">수정</button>'}}
             , {title:"삭제", name:"button", defaultData:"Y",
-                filter:function(){return '<button onclick="clickTest()" class="btn btn-outline-primary btn-sm">삭제</button>'}}
+                filter:function(){return '<button onclick="clickTest()" class="btn btn-outline-danger btn-sm">삭제</button>'}}
         ],
+
+        /** row클릭 이벤트가 필요할 때 넣어야합니다.   원하는 이벤트명으로 변경할 수 있습니다.   **/
         onRowClick: "onRowClick",
+        /** pagingEl에 페이징 숫자를 넣을 공간에 담을 수 있습니다. 안담게 되면 null을 반환해서 생성하지 않습니다.**/
         pagingEl : '#pagingBlock',
         getParam : getParam
     };
-    testGrid = new Grid("#testGrid", gridOption, "../test/testAjax", search);
+    testGrid = new Grid("#testGrid", gridOption, "/test/testAjax" /*, search */);
 })
 function getParam(){
     return {}
@@ -228,5 +223,18 @@ function getParam(){
 function search(page){
     testGrid.search(page)
 }
+
+/**  row를 클릭하면 발생하는 이벤트입니다. obj로 해당 열에대한 tr을 가져오게 되는데 childNodes를 통해서 원하는 값을 가져온뒤
+ *   controller에 파라미터를 넘기는 항목을 작성할 수 있습니다.  (onRowClick function 안에)
+ *   ex. location.href = '../test/test?parkingNum=' +obj.childNodes[0].innerText;
+ *   ex. ajaxCall('../test/test', { x: obj.childNodes[0].innerText }, callback, errorCallback, asyncType)
+ *
+ *   cf. { x: obj.childNodes[0].innerText } 이부분은 post일때 JSON.stringify()로 파싱하기 위한 param명을 지정해줄수 있습니다.
+ *   **/
+function onRowClick(num , obj){
+    console.log(obj.childNodes[0].innerText);
+}
+
+
 
 

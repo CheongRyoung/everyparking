@@ -1,9 +1,6 @@
 package com.everyparking.admin.framework.test.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +25,16 @@ public class TestService {
 		return testSqlDao.getUploadFile();
 	}
 	
-	public ArrayList<LinkedHashMap<String, Object>> getDBTest() {
-		return testSqlDao.getDBTest();
+	public List<HashMap<String, Object>> getDBTest(HashMap<String,Object> params) {
+		return testSqlDao.getDBTest(params);
 	}
+
+	public int getDBTestCount(HashMap<String,Object> params) {
+		return testSqlDao.getDBTestCount(params);
+	}
+
+	public HashMap<String,Object> getDBTestDetail(HashMap<String,Object> params) {
+		return testSqlDao.getDBTestDetail(params);
+	}
+
 }
