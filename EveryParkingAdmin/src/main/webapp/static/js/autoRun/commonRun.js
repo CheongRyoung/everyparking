@@ -10,6 +10,8 @@ const datepickerR = document.getElementById('datepickerR');
 const datepickerN = document.getElementById('datepickerN');
 const readEditor = document.getElementById('readEditor');
 const writeEditor = document.getElementById('writeEditor');
+const testGrid = document.getElementById('testGrid');
+const testajax = document.getElementById('testajax');
 
 // 시간을 포함해서 날짜를 선택해야할때
 if(datepickerR) {
@@ -192,10 +194,11 @@ function transGeocode() {
  *  프로젝트에 필요한 그리드 상세 사용법 예시
  *
  * **/
-let testGrid;
+
 
 /** 이부분은 gird.js의 상단 부분에 설명이 나와있습니다.   **/
-if($('#testGrid')){
+if(testGrid){
+    let testGrid;
     $(function(){
         let gridOption = {
             cols:[
@@ -230,11 +233,44 @@ function search(page){
  *   controller에 파라미터를 넘기는 항목을 작성할 수 있습니다.  (onRowClick function 안에)
  *   ex. location.href = '../test/test?parkingNum=' +obj.childNodes[0].innerText;
  *   ex. ajaxCall('../test/test', { x: obj.childNodes[0].innerText }, callback, errorCallback, asyncType)
- *
  *   cf. { x: obj.childNodes[0].innerText } 이부분은 post일때 JSON.stringify()로 파싱하기 위한 param명을 지정해줄수 있습니다.
  *   **/
 function onRowClick(num , obj){
     console.log(obj.childNodes[0].innerText);
+}
+
+/** ajaxCall을 활용하는 방안에 관하여.... 팀원들의 이해를 돕기위해 남깁니다.
+ *  작성자: 김청룡
+ *  작성일: 22-03-11
+ * **/
+
+/** params에 대한 설명 : 밑과 같이 class로 params를 넘겨도 되구요 **/
+let Rectangle = class Rectangle2 {
+    constructor(height, width) {
+        this.height = height;
+        this.width = width;
+    }
+};
+let test = new Rectangle("123", "345");
+/** 이런 형식으로 작성 해서 보내도 됩니다. **/
+test = { "키": "값", "키": "값"};
+
+if(testajax){
+    /** 첫번째 파라미터에 요청 맵핑 주소를 넣어줍니다.
+     *  두번째 파라미터에는 주소로 날릴 파라미터를 적어줍니다. (기본적으로 post 통신으로 되어있습니다)
+     *  파라미터의 형식은 다음과 같습니다 params= { 키: 값, 키: 값, 키: 값};
+     *  세번째 파라미터에는 통신결과후 값을 활용해 수행할 function을 작성해줍니다.**/
+        ajaxCall("/test/ajaxCall", test, function (result) {
+
+            /** 통신의 결과물을 function()안의 파라미터로 받아오게 됩니다. 이것을 data에 넣어줍니다. **/
+            let data = result;
+            if (data.result == 'fail') {
+                alert('ajax 통신을 실패했습니다.')
+            } else {
+                alert('ajax통신을 성공했습니다.')
+            }
+
+        })
 }
 
 

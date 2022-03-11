@@ -50,4 +50,16 @@ public class TestRestController extends BaseController {
         return mav;
     }
 
+    @RequestMapping("/ajaxCall")
+    public ModelAndView testajaxCall(@RequestBody HashMap<String,Object> params){
+        ModelAndView mav = createMav(Ajax.SAVE.TEXT+"."+Ajax.SUCCESS);
+        try {
+            mav = createMav();
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.FAIL);
+        }
+        return mav;
+    }
+
 }

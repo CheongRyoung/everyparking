@@ -1,3 +1,11 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: blueg
+  Date: 2022-03-11
+  Time: 오후 5:34
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../css/UserCss.css">
+    <link rel="stylesheet" href="/css/adminCss.css">
     <title>Document</title>
     <!-- 클래식 에디터 -->
     <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
@@ -18,10 +26,10 @@
     </style>
 </head>
 <body>
-    <div class="container-fluid" style="min-width: 500px;">
+<div class="container-fluid" style="max-width: 500px; background-color: #F5F5F5;">
     <header>
         <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5"></i></div>
+            <div class="col-1 px-0 mx-2"><i class="bi bi-arrow-left fs-5"></i></div>
             <div class="col px-0">
                 <h5 class="title">회원 가입</h5>
             </div>
@@ -36,7 +44,7 @@
                     <div class="col">
                         <div class="row my-3">
                             <div class="col text-center">
-                                <img class="logoMain my-3" src="../img/logoBG.jpg">
+                                <img class="logoMain my-3" src="/img/logoBG.jpg">
                             </div>
                         </div>
                         <div class="row">
@@ -69,7 +77,7 @@
                                     <input type="text" class="form-control" id="floatingName" placeholder="name">
                                     <label for="floatingName">이름</label>
                                 </div>
-                               <div class="row mb-1">
+                                <div class="row mb-1">
                                     <div class="col"><span>생년월일</span></div>
                                 </div>
                                 <input type="date" class="form-control mb-3" id="floatingPassword" placeholder="Password">
@@ -78,7 +86,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="checkbox"> 여성 <input type="checkbox"> 장애인 <input type="checkbox"> 전기차 
+                                        <input type="checkbox"> 여성 <input type="checkbox"> 장애인 <input type="checkbox"> 전기차
                                     </div>
                                 </div>
                                 <div class="row mb-1">
@@ -96,7 +104,7 @@
                                     <div class="col">
                                         <input type="checkbox"> 동의합니다.
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row my-4">
                                     <div class="col">
                                         <button class="buttonBox" style="float: right;">회원 가입 완료</button>
@@ -109,82 +117,8 @@
             </div>
         </div>
     </main>
-    </div>
-    <footer>
-    <div class="row">
-        <div class="col footerBox text-center py-5">
-            <div class="footerText">
-                상호: (주)우주  |  대표 : 전지나  |  사업자등록번호 : 120-12-12121
-                <br>
-                주소 : 서울특별시 강남구 강남대로 1길 1 (우 : 05050)
-                <br>
-                팩스 : 02-111-1111
-                <br>
-                통신판매업  신고번호 : 제2022-서울강남-00000호
-                <br>
-                서비스 이용문의: 02-111-1111  |  이메일 : cs@ooozoo.com  | 서비스제휴문의: part@ooozoo.com
-                <br>
-                <br>
-            </div>
-        </div>
-    </div>
-    </footer>
-    <!-- 푸터 박스 + 하단 네비 구역-->
-    <div class="footer-nav">
-    <!-- 하단 네비바 -->
-    <div class="row m-0 fixBottomNav" style="margin-top: auto;">
-        <div class="col">
-            <a href="#">
-            <div class="row">
-                <div class="col"><i class="bi bi-list fs-3 navIcon"></i></div>
-            </div>
-            <div class="row">
-                <div class="col navTitle">카테고리</div>
-            </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="#">
-            <div class="row">
-                <div class="col"><i class="bi bi-search fs-3 navIcon"></i></div>
-            </div>
-            <div class="row">
-                <div class="col navTitle">검색</div>
-            </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="#">
-            <div class="row">
-                <div class="col"><i class="bi bi-geo-alt fs-3 navIcon"></i></div>
-            </div>
-            <div class="row">
-                <div class="col navTitle">지도</div>
-            </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="#">
-            <div class="row">
-                <div class="col"><i class="bi bi-house fs-3 navIcon"></i></div>
-            </div>
-            <div class="row">
-                <div class="col navTitle">홈</div>
-            </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="#">
-            <div class="row">
-                <div class="col"><i class="bi bi-person-circle fs-3 navIcon"></i></div>
-            </div>
-            <div class="row">
-                <div class="col navTitle">MY</div>
-            </div>
-            </a>
-        </div>
-    </div>
-    </div> 
+</div>
+
 
 </body>
 </html>
