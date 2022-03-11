@@ -5,7 +5,7 @@
        
 <tiles-definitions>
 
-  <definition name="/login/loginPage" template="/WEB-INF/views/login/loginForm.jsp" >
+  <definition name="/login/loginForm" template="/WEB-INF/views/login/loginForm.jsp" >
     <put-attribute name="body" value="" />
   </definition>
   <definition name="/login/register" template="/WEB-INF/views/login/register.jsp" >
@@ -21,10 +21,13 @@
     <put-attribute name="modal" value="/WEB-INF/config/tiles/component/modal.jsp"></put-attribute>
   </definition>
 
-  <definition name="/admin/*" extends="tiles.layouts.component">
+  <definition name="/*" extends="tiles.layouts.component">
+    <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+  </definition>
+  <definition name="/*/*" extends="tiles.layouts.component">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
   </definition>
-  <definition name="/admin/*/*" extends="tiles.layouts.component">
+  <definition name="/*/*/*" extends="tiles.layouts.component">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
   </definition>
 
