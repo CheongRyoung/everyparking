@@ -50,7 +50,7 @@
  *
  */
 let grids = [];
-var Grid = function(tblEl, options, searchApiUrl, searchFunc){
+var Grid = function(tblEl, options, searchApiUrl){
     this.selector = tblEl;
     this.$tbl = $(this.selector);
     this.url = searchApiUrl;
@@ -64,6 +64,8 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
     this.showCols = 0;
     this.orderCol = '';
     this.orderType = '';
+    this.searchCondition = '';
+    this.searchKey = '';
 
 
     this.pagingOpt = {
@@ -226,6 +228,12 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
             params.ORDER = this.orderCol;
             params.ORDER_TYPE = this.orderType;
         }
+
+        if(this.searchKey){
+            params.SEARCHCOND = this.searchCondition;
+            params.SEARCHKEY = this.searchKey;
+        }
+
         this.pagingOpt.page = page;
         ajaxCall($this.url, params, function (data) {
             $this.list = data.list;
@@ -329,17 +337,25 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
             $this.$pagingEl.empty();
             $this.setRange();
             let html = ``;
-            html += `<ul>`;
-            html += `    <li>`;
-            html += `        <button type="button" onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page-1})" ${$this.pagingOpt.page == 1 ? 'disabled="disabled"' : ''}"><span class="icon arrow prev"></span></button>`;
+            html += ``;
+            html += `<ul class="pagination">`;
+            html += `    <li class="page-item ${$this.pagingOpt.page == 1 ? 'disabled' : ''}">`;
+            html += `        <a class="page-link" type="button" onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page-1})"><i class="bi bi-arrow-left-circle"></i></a>`;
             html += `    </li>`;
-            html += `    <li>`;
-            html += `        <span>${this.pagingOpt.page}</span> / <span>${this.pagingOpt.max}</span>`;
-            html += `    </li>`;
-            html += `    <li>`;
-            html += `        <button type="button"  onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page+1})" ${$this.pagingOpt.page == $this.pagingOpt.max ? 'disabled="disabled"' : ''}"><span class="icon arrow next"></span></button>`;
+            for(let pageNum=$this.pagingOpt.start; pageNum<=$this.pagingOpt.end; pageNum++) {
+                if(pageNum==$this.pagingOpt.page) {
+                    html += `    <li class="page-item active">`;}
+                else {
+                    html += `    <li class="page-item">`; }
+                html += `        <a class="page-link" type="button" onclick="girdPageMove('${$this.selector}', ${pageNum})"}">${pageNum}</a>`;
+                html += `    </li>`;
+            }
+            html += `    <li class="page-item ${$this.pagingOpt.page == $this.pagingOpt.max ? 'disabled' : ''}">`;
+            html += `        <a class="page-link" type="button"  onclick="girdPageMove('${$this.selector}', ${$this.pagingOpt.page+1})"><i class="bi bi-arrow-right-circle"></i></a>`;
             html += `    </li>`;
             html += `</ul>`;
+            html += ``;
+
             this.$pagingEl.html(html);
         }
     }
@@ -357,7 +373,7 @@ var Grid = function(tblEl, options, searchApiUrl, searchFunc){
         this.pagingOpt.prev = this.pagingOpt.start-1;
     }
 
-    this.drawColGroup();
+    // this.drawColGroup();
     this.drawHeaders();
     this.search();
     grids.push(this);
@@ -405,5 +421,21 @@ function changeOrder(obj, gridSelector, colIdx){
         $this.orderType = 'ASC';
     }
     $this.drawHeaderClass();
+    $this.reSearch();
+}
+
+/**
+ *  작성자: 김청룡
+ *  작성일: 22-03-13
+ *  키워드 검색
+ *  @param String 검색어
+ *  @param String 검색조건
+ *  @param gridSelector
+ * **/
+
+function searchGrid(key, condition, gridSelector){
+    let $this = findGrid(gridSelector);
+    $this.searchKey = key;
+    $this.searchCondition = condition;
     $this.reSearch();
 }

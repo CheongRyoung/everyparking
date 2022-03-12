@@ -10,7 +10,7 @@ const datepickerR = document.getElementById('datepickerR');
 const datepickerN = document.getElementById('datepickerN');
 const readEditor = document.getElementById('readEditor');
 const writeEditor = document.getElementById('writeEditor');
-const testGrid = document.getElementById('testGrid');
+const testGridid = document.getElementById('testGrid');
 const testajax = document.getElementById('testajax');
 
 // 시간을 포함해서 날짜를 선택해야할때
@@ -197,7 +197,7 @@ function transGeocode() {
 
 
 /** 이부분은 gird.js의 상단 부분에 설명이 나와있습니다.   **/
-if(testGrid){
+if(testGridid){
     let testGrid;
     $(function(){
         let gridOption = {
@@ -219,15 +219,20 @@ if(testGrid){
             pagingEl : '#pagingBlock',
             getParam : getParam
         };
-        testGrid = new Grid("#testGrid", gridOption, "/test/testAjax" /*, search */);
+        testGrid = new Grid("#testGrid", gridOption, "/test/testAjax");
+
     })
 }
+
 function getParam(){
     return {}
 }
-function search(page){
-    testGrid.search(page)
-}
+/** 그리드 검색 관련
+ *
+ *   searchGrid("안녕", "난 검색이야", "#testGrid");
+ *   위와같은 형식의 함수 이벤트를 등록하세요
+ *
+ * **/
 
 /**  row를 클릭하면 발생하는 이벤트입니다. obj로 해당 열에대한 tr을 가져오게 되는데 childNodes를 통해서 원하는 값을 가져온뒤
  *   controller에 파라미터를 넘기는 항목을 작성할 수 있습니다.  (onRowClick function 안에)
@@ -252,6 +257,12 @@ let Rectangle = class Rectangle2 {
     }
 };
 let test = new Rectangle("123", "345");
+
+let example = new function() {
+    this.ex= "ex";
+    this.xe= 're';
+}
+
 /** 이런 형식으로 작성 해서 보내도 됩니다. **/
 test = { "키": "값", "키": "값"};
 
