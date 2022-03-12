@@ -19,14 +19,14 @@ public class DownloadView extends AbstractView{
 
     @Override
     protected void renderMergedOutputModel(Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String image_originalName = (String) map.get("image_originalName");
-        String convert_name = (String) map.get("convert_name");
-        String image_url = (String) map.get("image_url");
+        String FILE_ORG_NAME = (String) map.get("FILE_ORG_NAME");
+        String FILE_CONV_NAME = (String) map.get("FILE_CONV_NAME");
+        String FILE_URL = (String) map.get("FILE_URL");
 
-        String fileName = URLEncoder.encode(image_originalName,"UTF-8");
+        String fileName = URLEncoder.encode(FILE_ORG_NAME,"UTF-8");
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition","attchment; filename="+ fileName);
 
-        FileUtils.copyFile(new File(rootPath + image_url+ "/"+ convert_name ), response.getOutputStream());
+        FileUtils.copyFile(new File(rootPath + FILE_URL+ "/"+ FILE_CONV_NAME ), response.getOutputStream());
     }
 }

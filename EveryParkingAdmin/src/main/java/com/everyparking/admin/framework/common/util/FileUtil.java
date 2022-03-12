@@ -45,7 +45,7 @@ public class FileUtil {
 					// 오늘 날짜 폴더 생성
 					String folderPath = "";
 					Date date = new Date();
-					SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 					folderPath = sdf.format(date);
 
 					String fullPath =  filePath +"/"+folderPath+"/";
@@ -59,12 +59,12 @@ public class FileUtil {
 					mf.transferTo(file);
 
 					HashMap<String,Object> fileInfo = new HashMap<>();
-					fileInfo.put("image_originalName", fileOrgName);
-					fileInfo.put("image_url", fullPath);
-					fileInfo.put("ext", ext);
-					fileInfo.put("convert_name", fileConvertName);
-					fileInfo.put("fileContentType", fileContentType);
-					fileInfo.put("IMAGE_SIZE", fileSize);
+					fileInfo.put("FILE_ORG_NAME", fileOrgName);
+					fileInfo.put("FILE_URL", fullPath);
+					fileInfo.put("FILE_EXT", ext);
+					fileInfo.put("FILE_CONV_NAME", fileConvertName);
+					fileInfo.put("FILE_TYPE", fileContentType);
+					fileInfo.put("FILE_SIZE", fileSize);
 					result.add(fileInfo);
 				}catch (Exception e){
 					logger.error(e.getMessage());

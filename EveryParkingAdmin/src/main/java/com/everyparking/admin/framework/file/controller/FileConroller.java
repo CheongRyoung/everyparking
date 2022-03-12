@@ -19,10 +19,10 @@ public class FileConroller {
     @Autowired
     FileService fileService;
 
-    @RequestMapping("/downloadFile/{image_no}")
-    public ModelAndView downloadFile(@PathVariable(value="image_no") String image_no) throws Exception {
+    @RequestMapping("/downloadFile/{FILE_SEQ}")
+    public ModelAndView downloadFile(@PathVariable(value="FILE_SEQ") String FILE_SEQ) throws Exception {
         HashMap params = new HashMap();
-        params.put("image_no" ,image_no);
+        params.put("FILE_SEQ" , FILE_SEQ);
         return new ModelAndView( downloadView, fileService.getFile(params));
     }
 }

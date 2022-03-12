@@ -56,7 +56,7 @@ public class SessionUtil {
      */
     public static void setCreator(HttpSession session, HashMap targetMap){
         HashMap<String,Object> user = (HashMap<String, Object>)session.getAttribute("member");
-        targetMap.put("writer", user.get("member_no"));
-        targetMap.put("updater", user.get("member_no"));
+        targetMap.put("REG_SEQ", user.get("USER_SEQ"));
+        targetMap.put("MOD_SEQ", user.get("USER_SEQ"));
     }
 }

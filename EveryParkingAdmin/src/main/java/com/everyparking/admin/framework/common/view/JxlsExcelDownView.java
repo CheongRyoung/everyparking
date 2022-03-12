@@ -4,7 +4,9 @@ import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.view.AbstractView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,28 +19,18 @@ import java.util.Map;
  * **/
 
 @Component
-public class JxlsExcelDown {
+public class JxlsExcelDownView extends AbstractView{
 
-    public void excelDown(HttpServletResponse response, Map<String, Object> data, String template, String newfileName) throws IOException {
-        
-        /** 템플릿을 읽어옵니다. **/
+    @Override
+    protected void renderMergedOutputModel(Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String template = (String) map.get("template");
+        String newfileName = (String) map.get("newfileName");
         InputStream is = new ClassPathResource("/templates/" + template +".xlsx").getInputStream();
-
-        /** 쓰는 곳을 지정해줍니다 **/
-        OutputStream os = response.getOutputStream();
-        
-        /**  파일 타입을 지정해줍니다. **/
-        response.setContentType("ms-vnd/excel");
-
-        /**  한글제목도 사용할 수 있게 해줍니다.  **/
         String fileName = new String(newfileName.getBytes("KSC5601"), "8859_1");
-
-        /**  response에 파일이름을 지정해줍니다  **/
+        response.setContentType("ms-vnd/excel");
         response.setHeader("Content-Disposition", "attachment;filename="+fileName+".xlsx");
-
-        /**  변환을 위해 jxls 라이브러리에서 요구하는 형식으로 보내줍니다  **/
         Context context = new Context();
-        context.putVar("data", data);
-        JxlsHelper.getInstance().processTemplate(is, os, context);
+        context.putVar("data", map.get("data"));
+        JxlsHelper.getInstance().processTemplate(is, response.getOutputStream(), context);
     }
 }

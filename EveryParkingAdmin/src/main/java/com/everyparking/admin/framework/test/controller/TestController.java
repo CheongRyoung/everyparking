@@ -1,6 +1,7 @@
 package com.everyparking.admin.framework.test.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.everyparking.admin.framework.common.controller.BaseController;
 import com.everyparking.admin.framework.common.util.SessionUtil;
+import com.everyparking.admin.framework.common.vo.Ajax;
 import com.everyparking.admin.framework.file.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.everyparking.admin.framework.test.service.TestService;
 import com.everyparking.admin.framework.common.util.FileUtil;
-import com.everyparking.admin.framework.common.view.PoiExcelDown;
+import com.everyparking.admin.framework.common.view.PoiExcelDownView;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -27,9 +29,6 @@ public class TestController extends BaseController {
 	
 	@Autowired
 	private TestService testService;
-
-	@Autowired
-	private PoiExcelDown poiExcelDown;
 	
 	@Autowired
 	private FileUtil fileUtil;
@@ -128,32 +127,6 @@ public class TestController extends BaseController {
 	}
 
 
-	//엑셀  파일 다운로드 request  poi.ver
-	//다운로드 후 별다른 행위를 하지 않기 때문에 void
-	@RequestMapping("/excelDownload")
-	public void excelDownload(HttpServletResponse response) throws Exception {
-/**
- * 		String name = ImageFolerName.NOTIFICATION;
- * 		ExcelDounloadUtil 객체 인스턴스시 생성자에 파라미터 입력
- * 		첫번째 파라미터 db에서 선별된 데이터 테이블(ArrayList<Map<String, Object>>)만 받으니 select시 map 리스트로 리턴 받을 것
- * 		두번째 파라미터는 엑셀에서 보면 테이블 시트의 이름이 있는데 그걸 지정해줌(테이블 시트는 하나만 생성됨, 여러개 원할시 말씀해주세요)
- * 		세번째 파라미터는 엑셀파일명을 어떻게 할지 적어주면됨 추가적으로 기간별 정보를 가져왔을 때 이 이름에 기간을 넣어주면 ++
- *
- *
- * **/
-		HashMap<String,Object> params = new HashMap();
-		PoiExcelDown test = new PoiExcelDown();
-		test.excelDown(testService.getDBTest(params), "테스트시트명", "test파일명123!@#_", response);
-
-		Map<String,Object> excelMap = new HashMap<String,Object>();
-		excelMap.put("DBdata", testService.getDBTest(params));
-		excelMap.put("sheetName", "테스트시트명");
-		excelMap.put("filename", "test파일명123!@#_");
-		// ExcelDounloadUtil 객체의 excelDownload메소드를 사용 응답을 해줘야 되니 response 꼭 필요
-
-	}
-	
-	
 	// 에디터용
 	@ResponseBody
 	@RequestMapping("imageUpload")
@@ -187,15 +160,16 @@ public class TestController extends BaseController {
 	@RequestMapping("/testlogin")
 	public ModelAndView testlogin(HttpServletRequest request) throws Exception {
 		HashMap<String,Object> params = new HashMap<>();
-		params.put("member_no", 0);
+		params.put("USER_SEQ", 0);
 		SessionUtil.setSessionData(request, "member", params );
-		return super.createMav("success");
+		return super.createMav(Ajax.SEARCH.TEXT+"."+Ajax.TPYE_SUCCESS);
 	}
 
 
 	@RequestMapping("/uploadFileSubmit")
 	public String fileUploadTestForm(HttpServletRequest request) throws Exception {
-		fileService.uploadFile(request, "/test");
+		List<Integer> file_seq = fileService.uploadFile(request, "/test");
+		// file_seq를 분류되는 이미지 테이블에 인서트해야합니다.
 		return "redirect:/test/fileUploadTestForm";
 	}
 

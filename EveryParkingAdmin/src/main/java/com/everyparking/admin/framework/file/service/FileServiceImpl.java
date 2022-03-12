@@ -31,21 +31,20 @@ public class FileServiceImpl implements FileService{
     @Override
     public List<Integer> uploadFile(HttpServletRequest request, String filePath) throws Exception {
         List<HashMap<String,Object>> fileList = fileUtil.uploadFile(request, filePath);
-        List<Integer> image_nos = null;
+        List<Integer> file_seq = null;
         if(fileList != null && fileList.size()>0){
-            image_nos = new ArrayList<Integer>();
+            file_seq = new ArrayList<Integer>();
             for (HashMap<String, Object> map : fileList) {
                 SessionUtil.setCreator(request, map);
                 try {
-                    map.put("parkingLot_no", 0);
                     insertFile(map);
-                    image_nos.add((Integer) map.get("image_no"));
+                    file_seq.add((Integer) map.get("FILE_SEQ"));
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                 }
             }
         }
-        return image_nos;
+        return file_seq;
     }
 
     @Override
