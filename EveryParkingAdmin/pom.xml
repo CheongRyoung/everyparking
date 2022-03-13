@@ -250,6 +250,12 @@
 			<version>3.0.8</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-el</artifactId>
+			<version>3.0.8</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt 암호화 라이브러리 -->
 		<dependency>
 			<groupId>org.jasypt</groupId>
