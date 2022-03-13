@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/UserCss.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 하단 네비바 -->
+    <div class="row m-0 fixBottomNav" style="margin-top: auto;">
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-list fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">카테고리</div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-search fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">검색</div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-geo-alt fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">지도</div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-house fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">홈</div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-person-circle fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">MY</div>
+            </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="kakaoMap"  id="map" style="width:100%; height:92vh; position: absolute; left: 0; z-index: 1;">
+        <div class="row my-3 mx-1">
+            <div class="col input-group btn-group dropstart" >
+                <button style="z-index: 2;" class="input-group-text bg-primary" id="basic-addon2">
+                    <i class="bi bi-search text-white"></i>
+                </button>
+                <input style="border: 0px; z-index: 2;" type="text" class="form-control" placeholder="지역명, 지하철역을 입력해주세요" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="col-2 d-flex flex-row-reverse" style="z-index: 2;">
+                <a href="mainList.html"><button type="button" class="btn btn-primary" style="height: 38px;"><i class="bi bi-list-check"></i></button></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 왼쪽 정보 팝업창 -->
+    <div class="info">
+        <div class="container-fluid">
+            <header>
+                <div class="row headerBox py-2 px-0">
+                    <div class="col-1 px-0" onclick="infoClose();"><i class="bi bi-arrow-left fs-5"></i></div>
+                    <div class="col px-0">
+                        <h5 class="title">예약 상세</h5>
+                    </div>
+                    <div class="col-1 px-0"></div>
+                </div>
+            </header>
+            <main>
+                <!-- 수정 해야되는 부분-->
+                <div class="row topBox" style="margin-top: auto;">
+                    <div class="col">
+
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col"><span class="mainContentTitle">OOO 주차장</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col"><span class="mainContentSubNg">총 공간 : 50면 | </span><span class="mainContentSubNg">주차면: 일반 여성 장애인 전기차</span></div>
+                        </div>
+
+                        <div class="row" >
+                            <div class="col px-0" style="margin-top: 10px;">
+                                <img class="mainContentImg" src="../img/p1.jpg" alt="">
+                            </div>
+                        </div>
+
+                        <div class="wraper" style="margin-top: 10px;">
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col">
+                                    <span class="cardTitleNg"><i class="bi bi-geo-alt"></i> 서울 강남구 대치동 317-2</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="cardTitleNg"><i class="bi bi-telephone"></i> 000-000-0000</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="cardTitleNg"><i class="bi bi-watch"></i> 상주시간 : 04시~24시</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 10px; border-top: 3px solid #EEEEEE;">
+                            <div class="col-5 areaList align-self-center"><span class="mainContentSubTitle">시간  요금</span></div>
+                            <div class="col areaList align-self-center">
+                                <div class="row">
+                                    <div class="col-7 discountTitleNg">
+                                        <span class="mainContentSubSubNg">1시간당</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="mainContentSubSubNg">1000원</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-5"><span class="mainContentSubTitle">할 인 율</span></div>
+                            <div class="col align-self-center">
+                                <div class="row">
+                                    <div class="col-7 discountTitleNg">
+                                        <span class="mainContentSubSubNg">여성 전용</span>
+                                    </div>
+                                    <div class="col text-center">
+                                        <span class="mainContentSubSubNg">10 %</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7 discountTitleNg">
+                                        <span class="mainContentSubSubNg">장애인 전용</span>
+                                    </div>
+                                    <div class="col text-center">
+                                        <span class="mainContentSubSubNg">50 %</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7 discountTitleNg">
+                                        <span class="mainContentSubSubNg">전기차 전용</span>
+                                    </div>
+                                    <div class="col text-center">
+                                        <span class="mainContentSubSubNg">10 %</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 리뷰 작성-->
+                        <div class="row my-4" style="border-bottom: 3px solid #EEEEEE; border-top: 3px solid #EEEEEE; margin-top: 10px; height: 40px;">
+                            <div class="col align-self-center">
+                                <span class="mainContentSubSubNg">리뷰(10)</span>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2" style="margin: 1px;">
+                            <div class="col d-flex justify-content-between">
+                                <span class="mainContentSubSubNg">UserNickName</span>
+                                <span class="mainContentSubSubNg">2022-02-27 12:12</span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-left: 1px;">
+                            <div class="col">
+                                <p>★★★★★</p>
+                            </div>
+                        </div>
+                        <div class="row mb-2 pb-1" style="margin: 1px; border-bottom: 1px solid #EEEEEE;">
+                            <div class="col">
+                                <span class="commentContentNg">댓글내용</span>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                <a class="commentBtn" href="#"><i class="bi bi-pencil-square"></i></a>
+                                <a class="commentBtn" href="#"><i class="bi bi-trash-fill"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-2" style="margin: 1px;">
+                            <div class="col d-flex justify-content-between">
+                                <span class="mainContentSubSubNg">UserNickName</span>
+                                <span class="mainContentSubSubNg">2022-02-27 12:12</span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-left: 1px;">
+                            <div class="col">
+                                <p>★★★★★</p>
+                            </div>
+                        </div>
+                        <div class="row mb-2 pb-1" style="margin: 1px; border-bottom: 1px solid #EEEEEE;">
+                            <div class="col">
+                                <span class="commentContentNg">댓글내용</span>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                <a class="commentBtn" href="#"><i class="bi bi-pencil-square"></i></a>
+                                <a class="commentBtn" href="#"><i class="bi bi-trash-fill"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2" style="margin: 1px;">
+                            <div class="col d-flex justify-content-between">
+                                <span class="mainContentSubSubNg">UserNickName</span>
+                                <span class="mainContentSubSubNg">2022-02-27 12:12</span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-left: 1px;">
+                            <div class="col">
+                                <p>★★★★★</p>
+                            </div>
+                        </div>
+                        <div class="row mb-2 pb-1" style="margin: 1px; border-bottom: 1px solid #EEEEEE;">
+                            <div class="col">
+                                <span class="commentContentNg">댓글내용</span>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                <a class="commentBtn" href="#"><i class="bi bi-pencil-square"></i></a>
+                                <a class="commentBtn" href="#"><i class="bi bi-trash-fill"></i></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+        <!-- footer -->
+        <footer>
+            <div class="row mt-5">
+                <div class="col footerBox text-center py-5">
+                    <div class="footerText">
+                        상호: (주)우주  |  대표 : 전지나  |  사업자등록번호 : 120-12-12121
+                        <br>
+                        주소 : 서울특별시 강남구 강남대로 1길 1 (우 : 05050)
+                        <br>
+                        팩스 : 02-111-1111
+                        <br>
+                        통신판매업  신고번호 : 제2022-서울강남-00000호
+                        <br>
+                        서비스 이용문의: 02-111-1111  |  이메일 : cs@ooozoo.com  | 서비스제휴문의: part@ooozoo.com
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50b1bf256cd9b50277f2931c17611bb6&libraries=services,clusterer,drawing"></script>
+<script>
+
+const mainMap = document.getElementById("mainMap");
+
+if(mainMap) {
+    var mapContainer = document.getElementById('mainMap'), // 지도를 표시할 div
+        mapOption = {
+            center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 예시좌표 서버에서 이쪽으로 좌표값 받아와야함
+    var carparkPositions = [
+        new kakao.maps.LatLng(37.49966168796031, 127.03007039430118),
+        new kakao.maps.LatLng(37.499463762912974, 127.0288828824399),
+        new kakao.maps.LatLng(37.49896834100913, 127.02833986892401),
+        new kakao.maps.LatLng(37.49893267508434, 127.02673400572665),
+        new kakao.maps.LatLng(37.49872543597439, 127.02676785815386),
+        new kakao.maps.LatLng(37.49813096097184, 127.02591949495914),
+        new kakao.maps.LatLng(37.497680616783086, 127.02518427952202)
+    ];
+
+// 이쪽에는 주차장 넘버 받아와야함
+    var parkingNumList = [
+        1, 2, 3, 4, 5, 6, 7
+    ];
+
+    var carparkMarkers = []; // 주차장 마커 객체를 가지고 있을 배열입니다
+
+    createCarparkMarkers(); // 주차장 마커를 생성하고 주차장 마커 배열에 추가합니다
+
+
+// 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
+    function createMarkerImage(src, size, options) {
+        var markerImage = new kakao.maps.MarkerImage(src, size, options);
+        return markerImage;
+    }
+
+// 좌표와 마커이미지를 받아 마커를 생성하여 리턴하는 함수입니다
+    function createMarker(position, image, num) {
+
+        var marker = new kakao.maps.Marker({
+            position: position,
+            image: image
+        });
+        marker.value=num;
+
+        //마커 클릭 이벤트 등록
+        kakao.maps.event.addListener(marker, 'click', function(qweqwadw) {
+            // 추후 ajax통신문을 작성하고 마지막에 스타일 변화를 주어야함
+            // marker.value가 주차장 넘버를 가지고 있으니 이걸로 서버 컨트롤 들어가야함
+            console.log(marker.value);
+            infoHandle.style.left='0%';
+        });
+        return marker;
+    }
+// 주차장 마커를 생성하고 주차장 마커 배열에 추가하는 함수입니다
+    function createCarparkMarkers() {
+        for (var i = 0; i < carparkPositions.length; i++) {
+
+            var imageSize = new kakao.maps.Size(),
+                imageOptions = {
+                    spriteOrigin: new kakao.maps.Point(10, 72),
+                    spriteSize: new kakao.maps.Size(50, 50)
+                };
+
+            // 마커이미지와 마커를 생성합니다
+            var markerImage = createMarkerImage("../img/park.png", imageSize, imageOptions),
+                marker = createMarker(carparkPositions[i], markerImage, parkingNumList[i]);
+
+            // 생성된 마커를 주차장 마커 배열에 추가합니다
+            carparkMarkers.push(marker);
+        }
+    }
+
+// 주차장 마커들의 지도 표시 여부를 설정하는 함수입니다
+    function setCarparkMarkers(map) {
+        for (var i = 0; i < carparkMarkers.length; i++) {
+            carparkMarkers[i].setMap(map);
+        }
+    }
+
+// 창로드가 완료되면 마커를 생성함
+    window.onload = function() {
+        // 주차장 마커 지도에 표시하도록 설정합니다
+        setCarparkMarkers(map);
+    }
+}
+
+//info 미리 담기
+var infoHandle = document.querySelector(".info");
+
+// info 닫기
+function infoClose(){
+    infoHandle.style.left="-100%";
+}
+</script>
+</script>
+</body>
+</html>

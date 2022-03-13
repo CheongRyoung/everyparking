@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.everyparking.admin.framework.test.dao.TestSqlDao">
+	<insert id="DBTest">
+		insert into test values (2)
+	</insert>
+
+	<sql id="testparkingBlockSql">
+		SELECT
+			test_no
+		    , title
+		    , datestring
+		    , reason
+		    , area
+		FROM testparkingblock
+		WHERE 1=1
+	</sql>
+	<sql id="searchTestparkingBlockSql">
+		<if test='test_no != null and !test_no.equals("")'>
+			AND test_no = #{test_no}
+		</if>
+		<if test='searchKey != null and !searchKey.equals("")'>
+			AND
+			(	title  LIKE CONCAT('%', #{searchKey}, '%')
+			 OR reason LIKE CONCAT('%', #{searchKey}, '%')
+			)
+		</if>
+		<if test='area != null and !area.equals("")'>
+			AND area = #{area}
+		</if>
+	</sql>
+
+	<select id="getDBTest" resultType="hashMap" parameterType="hashMap">
+		/*TestSQLMapper.getDBTest [작성자/작성일] 기능내용 */
+		<include refid="testparkingBlockSql"></include>
+		<include refid="searchTestparkingBlockSql"></include>
+		<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+			<if test='ORDER != null and !ORDER.equals("")'>
+				ORDER BY ${ORDER} ${ORDER_TYPE}
+			</if>
+			LIMIT #{START}, #{CNT}
+		</if>
+	</select>
+	<select id="getDBTestCount" resultType="int" parameterType="hashMap">
+		/*TestSQLMapper.getDBTestCount [작성자/작성일] 기능내용 */
+		SELECT COUNT(*) FROM(
+			<include refid="testparkingBlockSql"></include>
+			<include refid="searchTestparkingBlockSql"></include>
+		)Z
+	</select>
+	<select id="getDBTestDetail" resultType="hashMap" parameterType="hashMap">
+		/*TestSQLMapper.getDBTestDetail [작성자/작성일] 기능내용 */
+		<include refid="testparkingBlockSql"></include>
+		AND test_no = #{test_no}
+	</select>
+
+	<insert id="DBUploadTest">
+		/*TestSQLMapper.DBUploadTest [작성자/작성일] 기능내용 */
+		INSERT INTO uplaodTest
+		VALUES (#{editorData}, NOW())
+	</insert>
+	
+	<select id="getUploadFile" resultType="map">
+		/*TestSQLMapper.getUploadFile [작성자/작성일] 기능내용 */
+		select * from uplaodTest where test_no = 8
+	</select>
+</mapper>

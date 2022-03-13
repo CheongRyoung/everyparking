@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/UserCss.css">
+    <title>Document</title>
+    <!-- 클래식 에디터 -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
+    <style>
+        .qnaBorderColorNg{border-top: solid 1px #a6a6a6; border-bottom: solid 1px #a6a6a6;}
+        .qnaAnswerBackgroundColorNg{border-right: solid 1px #a6a6a6; background-color: #f5f5f5;}
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+    <header>
+        <div class="row headerBox py-2 px-0">
+            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5"></i></div>
+            <div class="col px-0">
+                <h5 class="title">공지 사항</h5>
+            </div>
+            <div class="col-1 px-0"></div>
+        </div>
+    </header>
+    <main>
+        <!-- 수정 해야되는 부분-->
+        <div class="row" style="margin-top: auto;">
+            <div class="col">
+                <div class="row">
+                    <div class="col p-0">
+                        <img src="../img/notice.png" class="img-fluid">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col" style="border-top: solid 3px #1187cf;"></div>
+                </div>
+
+                <dlv class="row mt-3">
+                    <div class="col">
+                        <h4 style="font-weight: bold;">2월 4주차 주차장 관리일지</h4>
+                    </div>
+                </dlv>
+
+                <div class="row my-3">
+                    <div class="col" style="font-size: 12px;">
+                        <span style="font-weight: bold;">작성자 </span>
+                        <span>아무개</span>
+                        <span>|</span>
+                        <span style="font-weight: bold;">등록일 </span>
+                        <span>2022.02.26</span>
+                        <span>|</span>
+                        <span style="font-weight: bold;">조회수 </span>
+                        <span>0</span>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col" style="border-top: solid 1px #a6a6a6;"></div>
+                </div>
+
+                <div class="row" style="height: 200px;">
+                    <div class="col mt-3">
+                        안녕하세요. 우주관리자입니다. 2월 4주차 관리일지를 공개합니다.
+                    </div>
+                </div>
+ 
+                <div class="row my-4">
+                    <div class="col-5">
+                        <button class="cancelBtn btn btn-primary" style="width: 80px;">목록</button>
+                    </div>
+                    <div class="col btnBox">
+                        <button class="cancelBtn btn btn-primary">〈 이전글</button>
+                        <button class="cancelBtn btn btn-primary">다음글 〉</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    </div>
+    <footer>
+    <div class="row">
+        <div class="col footerBox text-center py-5">
+            <div class="footerText">
+                상호: (주)우주  |  대표 : 전지나  |  사업자등록번호 : 120-12-12121
+                <br>
+                주소 : 서울특별시 강남구 강남대로 1길 1 (우 : 05050)
+                <br>
+                팩스 : 02-111-1111
+                <br>
+                통신판매업  신고번호 : 제2022-서울강남-00000호
+                <br>
+                서비스 이용문의: 02-111-1111  |  이메일 : cs@ooozoo.com  | 서비스제휴문의: part@ooozoo.com
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+    </footer>
+    <!-- 푸터 박스 + 하단 네비 구역-->
+    <div class="footer-nav">
+    <!-- 하단 네비바 -->
+    <div class="row m-0 fixBottomNav" style="margin-top: auto;">
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-list fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">카테고리</div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-search fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">검색</div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-geo-alt fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">지도</div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-house fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">홈</div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#">
+            <div class="row">
+                <div class="col"><i class="bi bi-person-circle fs-3 navIcon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col navTitle">MY</div>
+            </div>
+            </a>
+        </div>
+    </div>
+    </div> 
+
+</body>
+</html>
