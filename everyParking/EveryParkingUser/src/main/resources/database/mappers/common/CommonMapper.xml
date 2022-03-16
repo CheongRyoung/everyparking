@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.user.framework.common.dao.CommonDao">
+	<insert id="registerMember">
+	
+		<selectKey keyProperty="USER_SEQ" resultType="integer" order="AFTER">
+	       SELECT MAX(USER_SEQ) From P_USER
+	     </selectKey>
+     
+		INSERT INTO P_USER(
+			USER_TYPE,
+			USER_MAIL,
+			USER_PW,
+			USER_NAME,
+			USER_BIRTH,
+			REG_DATE,
+			USER_CAR_NO
+		)values(
+			'US01',  
+			#{USER_MAIL}, 
+			#{USER_PW}, 
+			#{USER_NAME}, 
+			#{USER_BIRTH}, 
+			SYSDATE(), 
+			#{USER_CAR_NO}
+		)
+	</insert>
+	
+	<insert id="insertSUBCODE" parameterType="hashMap">
+			insert into P_ROYALUSER (RU_TYPE, USER_SEQ)
+			values (#{SUB_CODE}, #{USER_SEQ})
+	
+	
+	</insert>
+	
+	
+	<select id="getMemberByIdAndPw" resultType="com.everyparking.user.framework.common.vo.MemberVo">
+		SELECT * 
+		FROM P_USER
+		WHERE USER_MAIL=#{USER_MAIL}
+		AND USER_PW=#{USER_PW}
+	</select>
+	
+	<select id="getMemberByNo" resultType="com.everyparking.user.framework.common.vo.MemberVo">
+		SELECT * 
+		FROM P_USER 
+		WHERE USER_SEQ = #{SEQ}
+	</select>
+	
+	<select id="getCountById" resultType="int">
+		SELECT COUNT(*) FROM P_USER
+		WHERE USER_MAIL = #{USER_MAIL}
+	</select>
+	
+	<!-- 우대사항 코드 -->
+	<select id="getSubCodeRoyalUser" resultType="hashMap">
+		SELECT * from P_SUBCODE
+		WHERE M_CODE = 'RY'
+	</select>
+	
+	<!-- 관리자회원 업데이트 -->
+	<update id="approveAdmin">
+		UPDATE P_USER
+		SET USER_TYPE = "US02"
+		WHERE USER_SEQ = #{USER_SEQ}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.admin.api.noticeManagement.dao.NoticeDao">
+
+<!-- 03/14 종화 작성 -->
+	<sql id="notiManageSQL">
+		SELECT
+            NOTI_SEQ
+            , USER_SEQ
+            , NOTI_TITLE
+            , NOTI_CONT
+            , REG_DATE 
+            , MOD_SEQ 
+            , MOD_DATE
+            , NOTE 
+        FROM p_notification
+        WHERE 1=1
+	</sql>
+	
+	<select id="getNotice" parameterType="int" resultType="hashMap">
+		SELECT * FROM p_notification WHERE NOTI_SEQ = #{NOTI_SEQ}
+	</select>
+	
+	<insert id="insertNotiTest" parameterType="hashMap">
+		/* 03/12 종화 작성 */
+		INSERT INTO p_notification(
+		USER_SEQ
+		, NOTI_TITLE
+		, NOTI_CONT
+		, REG_DATE
+		, MOD_SEQ
+		, MOD_DATE
+		, NOTE
+		)
+		VALUES(
+		NULL
+		, #{notiTitle}
+		, #{editorData}
+		, NOW()
+		, 0
+		, NULL
+		, NULL
+	)
+	</insert>
+	
+	<select id="selectListNoti" parameterType="hashMap" resultType="hashMap">
+		<include refid="notiManageSQL"></include>
+        <if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+            <if test='ORDER != null and !ORDER.equals("")'>
+                ORDER BY ${ORDER} ${ORDER_TYPE}
+            </if>
+            LIMIT #{START}, #{CNT}
+        </if>
+	</select>
+	
+	<select id="selectListCountNoti" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) FROM(
+		<include refid="notiManageSQL"></include>
+		)z
+	</select>
+	<update id="updateNoti" parameterType="hashMap">
+		update p_notification set
+			NOTI_TITLE = #{notiTitle}
+			, NOTI_CONT = #{editorData}
+			, MOD_SEQ = MOD_SEQ + 1
+			, MOD_DATE = NOW()
+			, NOTE = NULL
+			where NOTI_SEQ = #{NOTI_SEQ};
+	</update>
+	
+	<delete id="deleteNoti">
+		delete from p_notification where NOTI_SEQ = #{NOTI_SEQ}
+	</delete>
+</mapper>

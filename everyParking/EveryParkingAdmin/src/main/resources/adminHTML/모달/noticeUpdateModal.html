@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+        <style>
+            .modal-content{border-radius:inherit;width:700px;}
+            .modalStyle{color: #000;}
+            .explain{font-size: 17px;}
+            .modal-title{font-size: 18px;}
+            .modalBtn{width:100px;height:35px;border:none;font: -webkit-small-control;;}
+            hr{margin-top:8px;margin-bottom:30px;background-color: #000;}
+            a{text-decoration: none;color:#000;}
+            a:hover{color:#000;}
+            .modalBtn:focus{box-shadow: none;}
+            .form-select:focus{border:1px solid gray;outline: none;box-shadow: none;border-radius:0%;}
+            .form-control:focus{border:1px solid gray;outline: none;box-shadow: none;border-radius:0%;}
+            .form-control{color:gray;border-radius:0%;}
+            textarea{resize: none;min-height:500px;}
+            i{vertical-align: baseline;padding-right:5px;}
+
+
+
+        </style>
+
+        <script>
+        </script>
+
+    </head>
+    <body>
+
+        <!-- 모달 적용 부분 (복붙필요없는 부분) -->
+        <div class="row mt-5">
+            <div class="col"></div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateNoticeModal">공지사항 수정</button>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        <!-- 적용할 부분 -->
+        <!-- Modal -->
+        <div class="modalStyle modal fade" id="updateNoticeModal" data-bs-backdrop="show" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="">
+                <div class="modal-body">
+                <h6 class="modal-title" id="updateNoticeModalLabel">공지사항 수정</h6>
+                <hr>
+                <div class="explain">
+                공지사항을 변경해 주세요.
+                </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-9">
+                        <div class="row mt-5">
+                            <div class="col-3">공지사항 제목</div>
+                            <div class="col">
+                                <input class="form-control" type="text" name="" value="수정할 제목이 담길 부분입니다." >
+                            </div>
+                        </div>
+                        <div class="row mt-3 mb-5">
+                            <div class="col-3">공지사항 내용</div>
+                            <div class="col fs-1">
+                                <textarea class="form-control" type="text" name="" rows="8">수정할 내용이 담길 부분입니다.</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col"></div>
+                    
+                </div>
+                </div>
+                <div class="modal-footer" style="border:none;">
+                    <button type="button" class="modalBtn btn btn-secondary" style="background-color: #e0e0e0; color: #000;" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="modalBtn btn btn-primary" >수정</button>
+                </div>
+                </form>
+            </div>
+            </div>
+        </div>
+
+
+
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
+</html>

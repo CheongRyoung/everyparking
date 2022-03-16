@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.everyparking.admin.api.parkingManage.dao.ParkingInfoDao">
+	<sql id="parkingInfoSql">
+		SELECT
+		PARK_SEQ
+		, USER_SEQ
+		, PARK_NAME
+		, PARK_ADDR1
+		, PARK_ADDR2
+		, PARK_ADDR_X
+		, PARK_ADDR_Y
+		, PARK_CALL_NUM
+		, PARK_CONT
+		, PARK_OPEN
+		, PARK_CLOSE
+		, PARK_PRICE
+		, FILE_SEQ
+		, REG_SEQ
+		, REG_DATE
+		, MOD_SEQ
+		, MOD_DATE
+		, NOTE
+		FROM p_parkinginfo
+		WHERE 1=1
+		AND USE_YN = 'Y'
+	</sql>
+	<sql id="parkingInfoSearch">
+		<if test='PARK_NAME != null and !PARK_NAME.equals("")'>
+			PARK_NAME LIKE CONCAT('%', #{PARK_NAME}, '%')
+		</if>
+		<if test='PARK_ADDR != null and !PARK_ADDR.equals("")'>
+			PARK_ADDR LIKE CONCAT('%', #{PARK_ADDR}, '%')
+		</if>
+	</sql>
+
+	<select id="selectListParkingInfo" parameterType="hashMap"
+		resultType="hashMap">
+		/* parkingInfoMapper.selectListParkingInfo [ 주차장 목록 조회 - 전지나 ] */
+		<include refid="parkingInfoSql"></include>
+		<include refid="parkingInfoSearch"></include>
+		<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+			<if test='ORDER != null and !ORDER.equals("")'>
+				ORDER BY ${ORDER} ${ORDER_TYPE}
+			</if>
+			LIMIT #{START}, #{CNT}
+		</if>
+	</select>
+
+	<select id="selectListCountParkingInfo" parameterType="hashMap"
+		resultType="int">
+		/* parkingInfoMapper.selectListCountParkingInfo [ 주차장 목록카운트 조회 - 전지나 ]
+		*/
+		SELECT COUNT(*) FROM(
+		<include refid="parkingInfoSql"></include>
+		<include refid="parkingInfoSearch"></include>
+		) t1
+	</select>
+
+	<select id="selectOneParkingInfo" parameterType="hashMap"
+		resultType="hashMap">
+		/* parkingInfoMapper.selectOneParkingInfo [ 주차장 상세 - 전지나 ] */
+		<include refid="parkingInfoSql"></include>
+		AND PARK_SEQ = #{PARK_SEQ}
+	</select>
+
+	<insert id="insertParkingInfo" parameterType="hashMap">
+		/* parkingInfoMapper.insertParkingInfo [ 주차장 등록 - 전지나 ] */
+		<selectKey keyProperty="PARK_SEQ" keyColumn="PARK_SEQ"
+			resultType="INT" order="AFTER">
+			SELECT MAX(PARK_SEQ) from p_parkinginfo
+		</selectKey>
+		INSERT INTO p_parkinginfo(
+		
+		USER_SEQ
+		,FILE_SEQ
+		,PARK_NAME
+		,PARK_ADDR1
+		,PARK_ADDR2
+		,PARK_ADDR_X
+		,PARK_ADDR_Y
+		,PARK_CALL_NUM
+		,PARK_CONT
+		,PARK_OPEN
+		,PARK_CLOSE
+		,PARK_PRICE
+		,REG_SEQ
+		,NOTE
+
+		)VALUES(
+		#{USER_SEQ}
+		,#{FILE_SEQ}
+		,#{PARK_NAME}
+		,#{PARK_ADDR1}
+		,#{PARK_ADDR2}
+		,#{PARK_ADDR_X}
+		,#{PARK_ADDR_Y}
+		,#{PARK_CALL_NUM}
+		,#{PARK_CONT}
+		,#{PARK_OPEN}
+		,#{PARK_CLOSE}
+		,#{PARK_PRICE}
+		,#{REG_SEQ}
+		,#{NOTE}
+		)
+	</insert>
+
+	<update id="updateParkingInfo" parameterType="hashMap">
+		/* parkingInfoMapper.updateParkingInfo [ 주차장 등록 - 전지나 ] */
+		UPDATE p_parkinginfo SET
+		PARK_NAME = #{PARK_NAME}
+		, PARK_ADDR1 = #{PARK_ADDR1}
+		, PARK_ADDR2 = #{PARK_ADDR2}
+		, PARK_ADDR_X = #{PARK_ADDR_X}
+		, PARK_ADDR_Y = #{PARK_ADDR_Y}
+		, PARK_CALL_NUM = #{PARK_CALL_NUM}
+		, PARK_CONT = #{PARK_CONT}
+		, PARK_OPEN = #{PARK_OPEN}
+		, PARK_CLOSE = #{PARK_CLOSE}
+		, PARK_PRICE = #{PARK_PRICE}
+		, FILE_SEQ = #{FILE_SEQ}
+		, MOD_SEQ = #{MOD_SEQ}
+		, MOD_DATE = SYSDATE
+		, NOTE = #{NOTE}
+		WHERE PARK_SEQ = #{PARK_SEQ}
+	</update>
+
+	<update id="deleteParkingInfo" parameterType="hashMap">
+		/* parkingInfoMapper.deleteParkingInfo [ 주차장 삭제 - 전지나 ] */
+		UPDATE p_parkinginfo SET
+		USE_YN = 'N'
+		, MOD_SEQ = #{MOD_SEQ}
+		, MOD_DATE = NOW()
+		WHERE PARK_SEQ = #{PARK_SEQ}
+	</update>
+
+	<select id="selectListSection" parameterType="hashMap"
+		resultType="hashMap">
+		SELECT
+		SEC_SEQ
+		, SEC_TYPE
+		, PARK_SEQ
+		, SEC_COUNT
+		, SEC_DIS
+		, REG_SEQ
+		, REG_DATE
+		, MOD_SEQ
+		, MOD_DATE
+		, NOTE
+		FROM p_section
+		WHERE 1=1
+		AND USE_YN = 'Y'
+		<if test='secSeqs==null or secSeqs.equals("")'>
+			AND PARK_SEQ = #{PARK_SEQ}
+		</if>
+		<if test='secSeqs!= null and !secSeqs.equals("")'>
+			AND SEC_SEQ NOT IN (${secSeqs})
+		</if>
+	</select>
+	<select id="selectOneSection" parameterType="hashMap"
+		resultType="hashMap">
+		SELECT
+		SEC_SEQ
+		, SEC_TYPE
+		, PARK_SEQ
+		, SEC_COUNT
+		, SEC_DIS
+		, REG_SEQ
+		, REG_DATE
+		, MOD_SEQ
+		, MOD_DATE
+		, NOTE
+		FROM p_section
+		WHERE 1=1
+		AND USE_YN = 'Y'
+		<if test='SEC_SEQ!=null and !SEC_SEQ.equals("")'>
+			AND SEC_SEQ = #{SEC_SEQ}
+		</if>
+		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
+			AND PARK_SEQ = #{PARK_SEQ}
+		</if>
+		<if test='SEC_TYPE!=null and !SEC_TYPE.equals("")'>
+			AND SEC_TYPE = #{SEC_TYPE}
+		</if>
+	</select>
+
+	<insert id="insertSection" parameterType="hashMap">
+		/* parkingInfoMapper.insertSection [ 섹션 등록 - 전지나 ] */
+		<selectKey keyProperty="SEC_SEQ" keyColumn="SEC_SEQ"
+			resultType="INT" order="AFTER">
+			SELECT MAX(SEC_SEQ) AS SEC_SEQ FROM p_section
+		</selectKey>
+		INSERT INTO p_section(
+		SEC_TYPE
+		, PARK_SEQ
+		, SEC_COUNT
+		, SEC_DIS
+		, REG_SEQ
+		, REG_DATE
+		, NOTE
+		) VALUES (
+		#{SEC_TYPE}
+		, #{PARK_SEQ}
+		, #{SEC_COUNT}
+		, #{SEC_DIS}
+		, #{REG_SEQ}
+		, NOW()
+		, #{NOTE}
+		)
+	</insert>
+
+	<update id="updateSection" parameterType="hashMap">
+		update p_section set
+		SEC_COUNT = #{ SEC_COUNT }
+		, SEC_DIS = #{ SEC_DIS }
+		, MOD_SEQ = #{ MOD_SEQ }
+		, USE_YN = 'Y'
+		, MOD_DATE = NOW()
+		, NOTE = #{ NOTE }
+		WHERE SEC_TYPE = #{SEC_TYPE}
+		AND PARK_SEQ = #{PARK_SEQ}
+	</update>
+
+	<delete id="deleteSection" parameterType="hashMap">
+		update p_section set
+		USE_YN = 'N'
+		, MOD_SEQ = #{ MOD_SEQ }
+		, MOD_DATE = NOW()
+		WHERE SEC_TYPE = #{SEC_TYPE}
+		AND SEC_SEQ = #{SEC_SEQ}
+	</delete>
+	
+	<select id="selectSubcodeByRY" resultType="hashMap">
+		SELECT * FROM P_SUBCODE 
+		WHERE M_CODE = 'RY'
+	</select>
+
+</mapper>

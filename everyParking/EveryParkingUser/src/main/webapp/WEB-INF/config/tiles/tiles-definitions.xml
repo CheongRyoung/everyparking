@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <!--  일반 타일입니다-->
+    <definition name="tiles.layouts.component" template="/WEB-INF/config/tiles/layout/commonType.jsp">
+        <put-attribute name="*" expression="${*}"/>
+        <put-attribute name="title" value="/WEB-INF/config/tiles/component/title.jsp"></put-attribute>
+        <put-attribute name="menu" value="/WEB-INF/config/tiles/component/menu.jsp"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/config/tiles/component/body.jsp"></put-attribute>
+        <put-attribute name="footer" value="/WEB-INF/config/tiles/component/footer.jsp"></put-attribute>
+        <put-attribute name="modal" value="/WEB-INF/config/tiles/component/modal.jsp"></put-attribute>
+    </definition>
+
+    <definition name="/*" extends="tiles.layouts.component">
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+    <definition name="/*/*" extends="tiles.layouts.component">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+    </definition>
+    <definition name="/*/*/*" extends="tiles.layouts.component">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+    </definition>
+
+</tiles-definitions>

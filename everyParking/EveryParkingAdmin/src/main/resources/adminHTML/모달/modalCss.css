@@ -1,0 +1,90 @@
+
+#deleteModal .modal-content{border-radius:inherit;}
+#deleteModal .modalStyle{color: #000;}
+#deleteModal .modalBtn{width:100px;height:35px;border:none;font: -webkit-small-control;}
+#deleteModal hr{margin-top:8px;margin-bottom:20px;background-color: #000;}
+#deleteModal i{vertical-align: baseline;padding-right:5px;}
+
+#blockreasonModal .modal-content{border-radius:inherit;width:max-content;max-width: 600px;}
+#blockreasonModal .modalStyle{color: #000;}
+#blockreasonModal .modal-title{font-size:17px;}
+#blockreasonModal .modalBtn{width:100px;height:35px;border:none;font: -webkit-small-control;}
+#blockreasonModal hr{margin-top:8px;margin-bottom:30px;background-color: #000;}
+#blockreasonModal a{text-decoration: none;color:#000;}
+#blockreasonModal a:hover{color:#000;}
+#blockreasonModal i{vertical-align: baseline;padding-right:5px;}
+
+#costDeleteModal .modal-content{border-radius:inherit;}
+#costDeleteModal .modalStyle{color: #000;}
+#costDeleteModal .modalBtn{width:100px;height:35px;border:none;font: -webkit-small-control;}
+#costDeleteModal hr{margin-top:8px;margin-bottom:20px;background-color: #000;}
+#costDeleteModal i{vertical-align: baseline;padding-right:5px;}
+
+#costModalinsert .modal-content{border-radius:inherit;width:700px;}
+#costModalinsert .explain{font-size: 17px;}
+#costModalinsert .modal-title{font-size: 18px;}
+#costModalinsert .modalStyle{color: #000;}
+#costModalinsert .modalBtn{width:100px;height:35px;border:none;font: -webkit-small-control;}
+#costModalinsert hr{margin-top:8px;margin-bottom:30px;background-color: #000;}
+#costModalinsert a{text-decoration: none;color:#000;}
+#costModalinsert a:hover{color:#000;}
+#costModalinsert .modalBtn:focus{box-shadow: none;}
+#costModalinsert .form-select{border-radius:0%;}
+#costModalinsert .form-select:focus{border:1px solid gray;outline: none;box-shadow: none;}
+#costModalinsert .form-control:focus{border:1px solid gray;outline: none;box-shadow: none;}
+#costModalinsert .priceBox{color:gray;width: 60%;border-radius:0%;}
+#costModalinsert .form-control{color:gray;border-radius:0%;}
+#costModalinsert .modalSpan{align-self:center;padding:8px;}
+#costModalinsert textarea{resize: none;min-height:500px;border-radius:0%;}
+#costModalinsert i{vertical-align: baseline;padding-right:5px;}
+
+#noticeDeleteModal .modal-content{border-radius:inherit;}
+#noticeDeleteModal .modalStyle{color: #000;}
+#noticeDeleteModal .modalBtn{width:100px;height:35px;border:none;font: -webkit-small-control;}
+#noticeDeleteModal hr{margin-top:8px;margin-bottom:20px;background-color: #000;}
+#noticeDeleteModal i{vertical-align: baseline;padding-right:5px;}
+
+#noticeInsertModal .modal-content{border-radius:inherit;width:700px;}
+#noticeInsertModal .explain{font-size: 17px;}
+#noticeInsertModal .modal-title{font-size: 18px;}
+#noticeInsertModal .modalStyle{color: #000;}
+#noticeInsertModal .modalBtn{width:100px;height:35px;border:none;font: -webkit-small-control;;}
+#noticeInsertModal hr{margin-top:8px;margin-bottom:30px;background-color: #000;}
+#noticeInsertModal a{text-decoration: none;color:#000;}
+#noticeInsertModal a:hover{color:#000;}
+#noticeInsertModal .modalBtn:focus{box-shadow: none;}
+#noticeInsertModal .form-select:focus{border:1px solid gray;outline: none;box-shadow: none;border-radius:0%;}
+#noticeInsertModal .form-control:focus{border:1px solid gray;outline: none;box-shadow: none;border-radius:0%;}
+#noticeInsertModal .form-control{color:gray;border-radius:0%;}
+#noticeInsertModal textarea{resize: none;min-height:500px;}
+#noticeInsertModal i{vertical-align: baseline;padding-right:5px;}
+
+
+#qnaModal .modal-content{border-radius:inherit;}
+#qnaModal .modalStyle{color: #000;}
+#qnaModal .modalBtn{width:100px;height:35px;border:none;font: -webkit-small-control;}
+#qnaModal hr{margin-top:8px;margin-bottom:30px;background-color: #000;}
+#qnaModal a{text-decoration: none;color:#000;}
+#qnaModal a:hover{color:#000;}
+#qnaModal .modalBtn:focus{box-shadow: none;}
+#qnaModal .form-select:focus{border:1px solid gray;outline: none;box-shadow: none;}
+#qnaModal .form-control:focus{outline: none;box-shadow: none;}
+#qnaModal .form-control{border:none;;font-size: 13px;}
+#qnaModal textarea{resize: none;min-height:500px;;font-size:12px;padding:0px;overflow: hidden;}
+#qnaModal i{vertical-align: baseline;padding-right:5px;}
+#qnaModal .title{font-size:23px;}
+#qnaModal .writerInfo{font-size:12px;font-weight:bold;width:155px;}
+#qnaModal .writerData{font-weight: 500;padding-left:10px;}
+#qnaModal .line{text-align: center;}
+#qnaModal .contentBox{border-top:1px solid #979797; border-bottom:1px solid #979797;min-height:150px}
+#qnaModal .content{font-size:13px;}
+#qnaModal .writeBox{border:1px solid #979797;}
+#qnaModal .commendBtn{background-color: transparent;color:#979797;border: none;font-weight:bold;font-size: 17px;}
+#qnaModal .commendBtn:focus{outline: none;box-shadow: none;background-color: transparent;color:#979797};
+#qnaModal .commendBox{border-top:1px solid #000;border-bottom:1px solid #000;}
+#qnaModal .adminInfo{vertical-align: super;padding-left:5px;}
+#qnaModal .commendWriteDate{padding-left: 5px;vertical-align: super;font-size: 12px;color: gray;}
+#qnaModal .commendText{font-size: 13px;}
+#qnaModal .commendRootPart{border-bottom:1px solid #e0e0e0;}
+#qnaModal .commendTag{text-align:right;color:darkgray;font-size:14px;}
+#qnaModal .commendLink{color:darkgray};

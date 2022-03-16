@@ -6,7 +6,9 @@ target
 pom.properties
 .classpath
 MANIFEST.MF
-
+.properties
+.svn
+.idea
 ### Eclipse ###
 .metadata
 bin/
