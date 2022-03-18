@@ -17,11 +17,7 @@ public interface NoticeService {
 	
 	public int selectListCountNoti(HashMap<String,Object> params) throws Exception;
 	
-	public int updateNoti(String editorData
-							, String notiTitle
-							, HttpServletRequest request
-							, HashMap<String, Object> params
-							) throws Exception;
+	public int updateNoti(HashMap<String, Object> params) throws Exception;
 	
 	public int deleteNoti(HashMap<String,Object> params) throws Exception;
 	

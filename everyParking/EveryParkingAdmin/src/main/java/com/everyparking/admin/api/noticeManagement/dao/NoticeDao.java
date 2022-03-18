@@ -20,9 +20,7 @@ public interface NoticeDao {
 	
 	public int selectListCountNoti(HashMap<String,Object> params) throws Exception;
 	
-	public int updateNoti(@Param("editorData") String editorData
-							, @Param("notiTitle") String notiTitle
-							, HashMap<String,Object> params) throws Exception;
+	public int updateNoti(HashMap<String,Object> params) throws Exception;
 	
 	public int deleteNoti(HashMap<String,Object> params) throws Exception;
 	

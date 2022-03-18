@@ -28,32 +28,40 @@
             </div>
             <div class="row" style="margin: auto">
                 <div class="col">
-                    <div class="row mt-5 mb-4">
-                        <div class="col text-center"><span class="login">로그인</span></div>
-                    </div>
-                    <div class="form-floating mt-2">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">이메일</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword">비밀번호</label>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col d-flex justify-content-between">
-                                    <span><a href="#" class="link-secondary">아이디 찾기</a>
-                                    </span>
-                            <span><a href="#" class="link-secondary">회원 가입</a>
-                                    </span>
+                    <form action="/login/loginProcess" method="post">
+                        <div class="row mt-5 mb-4">
+                            <div class="col text-center"><span class="login">로그인</span></div>
                         </div>
-                    </div>
-                    <div class="row mb-5 pb-4">
-                        <div class="col d-grid"><button class="btn btn-primary">로그인</button></div>
-                    </div>
+                        <div class="form-floating mt-2">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="USER_MAIL">
+                            <label for="floatingInput">이메일</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="USER_PW">
+                            <label for="floatingPassword">비밀번호</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col d-flex justify-content-between">
+	                                    <span><a href="#" class="link-secondary">아이디 찾기</a>
+	                                    </span>
+                                <span><a href="/login/register" class="link-secondary">회원 가입</a>
+	                                    </span>
+                            </div>
+                        </div>
+                        <div class="row mb-5 pb-4">
+                            <div class="col d-grid"><button class="btn btn-primary">로그인</button></div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var confirm = '${errMsg}';
+    if(confirm == "아이디 또는 비밀번호 오류입니다.") {
+        alert("관리자의 승인이 필요합니다");
+    }
+</script>
 </body>
 </html>

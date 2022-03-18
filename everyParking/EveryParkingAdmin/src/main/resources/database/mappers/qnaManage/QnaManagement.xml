@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.admin.api.qnaManage.dao.QnaDao">
+	
+	<sql id="qnaManageSQL">
+		SELECT
+			QNA_SEQ
+			, USER_SEQ
+			, QNA_TYPE
+			, QNA_TITLE
+			, QNA_CONT
+			, REG_DATE
+			, MOD_SEQ
+			, MOD_DATE
+			, NOTE
+		FROM p_qna
+		WHERE 1=1
+		AND USE_YN = 'Y'
+	</sql>
+	
+	<select id="selectListQna" parameterType="hashMap" resultType="hashMap">
+		<include refid="qnaManageSQL"></include>
+		<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+            <if test='ORDER != null and !ORDER.equals("")'>
+                ORDER BY ${ORDER} ${ORDER_TYPE}
+            </if>
+            LIMIT #{START}, #{CNT}
+        </if>
+	</select>
+	
+	<select id="selectListCountQna" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) FROM(
+		<include refid="qnaManageSQL"></include>
+		)z
+	</select>
+</mapper>

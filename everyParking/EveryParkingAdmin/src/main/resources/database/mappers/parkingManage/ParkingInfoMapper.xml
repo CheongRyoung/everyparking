@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.everyparking.admin.api.parkingManage.dao.ParkingInfoDao">
+<mapper namespace="com.everyparking.admin.api.parkingManage.dao.ParkingInfoDao">
+
 	<sql id="parkingInfoSql">
 		SELECT
 		PARK_SEQ
@@ -59,8 +59,7 @@
 		) t1
 	</select>
 
-	<select id="selectOneParkingInfo" parameterType="hashMap"
-		resultType="hashMap">
+	<select id="selectOneParkingInfo" parameterType="hashMap" resultType="hashMap">
 		/* parkingInfoMapper.selectOneParkingInfo [ 주차장 상세 - 전지나 ] */
 		<include refid="parkingInfoSql"></include>
 		AND PARK_SEQ = #{PARK_SEQ}
@@ -222,6 +221,11 @@
 		WHERE SEC_TYPE = #{SEC_TYPE}
 		AND PARK_SEQ = #{PARK_SEQ}
 	</update>
+    
+    <select id="selectSubcodeByRY" resultType="hashMap">
+		SELECT * FROM P_SUBCODE 
+		WHERE M_CODE = 'RY'
+	</select>
 
 	<delete id="deleteSection" parameterType="hashMap">
 		update p_section set
@@ -232,9 +236,10 @@
 		AND SEC_SEQ = #{SEC_SEQ}
 	</delete>
 	
-	<select id="selectSubcodeByRY" resultType="hashMap">
+	<!-- <select id="selectSubcodeByRY" resultType="hashMap">
 		SELECT * FROM P_SUBCODE 
 		WHERE M_CODE = 'RY'
-	</select>
-
+	</select> -->
+	
+	
 </mapper>

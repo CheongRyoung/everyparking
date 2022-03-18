@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.everyparking.admin.api.noticeManagement.controller.NoticeManagementRestController;
 import com.everyparking.admin.api.noticeManagement.service.NoticeService;
-import com.everyparking.admin.api.noticeManagement.service.NoticeServiceImpI;
 import com.everyparking.admin.framework.common.controller.BaseController;
 
 /*03/14 종화 작성*/
@@ -26,12 +25,14 @@ public class NoticeManagementController extends BaseController {
 	@Autowired
 	private NoticeService noticeService;
 	
-	@Autowired
-	private NoticeServiceImpI noticeServiceImpI;
-	
 	@RequestMapping("/noticeManagement")
 	public String noticeManagement(){
 		return"/noticeManagement/noticeManagement";
+	}
+	
+	@RequestMapping("/readNoticePage")
+	public String readNoticePage(){
+		return"/noticeManagement/readNoticePage";
 	}
 	
 	@RequestMapping("/noticeInsertForm")
@@ -42,10 +43,9 @@ public class NoticeManagementController extends BaseController {
 	@RequestMapping("/noticeUpdateForm")
 	public String noticeUpdateForm(int NOTI_SEQ , Model model) throws Exception {
 		
-		HashMap<String, Object> map = noticeServiceImpI.getNotice(NOTI_SEQ);
+		HashMap<String, Object> map = noticeService.getNotice(NOTI_SEQ);
 		model.addAttribute("noti", map);
 				
 		return"/noticeManagement/noticeUpdateForm";
 	}
-	
 }

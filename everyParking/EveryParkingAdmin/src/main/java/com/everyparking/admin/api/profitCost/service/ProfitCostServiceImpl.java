@@ -1,5 +1,6 @@
 package com.everyparking.admin.api.profitCost.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -48,5 +49,12 @@ public class ProfitCostServiceImpl implements ProfitCostService{
     	}else {
     		return profitCostDao.deleteProfitCostRese(params);
     	}
+    }
+    
+    // 작성자 : 전지나 | 내용 : profitChart
+    @Override
+    public List<HashMap<String, Object>> selectProfitChartDataByMonth() throws Exception {  	
+    	List<HashMap<String, Object>> totalListByYearMonth = profitCostDao.selectProfitChartDataByMonth();
+    	return totalListByYearMonth;
     }
 }

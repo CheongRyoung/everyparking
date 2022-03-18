@@ -63,6 +63,9 @@ let parkingRevise = {
     
 }
 
+
+
+
 /* 이미지 미리보기&숫자만 입력 
 * 작성자 : 전지나
 */
@@ -74,7 +77,6 @@ function readImage(event) {
 	  }
 	inputThumbnail.addEventListener("change", readImage)
 	
-	
 function onlyTimeNum(event){
 	if(event.keyCode<48 || event.keyCode>57){
 		event.returnValue=false;
@@ -83,4 +85,28 @@ function onlyTimeNum(event){
         }
     }
 }
+	
+
+function fixedMinuteTime(){
+	var inputTime = document.querySelector(".inputTime");
+	// 00:00 안에 있는 콜론(:)기호 제거
+	var replaceTime = inputTime.value.replace(/\:/g, "");
+	if(replaceTime.length >= 4 && replaceTime.length < 5){
+		var hours = replaceTime.substring(0,2);
+		var minute = replaceTime.substring(2,4);
+			
+		if(hours + minute > 2400){
+			alert("24시를 넘길 수 없습니다.");
+			inputTime.value = "24:00";
+			return false;
+		}
+		// 분은 항상 00분으로 세팅
+		inputTime.value = hours + ":" + "00";
+	}
+}
+
+window.addEventListener("DOMContentLoaded" , function(){
+	fixedMinuteTime();
+});
+
 /* 전지나 끝 */

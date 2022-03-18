@@ -1,9 +1,7 @@
 package com.everyparking.admin.framework.test.controller;
 
-import com.everyparking.admin.HomeController;
-import com.everyparking.admin.framework.common.controller.BaseController;
-import com.everyparking.admin.framework.common.vo.Ajax;
-import com.everyparking.admin.framework.test.service.TestService;
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import com.everyparking.admin.framework.common.controller.BaseController;
+import com.everyparking.admin.framework.common.vo.Ajax;
+import com.everyparking.admin.framework.test.service.TestService;
 
 @RestController
 @RequestMapping("/test")
@@ -33,31 +31,44 @@ public class TestRestController extends BaseController {
             mav = createMav(testService.getDBTest(params), testService.getDBTestCount(params));
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.TYPE_FAIL);
         }
         return mav;
     }
 
     @RequestMapping("/testSaveAjax")
     public ModelAndView testSaveAjax(@RequestBody HashMap<String,Object> params){
-        ModelAndView mav = createMav(Ajax.SAVE.TEXT+"."+Ajax.SUCCESS);
+        ModelAndView mav = createMav(Ajax.SAVE.TEXT+"."+Ajax.TYPE_SUCCESS);
         try {
             mav = createMav(testService.DBUploadTest("1"));
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.TYPE_FAIL);
         }
         return mav;
     }
 
     @RequestMapping("/ajaxCall")
     public ModelAndView testajaxCall(@RequestBody HashMap<String,Object> params){
-        ModelAndView mav = createMav(Ajax.SAVE.TEXT+"."+Ajax.SUCCESS);
+        ModelAndView mav = createMav(Ajax.SAVE.TEXT+"."+Ajax.TYPE_SUCCESS);
         try {
             mav = createMav();
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.TYPE_FAIL);
+        }
+        return mav;
+    }
+
+    @RequestMapping("/insertTest")
+    public ModelAndView insertTest(@RequestBody HashMap<String,Object> params) throws Exception{
+        ModelAndView mav = super.createMav();
+        try {
+            mav = super.createMav(testService.insertTest());
+            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.TYPE_SUCCESS);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            super.setCustomMessage(mav, Ajax.TYPE_FAIL, e.getMessage());
         }
         return mav;
     }

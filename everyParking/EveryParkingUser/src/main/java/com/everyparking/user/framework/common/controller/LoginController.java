@@ -76,31 +76,21 @@ public class LoginController extends BaseController {
 			//로그인 인증 실패
 			
 			
-			
-			
-			//수정해야됨
-			
-			
-			
-			
-			
-			
-			
-			
 			mav.setViewName("/login/loginForm");
 			mav.addObject("errMsg", "아이디 또는 비밀번호 오류입니다.");
 		}
 		
 		return mav;
 	}
-	
-    
+	    
 	@RequestMapping("/logout")
 	public String loggout(HttpSession session, HttpServletRequest request) {
 		session.invalidate();
 		String referer = request.getHeader("Referer");
 		return "redirect:"+ referer;
 	}
+	
+
 	
 	
 	

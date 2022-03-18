@@ -1,4 +1,3 @@
-
 let profit = {
 		gridOption:{},
 		grid : null,
@@ -14,15 +13,39 @@ let profit = {
 						, {title:"발생일", name:"REGDATE", type:"date", colWidth:"20", order:true}
 						, 
 						{title : "삭제", name: "TSEQ", colWidth:"7", filter:function(data, rowData, ridx, cidx, $this) {
-							return `<a class="btn btn-outline-danger btn-sm" onclick="cmm.confirm('삭제', '삭제하시겠습니까', 'profit', ${rowData.TSEQ}, '${rowData.CATE}')">삭제</a>`
+							return `<a class="btn btn-outline-danger btn-sm" onclick="profit.deleteRow(${ridx})">삭제</a>`
 						}}
 						],
 						pagingEl : '#pagingBlock2',
 						getParam : getParam
 			};
 			this.grid = new Grid("#profitTable", $this.gridOption, "/profitCost/selectListProfitCost");
+		},
+	// 설정 변경 후 오류 수정
+	deleteRow: function(ridx) {
+		   let $this = this;
+		   let rowData = this.grid.getRowData(ridx);
+		   cmm.confirm('삭제', '삭제하시겠습니까', null, function(){
+		      if(rowData.CATE == '수익'){
+		         param = {'RESE_SEQ': rowData.TSEQ};
+		      } else {
+		         param = {'COST_SEQ': rowData.TSEQ};
+		      }
+		      ajaxCall('/profitCost/deleteProfitCost', param, function(data) {
+		         cmm.alert(data.message, function(){
+		            if(data.code == 'S'){
+		               grids[0].reSearch();
+		            }
+		         })
+		      });
+		   })
 		}
-}
+	}
+
+
+
+
+
 
 $(function(){
 	profit.initPage();

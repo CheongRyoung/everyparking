@@ -38,10 +38,7 @@ public class ParkingManageController extends BaseController {
     }
 
     @RequestMapping("/parkingZone")
-    public String parkingZone(Model model) throws Exception{
-    	List<HashMap<String, Object>> ryList = parkingInfoService.selectSubcodeByRY();
-		model.addAttribute("ryList", ryList);
-    	
+    public String parkingZone() throws Exception{
     	return "/parkingManage/parkingZone";
     }
 	    
@@ -69,20 +66,30 @@ public class ParkingManageController extends BaseController {
         	params.put("SEC_TYPE", SEC_TYPE);
             params.put("SEC_COUNT", SEC_COUNT);
             params.put("SEC_DIS", SEC_DIS);
-//            SessionUtil.setCreator(request, params);
+            SessionUtil.setCreator(request, params);
             mav = super.createMav(parkingInfoService.insertParkingInfo(request, params));
-            super.setMessage(mav, Ajax.UPDATE.TEXT+"."+Ajax.SUCCESS);
+            super.setMessage(mav, Ajax.UPDATE.TEXT+"."+Ajax.TYPE_SUCCESS);
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.TYPE_FAIL);
         }
         mav.setViewName("redirect:/parkingManage/parkingZone");
         return mav;
     }
 
     @RequestMapping("/parkingRevise")
-    public String parkingRevise(@ModelAttribute(value="PARK_SEQ") String PARK_SEQ) {
-        return "/parkingManage/parkingRevise";
+    public ModelAndView parkingRevise(@ModelAttribute(value="PARK_SEQ") String PARK_SEQ, Model model) throws Exception { // ModelAttribute : 파라미터로 넘어온 값을 바로 model에 담아 출력
+    	
+    	List<HashMap<String, Object>> ryList = parkingInfoService.selectSubcodeByRY();
+    	model.addAttribute("ryList", ryList);
+    	
+    	ModelAndView mav = super.createMav(Ajax.UPDATE.TEXT+"."+Ajax.SUCCESS);
+    	
+    	mav.setViewName("/parkingManage/parkingRevise");
+        
+        return mav;
+    	
+        
     }
 
     @RequestMapping("/updateParkingInfo")
@@ -99,10 +106,10 @@ public class ParkingManageController extends BaseController {
             params.put("SEC_DIS", SEC_DIS);
             SessionUtil.setCreator(request, params);
             mav = super.createMav(parkingInfoService.updateParkingInfo(request, params));
-            super.setMessage(mav, Ajax.UPDATE.TEXT+"."+Ajax.SUCCESS);
+            super.setMessage(mav, Ajax.UPDATE.TEXT+"."+Ajax.TYPE_SUCCESS);
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.UPDATE.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.UPDATE.TEXT+"."+Ajax.TYPE_FAIL);
         }
         mav.setViewName("redirect:/parkingManage/parkingZone");
         

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.user.api.main.dao.MainDao">
+
+
+	<!-- // 3/16 장문 지도 작업 부분 -->
+
+ 	<select id="selectParkingInfoList" parameterType="hashMap" resultType="hashMap">
+ 		/* MainMapper.selectMarkerList [ 주차장 정보 조회 - 김장문 ] */
+		SELECT PARK_SEQ,
+				USER_SEQ,
+				FILE_SEQ,
+				PARK_NAME,
+				PARK_ADDR1,
+				PARK_ADDR2,
+				PARK_ADDR_X,
+				PARK_ADDR_Y,
+				PARK_CALL_NUM,
+				PARK_CONT,
+				PARK_OPEN,
+				PARK_CLOSE,
+				PARK_PRICE,
+				REG_SEQ,
+				REG_DATE,
+				MOD_SEQ,
+				MOD_DATE,
+				NOTE,
+				USE_YN
+		FROM p_parkinginfo
+		WHERE 1=1
+		AND USE_YN = 'Y'
+  	</select>
+ 
+
+	<select id="selectParkingInfoListCount" parameterType="hashMap" resultType="int">
+		/* MainMapper.selectMarkerListCount [ 마커 좌표 개수 조회 - 김장문 ] */
+		SELECT COUNT(*)
+		FROM p_parkinginfo
+	</select>
+
+	
+	<select id="selectOneParkingInfo" parameterType="hashMap" resultType="hashMap">
+		/* MainMapper.selectOneParkingInfo [ 주차장 개별 정보 조회 - 김장문 ] */
+		SELECT PARK_SEQ
+			, USER_SEQ
+			, FILE_SEQ
+			, PARK_NAME
+			, PARK_ADDR1
+			, PARK_ADDR2
+			, PARK_ADDR_X
+			, PARK_ADDR_Y
+			, PARK_CALL_NUM
+			, PARK_CONT
+			, PARK_OPEN
+			, PARK_CLOSE
+			, PARK_PRICE
+			, REG_SEQ
+			, REG_DATE
+			, MOD_SEQ
+			, MOD_DATE
+			, NOTE
+			, USE_YN
+		FROM p_parkinginfo
+		WHERE 1=1
+		AND USE_YN = 'Y'
+		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
+			AND PARK_SEQ = #{PARK_SEQ}
+		</if>
+	</select>
+
+
+	<select id="selectSectionList" parameterType="hashMap" resultType="hashMap">
+		/* MainMapper.selectOneSection [ 주차장 개별 우대사항 정보의 조회 - 김장문 ] */
+		SELECT pc.SEC_SEQ
+			, pc.SEC_TYPE
+			, pc.PARK_SEQ
+			, pc.SEC_COUNT
+			, pc.SEC_DIS
+			, pc.REG_SEQ
+			, pc.REG_DATE
+			, pc.MOD_SEQ
+			, pc.MOD_DATE
+			, pc.NOTE
+			, ps.SUB_CODE
+			, ps.SUB_NAME
+		FROM p_section pc, p_subcode ps
+		WHERE 1=1
+		AND pc.SEC_TYPE = ps.SUB_CODE
+		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
+			AND pc.PARK_SEQ = #{PARK_SEQ}
+		</if>
+	</select>
+
+
+	<select id="selectReviewList" parameterType="hashMap" resultType="hashMap">
+		/* MainMapper.selectOneReview [ 주차장 개별의 리뷰 조회 - 김장문 ] */
+		SELECT pr.REV_SEQ
+			, pr.RESE_SEQ
+			, pr.REV_STAR
+			, pr.REV_CONT
+			, pr.REG_SEQ
+			, pr.REG_DATE
+			, pr.MOD_SEQ
+			, pr.MOD_DATE
+			, pr.USE_YN
+			, pu.USER_NAME
+		FROM p_review pr, p_reservation pv, p_section ps, p_user pu
+		WHERE pr.RESE_SEQ = pv.RESE_SEQ
+		AND pv.SEC_SEQ = ps.SEC_SEQ
+		AND pv.USER_SEQ = pu.USER_SEQ 
+		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
+			AND ps.PARK_SEQ = #{PARK_SEQ}
+		</if>
+	</select>
+	
+	<select id="selectReviewListCount" parameterType="hashMap" resultType="int">
+		/* MainMapper.selectReviewListCount [ 주차장 개별의 리뷰 카운트 조회 - 김장문 ] */
+		SELECT COUNT(*)
+		FROM p_review pr, p_reservation pv, p_section ps
+		WHERE pr.RESE_SEQ = pv.RESE_SEQ
+		AND pv.SEC_SEQ = ps.SEC_SEQ
+		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
+			AND ps.PARK_SEQ = #{PARK_SEQ}
+		</if>
+	</select>
+	
+
+</mapper>

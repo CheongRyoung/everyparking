@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.everyparking.admin.api.profitCost.dao.ProfitCostDao">
+<mapper namespace="com.everyparking.admin.api.profitCost.dao.ProfitCostDao">
 
 
 	<sql id="profitCostSql">
 		SELECT t1.*, @ROWNUM:=@ROWNUM+1 AS RNUM 
-		FROM (
-				SELECT
+		FROM (	SELECT
 				pp.PARK_NAME AS PARKNAME,
 				'비용' AS CATE,
 				pc.COST_PRICE AS PRICE,
@@ -77,7 +75,6 @@
         WHERE COST_SEQ = #{COST_SEQ}
     </update>
 
-
 	<update id="deleteProfitCostRese" parameterType="hashMap">
         /* profitCostMapper.deleteProfitCostRese [ 예약 비용 삭제 - 김장문 ]  */
         UPDATE p_reservation SET
@@ -87,5 +84,16 @@
         WHERE RESE_SEQ = #{RESE_SEQ}
     </update>
 
+	<select	id="selectProfitChartDataByMonth" resultType="hashMap">
+		/* profitCostMapper.selectProfitChartDataByMonth [ 월별 순수익 차트 데이터  - 전지나 ] */
+		SELECT
+			DATE_FORMAT(REG_DATE, '%Y-%m') AS yearMonth
+			, DATE_FORMAT(REG_DATE, '%m') AS month
+			, SUM(RESE_PRICE) AS totalPrice
+		FROM p_reservation 
+		WHERE 1=1 
+		AND USE_YN='Y' 
+		GROUP BY DATE_FORMAT(REG_DATE, '%Y-%m')
+	</select>
 
 </mapper>

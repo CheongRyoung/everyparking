@@ -2,6 +2,8 @@ package com.everyparking.admin.api.profitCost.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.everyparking.admin.api.profitCost.service.ProfitCostService;
 import com.everyparking.admin.framework.common.controller.BaseController;
+import com.everyparking.admin.framework.common.util.SessionUtil;
 import com.everyparking.admin.framework.common.vo.Ajax;
 
 @RestController
@@ -36,7 +39,7 @@ public class ProfitCostRestController extends BaseController {
             mav = super.createMav(profitCostService.selectListProfitCost(params), profitCostService.selectListCountProfitCost(params));
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.TYPE_FAIL);
         }
         return mav;
     }
@@ -50,7 +53,7 @@ public class ProfitCostRestController extends BaseController {
             mav = super.createMav(profitCostService.selectOneProfitCost(params));
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.TYPE_FAIL);
         }
         return mav;
     }
@@ -58,19 +61,31 @@ public class ProfitCostRestController extends BaseController {
     
     
     @RequestMapping("/deleteProfitCost")
-    public ModelAndView deleteProfitCost(@RequestBody HashMap<String,Object> params) throws Exception{
+    public ModelAndView deleteProfitCost(HttpServletRequest request, @RequestBody HashMap<String,Object> params) throws Exception{
         ModelAndView mav = super.createMav();
         try {
+        	SessionUtil.setCreator(request, params);
             mav = super.createMav(profitCostService.deleteProfitCost(params));
-            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.SUCCESS);
+            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.TYPE_SUCCESS);
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.TYPE_FAIL);
         }
         return mav;
     }
     
     
+    @RequestMapping("/selectProfitChartDataByMonth")
+    public ModelAndView selectProfitChartDataByMonth(@RequestBody HashMap<String, Object> params) throws Exception{
+    	ModelAndView mav = super.createMav();
+    	try {
+    		mav = super.createMav(profitCostService.selectProfitChartDataByMonth());
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+        }
+        return mav;
+    }
     
     
 }

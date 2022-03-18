@@ -2,12 +2,19 @@ package com.everyparking.admin.framework.common.util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.everyparking.admin.framework.common.vo.MemberVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.Enumeration;
 import java.util.HashMap;
 
 public class SessionUtil {
 
 
+    private static final Logger logger = LoggerFactory.getLogger(SessionUtil.class);
     /**
      * session에 데이터 생성
      * @param request
@@ -45,7 +52,7 @@ public class SessionUtil {
      * @param request
      * @param targetMap
      */
-    public static void setCreator(HttpServletRequest request, HashMap targetMap){
+    public static void setCreator(HttpServletRequest request, HashMap<String, Object> targetMap) throws Exception{
         setCreator(request.getSession(), targetMap);
     }
 
@@ -54,9 +61,33 @@ public class SessionUtil {
      * @param session
      * @param targetMap
      */
-    public static void setCreator(HttpSession session, HashMap targetMap){
-        HashMap<String,Object> user = (HashMap<String, Object>)session.getAttribute("member");
-        targetMap.put("REG_SEQ", user.get("USER_SEQ"));
-        targetMap.put("MOD_SEQ", user.get("USER_SEQ"));
+    @SuppressWarnings("unchecked")
+    public static void setCreator(HttpSession session, HashMap targetMap) throws Exception {
+        try {
+            MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+            targetMap.put("REG_SEQ", sessionUser.getUSER_SEQ());
+            targetMap.put("USER_SEQ", sessionUser.getUSER_SEQ());
+            targetMap.put("MOD_SEQ", sessionUser.getUSER_SEQ());
+        }catch(Exception e) {
+            logger.error("========================로그인 오류!!!!! 세션 없음!!===========================");
+            e.printStackTrace();
+            throw new Exception("로그인 오류!!!!! 세션 없음!!");
+        }
+    }
+
+    public static ModelAndView checkSession(HttpSession session) {
+        MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+        ModelAndView mav = new ModelAndView();
+        if(sessionUser != null){
+            mav.addObject("sessionUser", sessionUser);
+        }
+        return mav;
+    }
+
+    public static HashMap<String, Object> getUSER_SEQ(HttpSession session) {
+        HashMap<String, Object> data = new HashMap<>();
+        MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+        data.put("USER_SEQ", sessionUser.getUSER_SEQ());
+        return data;
     }
 }

@@ -59,7 +59,7 @@
 <div id="sideBox" class="cate-sideBar">
     <div class="row py-2 mt-3 mb-4">
         <div class="col p-0 sideLogoBox">
-            <img src="../img/logo.png" style="width:130px;height:75px;">
+            <img src="/img/logo.png" style="width:130px;height:75px;">
         </div>
     </div>
     <div class="row sideTitleBox">
@@ -185,13 +185,13 @@
                 <div class="col">
                     <ul class="myList-liStyle list-unstyled">
                         <li>
-                            <a href="#" class="link-dark rounded">예약 내역</a>
+                            <a href="/mypage/reservation/currentList" class="link-dark rounded">예약 내역</a>
                         </li>
                         <li>
-                            <a href="#" class="link-dark rounded">지난 내역</a>
+                            <a href="/mypage/reservation/pastList" class="link-dark rounded">지난 내역</a>
                         </li>
                         <li>
-                            <a href="#" class="link-dark rounded">취소 내역</a>
+                            <a href="/mypage/reservation/cancelList" class="link-dark rounded">취소 내역</a>
                         </li>
                     </ul>
                 </div>
@@ -212,10 +212,7 @@
                 <div class="col">
                     <ul class="myList-liStyle list-unstyled">
                         <li>
-                            <a href="#" class="link-dark rounded">공지사항</a>
-                        </li>
-                        <li>
-                            <a href="#" class="link-dark rounded">문의하기</a>
+                            <a href="/mypage/review/list" class="link-dark rounded">후기 내역</a>
                         </li>
                     </ul>
                 </div>

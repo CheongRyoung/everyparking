@@ -3,7 +3,7 @@
 <div class="container-fluid" style="min-width: 500px;">
     <header>
         <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5"></i></div>
+            <div class="col-1 px-0" onclick="e = function() {window.history.back()}"><i class="bi bi-arrow-left fs-5"></i></div>
             <div class="col px-0">
                 <h5 class="title">회원 가입</h5>
             </div>
@@ -42,8 +42,8 @@
 	                                    <div class="col"><span>비밀번호 확인</span></div>
 	                                </div>
 	                                <div class="form-floating mb-3">
-	                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-	                                    <label for="floatingPassword">Password Confirm</label>
+	                                    <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Password">
+	                                    <label for="floatingPasswordConfirm">Password Confirm</label>
 	                                </div>
 	                                <div class="row mb-1">
 	                                    <div class="col"><span>이름</span></div>

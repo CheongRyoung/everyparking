@@ -15,4 +15,5 @@ public interface TestSqlDao {
 	public int DBUploadTest(@Param("editorData") String editorData);
 	public List<HashMap<String, Object>> getDBTest(HashMap<String,Object> params);
 	public HashMap<String, Object> getUploadFile();
+	public int insertTest();
 }

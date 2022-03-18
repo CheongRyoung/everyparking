@@ -10,8 +10,8 @@
 			</h1>
 		</div>
 		<div class="col-2 mt-4 px-0 text-end">
-			<button class="btn btn-light btn-sm adminBorder borderBottom" data-bs-toggle="modal" data-bs-target="#costModalinsert">비용
-				등록</button>
+			<a href="./costInsertForm" class="btn btn-light btn-sm adminBorder borderBottom" data-bs-toggle="modal" data-bs-target="#costModalinsert">비용
+				등록</a>
 		</div>
 	</div>
 	<form action="">
@@ -50,7 +50,8 @@
 		<!-- 테이블 구역 -->
 		<div class="col px-0" style="background-color: white; height: 600px;">
 			<!-- Chart API 가져올 구역-->
-
+			<canvas class="profitChart" id="profitChart"></canvas>
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="/js/profitCost/profitChart.js"></script>

@@ -13,4 +13,6 @@ public interface ProfitCostService {
 
     public int deleteProfitCost(HashMap<String, Object> params) throws Exception;
     
+    // 작성자 : 전지나 | 내용 : profitChart
+    public List<HashMap<String, Object>> selectProfitChartDataByMonth() throws Exception;
 }

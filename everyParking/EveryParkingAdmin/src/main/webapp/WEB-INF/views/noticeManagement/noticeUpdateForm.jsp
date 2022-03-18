@@ -19,41 +19,43 @@
 		</div>
 	</div>
 	<!-- 테이블 -->
-	<div
-		class="row mt-2 mb-3 backgroundColorwhite adminBorder borderBottom"
-		style="min-height: 600px;">
-		<div class="col">
-			<div class="row">
-				<div class="col"></div>
-				<div class="col-9">
-					<div class="row mt-5">
-					<input id="notiseq" type="hidden" value="${noti.NOTI_SEQ}">
-						<div class="col-3">공지사항 제목</div>
-						<div class="col">
-							<input class="form-control" type="text" id="notititle" value="${noti.NOTI_TITLE}">
+	<form id="noticeDetail">
+		<div
+			class="row mt-2 mb-3 backgroundColorwhite adminBorder borderBottom"
+			style="min-height: 600px;">
+			<div class="col">
+				<div class="row">
+					<div class="col"></div>
+					<div class="col-9">
+						<div class="row mt-5">
+						<input id="notiseq" type="hidden" name="NOTI_SEQ" value="${noti.NOTI_SEQ}">
+							<div class="col-3">공지사항 제목</div>
+							<div class="col">
+								<input class="form-control" type="text" name="notiTitle" id="notititle" value="${noti.NOTI_TITLE}">
+							</div>
+						</div>
+						<div class="row mt-3 mb-5">
+							<div class="col-3">공지사항 내용</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<textarea id="writeEditor" style="display: none;"> ${noti.NOTI_CONT}</textarea>
+							</div>
+						</div>
+						<div class="row my-3">
+							<div class="col text-end">
+								<button type="button" class="modalBtn btn btn-secondary"
+									style="background-color: #e0e0e0; color: #000;">취소</button>
+								<button type="button" class="modalBtn btn btn-primary" onclick="updateData()">등록</button>
+							</div>
 						</div>
 					</div>
-					<div class="row mt-3 mb-5">
-						<div class="col-3">공지사항 내용</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<textarea id="writeEditor" style="display: none;"> ${noti.NOTI_CONT}</textarea>
-						</div>
-					</div>
-					<div class="row my-3">
-						<div class="col text-end">
-							<button type="button" class="modalBtn btn btn-secondary"
-								style="background-color: #e0e0e0; color: #000;">취소</button>
-							<button type="button" class="modalBtn btn btn-primary" onclick="updateData()">등록</button>
-						</div>
-					</div>
+					<div class="col"></div>
 				</div>
-				<div class="col"></div>
+	
 			</div>
-
 		</div>
-	</div>
+	</form>
 </div>
 <script type="text/javascript" src="/js/noticeManagement/noticeManagement.js"></script>
 

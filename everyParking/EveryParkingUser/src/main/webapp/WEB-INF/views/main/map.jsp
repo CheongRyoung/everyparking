@@ -41,7 +41,7 @@
             <div class="row topBox" style="margin-top: auto;">
                 <div class="col">
                     <div class="row" style="margin-top: 10px;">
-                        <div class="col"><span class="mainContentTitle">OOO 주차장</span></div>
+                        <div class="col"><span class="mainContentTitle" id="parkName"></span></div>
                     </div>
                     <div class="row">
                         <div class="col"><span class="mainContentSubNg">총 공간 : 50면 | </span><span class="mainContentSubNg">주차면: 일반 여성 장애인 전기차</span></div>
@@ -54,17 +54,17 @@
                     <div class="wraper" style="margin-top: 10px;">
                         <div class="row" style="margin-top: 10px;">
                             <div class="col">
-                                <span class="cardTitleNg"><i class="bi bi-geo-alt"></i> 서울 강남구 대치동 317-2</span>
+                                <i class="bi bi-geo-alt"></i> <span class="cardTitleNg" id="parkingAdd"> </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <span class="cardTitleNg"><i class="bi bi-telephone"></i> 000-000-0000</span>
+                                <i class="bi bi-telephone"></i> <span class="cardTitleNg" id="phone"> </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <span class="cardTitleNg"><i class="bi bi-watch"></i> 상주시간 : 04시~24시</span>
+                                <i class="bi bi-watch"></i> <span class="cardTitleNg" id="openTime"></span> ~ <span class="cardTitleNg" id="endTime"></span>
                             </div>
                         </div>
                     </div>
@@ -76,107 +76,25 @@
                                     <span class="mainContentSubSubNg">1시간당</span>
                                 </div>
                                 <div class="col">
-                                    <span class="mainContentSubSubNg">1000원</span>
+                                    <span class="mainContentSubSubNg" id="parkPrice"></span><span class="mainContentSubSubNg"> 원</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-5"><span class="mainContentSubTitle">할 인 율</span></div>
-                        <div class="col align-self-center">
-                            <div class="row">
-                                <div class="col-7 discountTitleNg">
-                                    <span class="mainContentSubSubNg">여성 전용</span>
-                                </div>
-                                <div class="col text-center">
-                                    <span class="mainContentSubSubNg">10 %</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7 discountTitleNg">
-                                    <span class="mainContentSubSubNg">장애인 전용</span>
-                                </div>
-                                <div class="col text-center">
-                                    <span class="mainContentSubSubNg">50 %</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7 discountTitleNg">
-                                    <span class="mainContentSubSubNg">전기차 전용</span>
-                                </div>
-                                <div class="col text-center">
-                                    <span class="mainContentSubSubNg">10 %</span>
-                                </div>
-                            </div>
+                        <div class="col align-self-center" id="section">
+                        	
+                            <!-- 구역 할인률 노출 -->
                         </div>
                     </div>
                     <!-- 리뷰 작성-->
                     <div class="row my-4" style="border-bottom: 3px solid #EEEEEE; border-top: 3px solid #EEEEEE; margin-top: 10px; height: 40px;">
                         <div class="col align-self-center">
-                            <span class="mainContentSubSubNg">리뷰(10)</span>
+                            <span class="mainContentSubSubNg" id="review">리뷰(10)</span>
                         </div>
                     </div>
-
-                    <div class="row mt-2" style="margin: 1px;">
-                        <div class="col d-flex justify-content-between">
-                            <span class="mainContentSubSubNg">UserNickName</span>
-                            <span class="mainContentSubSubNg">2022-02-27 12:12</span>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-left: 1px;">
-                        <div class="col">
-                            <p>★★★★★</p>
-                        </div>
-                    </div>
-                    <div class="row mb-2 pb-1" style="margin: 1px; border-bottom: 1px solid #EEEEEE;">
-                        <div class="col">
-                            <span class="commentContentNg">댓글내용</span>
-                        </div>
-                        <div class="col d-flex justify-content-end">
-                            <a class="commentBtn" href="#"><i class="bi bi-pencil-square"></i></a>
-                            <a class="commentBtn" href="#"><i class="bi bi-trash-fill"></i></a>
-                        </div>
-                    </div>
-                    <div class="row mt-2" style="margin: 1px;">
-                        <div class="col d-flex justify-content-between">
-                            <span class="mainContentSubSubNg">UserNickName</span>
-                            <span class="mainContentSubSubNg">2022-02-27 12:12</span>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-left: 1px;">
-                        <div class="col">
-                            <p>★★★★★</p>
-                        </div>
-                    </div>
-                    <div class="row mb-2 pb-1" style="margin: 1px; border-bottom: 1px solid #EEEEEE;">
-                        <div class="col">
-                            <span class="commentContentNg">댓글내용</span>
-                        </div>
-                        <div class="col d-flex justify-content-end">
-                            <a class="commentBtn" href="#"><i class="bi bi-pencil-square"></i></a>
-                            <a class="commentBtn" href="#"><i class="bi bi-trash-fill"></i></a>
-                        </div>
-                    </div>
-                    <div class="row mt-2" style="margin: 1px;">
-                        <div class="col d-flex justify-content-between">
-                            <span class="mainContentSubSubNg">UserNickName</span>
-                            <span class="mainContentSubSubNg">2022-02-27 12:12</span>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-left: 1px;">
-                        <div class="col">
-                            <p>★★★★★</p>
-                        </div>
-                    </div>
-                    <div class="row mb-2 pb-1" style="margin: 1px; border-bottom: 1px solid #EEEEEE;">
-                        <div class="col">
-                            <span class="commentContentNg">댓글내용</span>
-                        </div>
-                        <div class="col d-flex justify-content-end">
-                            <a class="commentBtn" href="#"><i class="bi bi-pencil-square"></i></a>
-                            <a class="commentBtn" href="#"><i class="bi bi-trash-fill"></i></a>
-                        </div>
-                    </div>
+					<!-- 리뷰 데이터 노출 -->
                 </div>
             </div>
         </main>

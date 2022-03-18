@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 	<div class="col mx-3">
 		<form action="/parkingManage/updateParkingInfo" enctype="multipart/form-data" method="post" id="parkingInfoDetailForm" onsubmit="return parkingRevise.validForm()">
 			<input type="hidden" name="PARK_SEQ">
@@ -22,33 +23,14 @@
 								<img class="img-fluid" src="/img/image1.png">
 							</div>
 							<div class="col ms-1">
+								<c:forEach items="${ryList}" var="ry">
 								<div class="row mb-5">
 									<div class="col-4">
-										<input type="checkbox" name="SEC_TYPE" value="SC01"> 일반 구역
+										<input type="checkbox" name="SEC_TYPE" value=${ry.SUB_CODE }> ${ry.SUB_NAME } 구역
 									</div>
 									<div class="col">공용주차 공간입니다</div>
 								</div>
-								<div class="row mb-5">
-									<div class="col-4">
-										<input type="checkbox" name="SEC_TYPE" value="SC02">
-										여성전용 구역
-									</div>
-									<div class="col">여성을 위한 주차 공간입니다</div>
-								</div>
-								<div class="row mb-5">
-									<div class="col-4">
-										<input type="checkbox" name="SEC_TYPE" value="SC03">
-										장애인 구역
-									</div>
-									<div class="col">장애인을 위한 주차 공간입니다</div>
-								</div>
-								<div class="row mb-5">
-									<div class="col-4">
-										<input type="checkbox" name="SEC_TYPE" value="SC04"> 충전
-										구역
-									</div>
-									<div class="col">전기차 충전시설이 구비된 주차 공간입니다</div>
-								</div>
+								</c:forEach>
 							</div>
 						</div>
 						<div class="row me-4 pt-5 mt-5">
@@ -79,8 +61,9 @@
 									<div class="col">주차 가능 대수 입력</div>
 									<div class="col">할인율(숫자만 입력)</div>
 								</div>
-								<div class="row mb-5" id="SEC_TYPE_SC01">
-									<div class="col-3">일반 구역</div>
+								<c:forEach items="${ryList}" var="ry">
+								<div class="row mb-5" id="SEC_TYPE_${ry.SUB_CODE }">
+									<div class="col-3">${ry.SUB_NAME } 구역</div>
 									<div class="col">
 										<input type="text" name="SEC_COUNT" placeholder="가능 대수">
 									</div>
@@ -88,33 +71,7 @@
 										<input type="text" name="SEC_DIS" placeholder="할인율(%)">
 									</div>
 								</div>
-								<div class="row mb-5" id="SEC_TYPE_SC02">
-									<div class="col-3">여성 전용</div>
-									<div class="col">
-										<input type="text" name="SEC_COUNT" placeholder="가능 대수">
-									</div>
-									<div class="col">
-										<input type="text" name="SEC_DIS" placeholder="할인율(%)">
-									</div>
-								</div>
-								<div class="row mb-5" id="SEC_TYPE_SC03">
-									<div class="col-3">장애인 구역</div>
-									<div class="col">
-										<input type="text" name="SEC_COUNT" placeholder="가능 대수">
-									</div>
-									<div class="col">
-										<input type="text" name="SEC_DIS" placeholder="할인율(%)">
-									</div>
-								</div>
-								<div class="row mb-5" id="SEC_TYPE_SC04">
-									<div class="col-3">전기차 구역</div>
-									<div class="col">
-										<input type="text" name="SEC_COUNT" placeholder="가능 대수">
-									</div>
-									<div class="col">
-										<input type="text" name="SEC_DIS" placeholder="할인율(%)">
-									</div>
-								</div>
+								</c:forEach>
 							</div>
 						</div>
 						<div class="row me-4 mt-4">
@@ -141,20 +98,20 @@
 
 				<div class="row mt-3">
 					<div class="col-4 px-0">
-						<img class="img-fluid" src="/img/image1.png">
+						<img id="thumbNail" class="img-fluid" src="/img/image1.png">
 					</div>
 
 					<div class="col ms-1">
 						<div class="row me-3">
 							<div class="col-4 mt-1">주차장명</div>
 							<div class="col">
-								<input type="text" value="주차장 명을 입력해 주세요." name="PARK_NAME" style="width: 100%;">
+								<input type="text" placeholder="주차장 명을 입력해 주세요." name="PARK_NAME" style="width: 100%;">
 							</div>
 						</div>
 						<div class="row me-3 mt-3">
 							<div class="col-4 mt-1">주차장 위치</div>
 							<div class="col">
-								<input id="postcodeName" type="text" value="클릭 후 주소를 입력해 주세요." name="PARK_ADDR" style="width: 100%;" onclick="postcoderun()" readonly>
+								<input id="postcodeName" type="text" placeholder="클릭 후 주소를 입력해 주세요." name="PARK_ADDR1" style="width: 100%;" onclick="postcoderun()" readonly>
 								<input id="postcodeX"    type="hidden" name="PARK_ADDR_X">
 								<input id="postcodeY"    type="hidden" name="PARK_ADDR_Y">
 							</div>
@@ -163,7 +120,7 @@
 						<div class="row me-3 mt-3">
 							<div class="col-4 mt-1">주차장 위치 상세</div>
 							<div class="col">
-								<input type="text" placeholder="입구 위치 등을 작성해 주세요." style="width: 100%;" name="PARK_ADDR">
+								<input type="text" placeholder="입구 위치 등을 작성해 주세요." style="width: 100%;" name="PARK_ADDR2">
 							</div>
 						</div>
 						<div class="row me-3 mt-3">
@@ -176,14 +133,28 @@
 						<div class="row me-3 mt-3">
 							<div class="col-4 mt-1">주차장 설명</div>
 							<div class="col">
-								<input type="text" name="PARK_CONT" placeholder="주차장을 설명해 주세요."
-									   style="width: 100%; height: 90px;">
+								<textarea rows="3" cols="45" placeholder="주차장을 설명해 주세요." name="PARK_CONT" style="width:100%;"></textarea>
 							</div>
+						</div>
+						<div class="row me-3 mt-3">
+							<div class="col-4 mt-1">전화번호</div>
+							<div class="col">
+								<input type="text" name="PARK_CALL_NUM" placeholder="주차장 전화번호를 입력해주세요." style="width: 100%;">
+							</div>
+						</div>						
+						<div class="row me-3 mt-3">
+							<div class="col-4 mt-1">문의시간</div>
+							<div class="col">OPEN : 
+								<input class="inputTime" onkeypress="onlyTimeNum(event);" type="time" name="PARK_OPEN">
+							</div>					
+							<div class="col">CLOSE :
+								<input class="inputTime" onkeypress="onlyTimeNum(event);" type="time" name="PARK_CLOSE">
+							</div>						
 						</div>
 						<div class="row me-3 mt-3">
 							<div class="col-4 mt-1">이미지 업로드</div>
 							<div class="col">
-								<input type="file" name="profile" style="width: 100%;">
+								<input id="inputThumbnail" type="file" name="profile" style="width: 100%;">
 							</div>
 						</div>
 					</div>

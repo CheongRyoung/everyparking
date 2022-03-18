@@ -1,6 +1,6 @@
 let parkingRevise = {
     PARK_SEQ : null,
-    PARK_INFO : {},
+    PARK_INFO : {},  // null값인 상태
     step:0,
     init : function(PARK_SEQ){
         this.PARK_SEQ = PARK_SEQ;
@@ -18,7 +18,7 @@ let parkingRevise = {
                 $this.sections = $this.PARK_INFO.sections;
                 if($this.sections.length>0){
                     $this.sections.forEach((item, index)=>{
-                        /* 리터럴템플릿 >(탭 위의키) `` 로 감싸면 js변수를 ${} 로 호출할 수 있습니다. */
+                        /* 리터럴템플릿 >(탭 위의키:백틱) `` 로 감싸면 js변수를 ${} 로 호출할 수 있습니다. */
                         $(`input[name=SEC_TYPE][value=${item.SEC_TYPE}]`).prop('checked', true);
                         $(`#SEC_TYPE_${item.SEC_TYPE} input[name=SEC_COUNT]`).val(item.SEC_COUNT);
                         $(`#SEC_TYPE_${item.SEC_TYPE} input[name=SEC_DIS]`).val(item.SEC_DIS);

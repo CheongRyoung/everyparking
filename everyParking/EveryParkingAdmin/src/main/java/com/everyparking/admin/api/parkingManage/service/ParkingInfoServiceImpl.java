@@ -37,22 +37,23 @@ public class ParkingInfoServiceImpl implements ParkingInfoService{
     @Override
     public HashMap<String, Object> selectOneParkingInfo(HashMap<String, Object> params) throws Exception {
         HashMap<String, Object> result = parkingInfoDao.selectOneParkingInfo(params);
-        result.put("sections", this.selectListSection(params));
+        result.put("sections", this.selectListSection(params)); 
         return result;
     }
 
     @Override
     public int insertParkingInfo(HttpServletRequest request, HashMap<String, Object> params) throws Exception {
-	   // List<Integer> file_seq = fileService.uploadFile(request, filePath);
-	   // if(file_seq.size() >= 1){
-	   //     params.put("FILE_SEQ", file_seq.get(0));
-	   //}
+	    List<Integer> file_seq = fileService.uploadFile(request, filePath);
+	    if(file_seq.size() >= 1){
+	        params.put("FILE_SEQ", file_seq.get(0));
+	    }
 
     	String[] SEC_TYPE_arr = (String[]) params.get("SEC_TYPE");  /* 화면의 input name 이 같은 애들은 배열로 넘어옴 .. */
         String[] SEC_COUNT_arr = (String[]) params.get("SEC_COUNT");
         String[] SEC_DIS_arr = (String[]) params.get("SEC_DIS");
         HashMap<String, Object> params2 = new HashMap<>();
         
+        params.put("USER_SEQ", params.get("REG_SEQ"));
         parkingInfoDao.insertParkingInfo(params);
         
         // 파라미터에 다시 입력시켜야한다.

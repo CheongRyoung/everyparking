@@ -20,23 +20,23 @@
             </div>
             <div class="row backgroundColorwhite">
                 <div class="col-2"></div>
-                <div class="col my-1"><a href="#">주차장 홈</a></div>
+                <div class="col my-1"><a href="../parkingManage/parkingZone">주차장 홈</a></div>
             </div>
             <div class="row backgroundColorwhite">
                 <div class="col-2"></div>
-                <div class="col my-1"><a href="#">예약 여부 관리</a></div>
+                <div class="col my-1"><a href="./">예약 여부 관리</a></div>
             </div>
             <div class="row backgroundColorwhite">
                 <div class="col-2"></div>
-                <div class="col my-1"><a href="#">유지 비용 관리</a></div>
+                <div class="col my-1"><a href="../profitCost/costTable">유지 비용 관리</a></div>
             </div>
             <div class="row backgroundColorwhite">
                 <div class="col-2"></div>
-                <div class="col my-1"><a href="#">이용 내역 조회</a></div>
+                <div class="col my-1"><a href="../profitCost/reservationInquiry">이용 내역 조회</a></div>
             </div>
             <div class="row backgroundColorwhite">
                 <div class="col-2"></div>
-                <div class="col mt-1 mb-4"><a href="#">순 수익 조회</a></div>
+                <div class="col mt-1 mb-4"><a href="../profitCost/profitChart">순 수익 조회</a></div>
             </div>
         </div>
     </div>

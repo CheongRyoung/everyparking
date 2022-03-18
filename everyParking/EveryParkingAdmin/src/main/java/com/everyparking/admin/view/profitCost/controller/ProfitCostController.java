@@ -21,8 +21,17 @@ public class ProfitCostController extends BaseController {
 	
 	
     @RequestMapping("/costTable")
-    public String costTable() {
+   
+    	 //정자운 0316 19:30 추가부분
+    	 public String costTable(Model model) throws Exception {
+    	    	
+    	    	HashMap<String, Object> data = new HashMap<String, Object>();
+    	    	
+    	    	model.addAttribute("list", parkingInfoService.selectListParkingInfo(data));
+    	
         return "/profitCost/costTable";
+        
+        
     }
 
     @RequestMapping("/costInsertForm")

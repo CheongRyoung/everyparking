@@ -40,12 +40,8 @@ public class NoticeServiceImpI implements NoticeService{
 	}
 
 	@Override
-	public int updateNoti(String editorData
-							, String notiTitle
-							, HttpServletRequest request
-							, HashMap<String, Object> params
-							) throws Exception  {
-		return noticedao.updateNoti(editorData, notiTitle, params);
+	public int updateNoti(HashMap<String, Object> params) throws Exception  {
+		return noticedao.updateNoti(params);
 	}
 
 	@Override

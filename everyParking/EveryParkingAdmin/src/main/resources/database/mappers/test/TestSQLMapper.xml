@@ -66,4 +66,13 @@
 		/*TestSQLMapper.getUploadFile [작성자/작성일] 기능내용 */
 		select * from uplaodTest where test_no = 8
 	</select>
+	
+	<insert id="insertTest">
+		/*TestSQLMapper.insertTest [작성자/작성일] 기능내용 */
+		insert into test_tb(
+			REG_DATE
+		)VALUES(
+			NOW()
+		)
+	</insert>
 </mapper>

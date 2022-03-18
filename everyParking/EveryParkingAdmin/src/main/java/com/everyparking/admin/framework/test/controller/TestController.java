@@ -101,7 +101,7 @@ public class TestController extends BaseController {
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("USER_SEQ", 0);
 		SessionUtil.setSessionData(request, "member", params );
-		return super.createMav(Ajax.SEARCH.TEXT+"."+Ajax.TPYE_SUCCESS);
+		return super.createMav(Ajax.SEARCH.TEXT+"."+Ajax.TYPE_SUCCESS);
 	}
 
 

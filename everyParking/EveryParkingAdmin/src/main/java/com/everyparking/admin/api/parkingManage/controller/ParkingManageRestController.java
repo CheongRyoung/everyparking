@@ -1,8 +1,7 @@
 package com.everyparking.admin.api.parkingManage.controller;
 
-import com.everyparking.admin.api.parkingManage.service.ParkingInfoService;
-import com.everyparking.admin.framework.common.controller.BaseController;
-import com.everyparking.admin.framework.common.vo.Ajax;
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
+import com.everyparking.admin.api.parkingManage.service.ParkingInfoService;
+import com.everyparking.admin.framework.common.controller.BaseController;
+import com.everyparking.admin.framework.common.vo.Ajax;
 
 @RestController
 @RequestMapping(value="/parkingManage")
@@ -29,7 +30,7 @@ public class ParkingManageRestController extends BaseController {
             mav = super.createMav(parkingInfoService.selectListParkingInfo(params), parkingInfoService.selectListCountParkingInfo(params));
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.TYPE_FAIL);
         }
         return mav;
     }
@@ -41,7 +42,7 @@ public class ParkingManageRestController extends BaseController {
             mav = super.createMav(parkingInfoService.selectOneParkingInfo(params));
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.TYPE_FAIL);
         }
         return mav;
     }
@@ -51,10 +52,10 @@ public class ParkingManageRestController extends BaseController {
         ModelAndView mav = super.createMav();
         try {
             mav = super.createMav(parkingInfoService.deleteParkingInfo(params));
-            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.SUCCESS);
+            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.TYPE_SUCCESS);
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.TYPE_FAIL);
         }
         return mav;
     }

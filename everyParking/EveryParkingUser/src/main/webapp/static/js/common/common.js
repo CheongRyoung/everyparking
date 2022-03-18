@@ -46,7 +46,7 @@ function ajaxCall(url, params, callback, errorCallback, asyncType){
         dataType: "json",               	// 서버에서 보내줄 데이터의 타입
         async : asyncType					// 동기 , 비동기
     }).done(callback)                       // 성공시
-        .fail(commErrorCallback);               // 실패시
+        .fail(commErrorCallback);           // 실패시
 }
 
 /**
