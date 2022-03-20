@@ -19,9 +19,10 @@ if(datepickerR) {
         minDate: new Date(),
         autoUpdateInput: true,
         timePicker: true,
+        timePicker24Hour: true,
         locale: {
             "separator": " ~ ",                     // 시작일시와 종료일시 구분자
-            "format": 'YYYY년 MM월 DD일 hh시',                 // 일시 노출 포맷
+            "format": 'YYYY-MM-DD hh시',                 // 일시 노출 포맷
             "applyLabel": "확인",                    // 확인 버튼 텍스트
             "cancelLabel": "취소",                   // 취소 버튼 텍스트
             "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
@@ -240,5 +241,68 @@ if(testGridid) {
 }
 
 
+const blockParkSelect = document.querySelector('.inputPlusSelectBox');
+const blockParkDate = document.querySelector('.drp-selected');
+const applyBtn = document.querySelector('.applyBtn');
+const blockFormData = document.getElementById('blockFormData');
 
+function getSectionInfo() {
+    var params = {'PARK_SEQ': blockParkSelect.value, "BLOCK_DATE": blockParkDate.value};
+    params.PARK_SEQ = blockParkSelect.value;
+    params.daterange = blockParkDate.innerText;
+    ajaxCall('/parkingBlock/getSectionInfo', params, function(data) {
+        var secList = data.list;
+        $("#selectSection").html("");
+        secList.forEach((item, index) => {
+            if(item.SEC_COUNT - item.SEC_USE <= 0) {
+            let SEChtml = ``;
+            SEChtml += `<div class="row">`;
+            SEChtml += `    <div class="col">`;
+            SEChtml += `        <p> ${item.SUB_NAME}</p>`;
+            SEChtml += `    </div>`;
+            SEChtml += `    <div class="col">`;
+            SEChtml += `        <p>만차입니다</p>`;
+            SEChtml += `    </div>`;
+            SEChtml += `</div>`;
+            $("#selectSection").append(SEChtml);
+            } else {
+                let SEChtml = ``;
+                SEChtml += `<div class="row">`;
+                SEChtml += `    <div class="col">`;
+                SEChtml += `        <input type="radio" value=${item.SEC_SEQ} name="SEC_SEQ" id="SEC_SEQ"> ${item.SUB_NAME}`;
+                SEChtml += `    </div>`;
+                SEChtml += `    <div class="col">`;
+                SEChtml += `        <select name="INSERT_COUNT" id="INSERT_COUNT">`;
+                for(let i=1; i<=(item.SEC_COUNT - item.SEC_USE); i++) {
+                    SEChtml += `<option value=${i}> ${i} 칸 </option>`;
+                }
+                SEChtml += `</select>`;
+                SEChtml += `    </div>`;
+                SEChtml += `</div>`;
+                $("#selectSection").append(SEChtml);
+            }
+        })
+    });
+}
+
+function blockRegister() {
+    let params = new FormData(blockFormData);
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState==4 && xhr.status==200) {
+            let data = JSON.parse(xhr.responseText);
+            if(data.code == "S") {
+                cmm.alert("저장에 성공했습니다.", function() {
+                    location.href = '/parkingBlock/parkingBlock';
+                })
+            } else {
+                cmm.alert("예약이 존재합니다. 다시 확인해주세요");
+            }
+        }
+    }
+    xhr.open('post', '/parkingBlock/insertBlock');
+    // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+}
+applyBtn.addEventListener('click', getSectionInfo);
 

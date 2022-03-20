@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.admin.api.parkingBlock.dao.ParkingBlockDao">
+	<sql id="parkingBlockSql">
+		SELECT B1.*, @ROWNUM:=@ROWNUM+1 AS RNUM 
+		FROM (
+				SELECT
+					pb.BLO_SEQ AS BSEQ, 
+					pp.PARK_NAME AS PARKNAME, 
+					pb.BLO_START AS BSTART, 
+					pb.BLO_END AS BEND, 
+					pb.BLO_CONT AS BCONT, 
+					psu.SUB_NAME AS SNAME, 
+					pse.SEC_COUNT AS SCOUNT,
+					pb.USE_YN as USE_YN 
+				FROM 
+					p_block pb, 
+					p_parkinginfo pp, 
+					p_section pse, 
+					p_subcode psu
+				WHERE 
+					pb.SEC_SEQ = pse.SEC_SEQ and pse.PARK_SEQ = pp.PARK_SEQ and pse.SEC_TYPE = psu.SUB_CODE
+			  ) B1, (SELECT @ROWNUM:=0) R
+		WHERE 1=1
+		AND B1.USE_YN = 'Y'
+	</sql>
+	<sql id="parkingBlockSearch">
+		<if test='SEARCHCOND != null and !SEARCHCOND.equals("")'>
+			AND B1.PARKNAME LIKE CONCAT('%', #{SEARCHCOND},'%')
+		</if>
+	</sql>
+	
+	<select id="selectListParkingBlock" parameterType="hashMap" resultType="hashMap">
+		/* parkingBlockMapper.selectListParkingBlock [ 차단시간 조회 목록 - 고남곤 ] */
+		<include refid="parkingBlockSql"></include>
+		<include refid="parkingBlockSearch"></include>
+		<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+			<if test='ORDER != null and !ORDER.equals("")'>
+				ORDER BY ${ORDER} ${ORDER_TYPE}
+			</if>
+			LIMIT #{START}, #{CNT}
+		</if>
+	</select>
+	
+	<select id="selectListCountParkingBlock" parameterType="hashMap" resultType="int">
+		/* parkingBlockMapper.selectListCountProfitCost [ 차단시간 카운트 조회 - 고남곤 ] */
+		SELECT COUNT(*) FROM(
+		<include refid="parkingBlockSql"></include>
+		<include refid="parkingBlockSearch"></include>
+		)z
+	</select>
+	
+	<update id="deleteParkingBlock" parameterType="hashMap">
+        /* parkingBlockMapper.deleteParkingBlock [ 차단시간 삭제 - 고남곤 ]  */
+        UPDATE p_block SET
+           USE_YN = 'N'
+           , MOD_SEQ = #{MOD_SEQ}
+           , MOD_DATE = NOW()
+        WHERE BLO_SEQ = #{BLO_SEQ}
+    </update>
+
+	<select id="getSectionInfo" parameterType="hashMap" resultType="hashMap">
+		SELECT SEC_SEQ,
+		SEC_TYPE,
+		sub.SUB_NAME,
+		SEC_COUNT,
+		IFNULL(useSec, 0) AS SEC_USE,
+		final.USE_YN
+		FROM (SELECT sec.SEC_SEQ,
+		sec.SEC_TYPE,
+		sec.SEC_COUNT,
+		useSec,
+		tion.USE_YN
+		FROM (SELECT SEC_SEQ,
+		COUNT(SEC_SEQ) AS useSec,
+		USE_YN
+		FROM (select
+		SEC_SEQ
+		, DATE_FORMAT(BLO_START, '%Y-%m-%d %T') as START
+		, DATE_FORMAT(BLO_END, '%Y-%m-%d %T') as END
+		, USE_YN
+		FROM p_block
+		WHERE USE_YN = 'Y'
+		UNION ALL
+		SELECT
+		SEC_SEQ
+		, DATE_FORMAT(RESE_START, '%Y-%m-%d %T') as START
+		, DATE_FORMAT(RESE_END, '%Y-%m-%d %T') as END
+		, USE_YN
+		FROM p_reservation
+		WHERE USE_YN = 'Y') AS plus
+		WHERE 1=1
+		AND (STR_TO_DATE((Concat(LEFT(#{daterange}, 12), ':00:01')), '%Y-%m-%d %T') BETWEEN START AND END
+		OR STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T') BETWEEN START AND END)
+		GROUP BY SEC_SEQ) AS tion
+		RIGHT JOIN p_section AS sec
+		ON sec.SEC_SEQ = tion.SEC_SEQ
+		WHERE 1=1
+		AND sec.USE_YN = 'Y'
+		<if test='PARK_SEQ != null and !PARK_SEQ.equals("")'>
+		AND sec.PARK_SEQ = #{PARK_SEQ}
+		</if>) AS final
+		JOIN p_subcode AS sub
+		ON final.SEC_TYPE = sub.SUB_CODE
+		<if test='SEC_SEQ != null and !SEC_SEQ.equals("")'>
+		WHERE SEC_SEQ = #{SEC_SEQ}
+		</if>
+	</select>
+
+	<insert id="insertBlock" parameterType="java.util.List">
+
+		INSERT INTO p_block (SEC_SEQ,
+					BLO_START,
+					BLO_END,
+					BLO_CONT,
+					REG_SEQ,
+					REG_DATE)
+					VALUES
+					<foreach collection="list" item="item" separator=",">
+					       (
+					#{item.SEC_SEQ},
+					STR_TO_DATE((Concat(LEFT(#{item.daterange}, 12), ':00:01')), '%Y-%m-%d %T'),
+					STR_TO_DATE((substring(#{item.daterange}, 18, 13)), '%Y-%m-%d %T'),
+					#{item.BLO_CONT},
+					null,
+					SYSDATE()
+					        )
+					</foreach>
+	</insert>
+</mapper>

@@ -85,15 +85,84 @@
     </update>
 
 	<select	id="selectProfitChartDataByMonth" resultType="hashMap">
-		/* profitCostMapper.selectProfitChartDataByMonth [ 월별 순수익 차트 데이터  - 전지나 ] */
+		/* 테스트 - profitCostMapper.selectProfitChartDataByMonth [ 월별 순수익 차트 데이터  - 전지나 ] */
 		SELECT
 			DATE_FORMAT(REG_DATE, '%Y-%m') AS yearMonth
 			, DATE_FORMAT(REG_DATE, '%m') AS month
 			, SUM(RESE_PRICE) AS totalPrice
 		FROM p_reservation 
 		WHERE 1=1 
-		AND USE_YN='Y' 
+		AND USE_YN='Y'
 		GROUP BY DATE_FORMAT(REG_DATE, '%Y-%m')
 	</select>
-
+	<!-- 주차장 별로 조회하게 만들어야하는데 search 옵션을 ajaxCall을 이용해서 구현해야 하는데 조건을 달아주는 방식에, select할 내용도 아마 추가해야하지 않을까.... -->
+	
+	<select id="selectReservationPriceByParkSeq" resultType="hashMap">
+		/* 테스트 - profitCostMapper.selectProfitChartDataByMonth [ 주차장별,연도별 예약 수익 차트 데이터  - 전지나 ] */
+		SELECT 
+			ps.PARK_SEQ
+			, sum(pr.RESE_PRICE) AS total
+			, DATE_FORMAT(pr.REG_DATE, '%Y-%m') AS yearMonth 
+		FROM P_RESERVATION pr
+			, P_SECTION ps 
+		WHERE 1=1 
+		AND pr.SEC_SEQ = ps.SEC_SEQ 
+		AND pr.USE_YN = 'Y'
+		AND ps.PARK_SEQ = #{PARK_SEQ} 
+		GROUP BY date_format(pr.REG_DATE, '%Y-%M') 
+		ORDER BY pr.REG_DATE
+	</select>
+	
+	<select id="selectCostPriceByParkSeq" resultType="hashMap">
+	/* 테스트 */
+		SELECT PARK_SEQ
+			, SUM(COST_PRICE) AS total
+			, DATE_FORMAT(COST_DATE, '%Y-%m') AS yearMonth  
+		FROM P_COSTMANAGE
+		WHERE 1=1
+		AND USE_YN = 'Y'
+		AND PARK_SEQ = 12363
+		GROUP BY DATE_FORMAT(COST_DATE, '%Y-%M')
+		ORDER BY COST_DATE
+	</select>
+	
+	<select id="selectChartByParkSeq" resultType="hashMap">
+		SELECT 
+			b.yyyymm AS yearmonth
+			, IFNULL(a.cnt, 0)
+			, IFNULL(a.profit, 0) AS totalprice
+		FROM ( SELECT date_format(REG_DATE, '%Y-%m') AS yyyymm
+					  , count(*) cnt
+					  , sum(RESE_PRICE) AS profit
+			   FROM ( SELECT preser.*
+			   				 , psec.PARK_SEQ
+			          FROM p_reservation AS preser
+			          JOIN p_section AS psec
+			          ON preser.SEC_SEQ = psec.SEC_SEQ
+			          WHERE 1=1
+			          AND preser.USE_YN = 'Y'
+			          <if test='PARK_SEQ != null and !PARK_SEQ.equals("")'>
+			             AND PARK_SEQ = #{PARK_SEQ}
+			          </if>
+			        ) z
+		<if test='SearchDate != null and !SearchDate.equals("")'>
+		AND <![CDATA[ z.REGDATE >= STRDATE(substr(#{SearchDate}, 1, 10), '%Y-%m')
+        AND z.REGDATE <= STRDATE(substr(#{SearchDate}, 14, 24), '%Y-%m') ]]>
+        </if>
+		GROUP BY date_format(REG_DATE, '%Y-%m')) a
+		RIGHT JOIN (SELECT  @N := @N +1 AS n 
+							,date_format( date_add( '2022-01-01' , interval @N -1 month),'%Y-%m') AS yyyymm
+			        FROM (WITH RECURSIVE CTE AS (SELECT 1 AS DAY
+			              						 UNION ALL
+			              						 SELECT 1+CTE.DAY AS DAY
+			            						 FROM CTE
+									 			<if test='SearchDate != null and !SearchDate.equals("")'>
+			            						 <![CDATA[
+			           							 WHERE CTE.DAY <= ]]> TIMESTAMPDIFF (MONTH, #{SearchDate}))
+			            						 </if>
+			              SELECT * FROM CTE) aa, (select @N:=0 from dual ) a
+			        ) b
+		ON a.yyyymm = b.yyyymm
+		ORDER BY b.yyyymm asc
+	</select>
 </mapper>

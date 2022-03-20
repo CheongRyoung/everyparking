@@ -72,7 +72,6 @@
 			SELECT MAX(PARK_SEQ) from p_parkinginfo
 		</selectKey>
 		INSERT INTO p_parkinginfo(
-		
 		USER_SEQ
 		,FILE_SEQ
 		,PARK_NAME
@@ -135,20 +134,22 @@
 		WHERE PARK_SEQ = #{PARK_SEQ}
 	</update>
 
-	<select id="selectListSection" parameterType="hashMap"
-		resultType="hashMap">
+	<select id="selectListSection" parameterType="hashMap" resultType="hashMap">
 		SELECT
 		SEC_SEQ
 		, SEC_TYPE
+		, SUB_NAME
 		, PARK_SEQ
 		, SEC_COUNT
 		, SEC_DIS
-		, REG_SEQ
-		, REG_DATE
-		, MOD_SEQ
-		, MOD_DATE
-		, NOTE
-		FROM p_section
+		, ps.REG_SEQ
+		, ps.REG_DATE
+		, ps.MOD_SEQ
+		, ps.MOD_DATE
+		, ps.NOTE
+		FROM p_section AS ps
+		JOIN p_subcode AS p
+		ON ps.SEC_TYPE = p.SUB_CODE
 		WHERE 1=1
 		AND USE_YN = 'Y'
 		<if test='secSeqs==null or secSeqs.equals("")'>
@@ -158,8 +159,8 @@
 			AND SEC_SEQ NOT IN (${secSeqs})
 		</if>
 	</select>
-	<select id="selectOneSection" parameterType="hashMap"
-		resultType="hashMap">
+	
+	<select id="selectOneSection" parameterType="hashMap" resultType="hashMap">
 		SELECT
 		SEC_SEQ
 		, SEC_TYPE
@@ -187,8 +188,7 @@
 
 	<insert id="insertSection" parameterType="hashMap">
 		/* parkingInfoMapper.insertSection [ 섹션 등록 - 전지나 ] */
-		<selectKey keyProperty="SEC_SEQ" keyColumn="SEC_SEQ"
-			resultType="INT" order="AFTER">
+		<selectKey keyProperty="SEC_SEQ" keyColumn="SEC_SEQ" resultType="INT" order="AFTER">
 			SELECT MAX(SEC_SEQ) AS SEC_SEQ FROM p_section
 		</selectKey>
 		INSERT INTO p_section(
@@ -236,10 +236,6 @@
 		AND SEC_SEQ = #{SEC_SEQ}
 	</delete>
 	
-	<!-- <select id="selectSubcodeByRY" resultType="hashMap">
-		SELECT * FROM P_SUBCODE 
-		WHERE M_CODE = 'RY'
-	</select> -->
 	
-	
+
 </mapper>

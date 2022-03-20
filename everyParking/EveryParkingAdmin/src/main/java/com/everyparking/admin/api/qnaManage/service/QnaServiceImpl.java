@@ -28,4 +28,20 @@ public class QnaServiceImpl implements QnaService{
 		return qnadao.selectListCountQna(params);
 	}
 
+	@Override
+	public HashMap<String, Object> getQna(int QNA_SEQ) throws Exception {
+		HashMap<String, Object> result = qnadao.getQna(QNA_SEQ);
+		return result;
+	}
+
+	@Override
+	public int qnaReadCount(int QNA_SEQ) throws Exception {
+		return qnadao.qnaReadCount(QNA_SEQ);
+	}
+
+	@Override
+	public int insertComment(HashMap<String, Object> params) throws Exception {
+		return qnadao.insertComment(params);	
+	}
+
 }

@@ -20,7 +20,7 @@ public class UserHistoryController extends BaseController{
 	
     @RequestMapping("/userHistory")
    
-    	 public String costTable(Model model) throws Exception {
+    	 public String userHistory(Model model) throws Exception {
     	    	
     	    	HashMap<String, Object> data = new HashMap<String, Object>();
     	    	

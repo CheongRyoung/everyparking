@@ -465,6 +465,6 @@ function searchGrid(gridSelector, condition, key){
  *
  * **/
 
-function excelDwon(gridSelector, url){
+function excelDown(gridSelector, url){
     findGrid(gridSelector).excelDown(url);
 }

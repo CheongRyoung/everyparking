@@ -14,6 +14,7 @@
 			, MOD_SEQ
 			, MOD_DATE
 			, NOTE
+			, QNA_COUNT
 		FROM p_qna
 		WHERE 1=1
 		AND USE_YN = 'Y'
@@ -34,4 +35,41 @@
 		<include refid="qnaManageSQL"></include>
 		)z
 	</select>
+	
+	<select id="getQna" parameterType="int" resultType="hashMap">
+		SELECT pq.* , pu.USER_NAME
+		FROM p_qna pq , p_user pu
+		where pq.USER_SEQ = pu.USER_SEQ
+		and pq.QNA_SEQ = #{QNA_SEQ}
+		order by pq.QNA_SEQ ASC 
+	</select>
+	
+	<update id="qnaReadCount">
+		UPDATE p_qna SET
+			QNA_COUNT = QNA_COUNT+1
+		WHERE QNA_SEQ = #{QNA_SEQ}	
+	</update>
+	
+	<insert id="insertComment" parameterType="hashMap">
+		<selectKey keyProperty="QNAC_SEQ" keyColumn="QNAC_SEQ" resultType="INT" order="AFTER">
+			SELECT MAX(QNAC_SEQ) from p_qnacomment
+		</selectKey>
+		INSERT INTO p_qnacomment(
+		QNA_SEQ
+		, USER_SEQ
+		, QNAC_CONT
+		, REG_DATE
+		, MOD_SEQ
+		, MOD_DATE
+		, NOTE
+		) VALUES (
+		#{QNA_SEQ}
+		, #{USER_SEQ}
+		, #{QNAC_CONT}
+		, NOW()
+		, #{MOD_SEQ}
+		, #{MOD_DATE}
+		, #{NOTE}
+		)
+	</insert>
 </mapper>

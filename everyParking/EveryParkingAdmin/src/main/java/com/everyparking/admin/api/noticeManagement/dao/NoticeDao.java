@@ -12,10 +12,9 @@ import org.springframework.stereotype.Repository;
 public interface NoticeDao {
 	
 	/* 03/12 종화 작성*/
-	public int insertNotiTest(@Param("editorData") String editorData
-								, @Param("notiTitle") String notiTitle
-								, HashMap<String,Object> params) throws Exception;
-						
+	
+	public int insertNoti(HashMap<String, Object> params) throws Exception;
+							
 	public List<HashMap<String,Object>> selectListNoti(HashMap<String,Object> params) throws Exception;
 	
 	public int selectListCountNoti(HashMap<String,Object> params) throws Exception;
@@ -25,5 +24,7 @@ public interface NoticeDao {
 	public int deleteNoti(HashMap<String,Object> params) throws Exception;
 	
 	public HashMap<String,Object> getNotice(int NOTI_SEQ) throws Exception;
+	
+	public int notiReadCount(int NOTI_SEQ) throws Exception;
 	
 }

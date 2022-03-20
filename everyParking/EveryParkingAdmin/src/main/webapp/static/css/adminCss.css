@@ -74,6 +74,13 @@ body>div.mb-5{
     cursor: pointer;
 }
 
+table tr td {
+	overflow:hidden;
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+	max-width: 150px;
+}
+
 .profitChart{width:95%;height:85%;margin-top:45px;margin-left:20px;}
 
 

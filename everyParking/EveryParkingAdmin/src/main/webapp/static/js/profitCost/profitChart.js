@@ -1,38 +1,19 @@
+let parkSeq = new Map();
 
-let barChart = function() {
-	this.SEARCHCOND ='',
-	this.SEARCHKEY = '',
-	this.params = getParam,
-	this.search = function() {
-		let $this = this;
-		let params = $this.params();
-		if(this.SEARCHCOND != '') {
-			params.SEARCHCOND = this.SEARCHCOND;
-		}
-		if(this.SEARCHKEY != '') {
-			params.SEARCHKEY = this.SEARCHKEY;
-		}
-		// var xhr = new XMLHttpRequest();
-		// xhr.onreadystatechange = function() {
-		// 	if(xhr.readyState == 4 && xhr.status==200) {
-		// 		var data = JSON.parse(xhr.responseText);
-		// 		var list = data.list;
-		// 		drawChart(list);
-		// 	}
-		// }
-		// xhr.open("post","/profitCost/selectProfitChartDataByMonth", true);
-		// xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		// xhr.send(params);
+let barChart;
 
-		ajaxCall("/profitCost/selectProfitChartDataByMonth", params, function (data) {
-			var list = data.list;
-			drawChart(list)
-		})
-	}
+ajaxCall("/profitCost/selectReserChartDataByParkSeq", parkSeq, function(data){
+	var list = data.list;
+	drawChart(list)
+});
+
+function searchParkSeq(this.value){
+	parkSeq = {'PARK_SEQ' : this.value};
 }
 
 function drawChart(list){
 	let profitChart = document.getElementById('profitChart').getContext('2d');
+	var monthList = [];
 	var resultLabels = [];
 	var profitValue = [];
 
@@ -43,28 +24,35 @@ function drawChart(list){
 	
 	if(barChart)
 		barChart.destroy();
-		barChart = new Chart(profitChart, {
+	barChart = new Chart(profitChart, {
 		type : 'line',
 	    data : {
 	    	labels : resultLabels,
 	    	datasets:[{
-	   		 	label : '순수익',
+	   		 	label : '수익',
 	   		 	data : profitValue 
-	    	}]
+	    	}],
+			labels : resultLabels,
+			datasets:[{
+				 	label : '관리비용',
+				 	data : profitValue 
+			}],
+			labels : resultLabels,
+			datasets:[{
+				 	label : '순수익',
+				 	data : profitValue 
+			}]
 	    }
 	})
+	
+	
 }
 
-function getParam() {
-	return {}}
-
-function searchChart(condition, key, ){
-	let $this = barChart;
-	if(key != undefined) {
-		$this.SEARCHCOND = key;
-	}
-	if(condition != ''){
-		$this.SEARCHCOND = condition;
-	}
-	$this.search();
+function searchDate(){
+	var searchDateValue = document.getElementById('datepickerN').value;
+	console.log(searchDateValue);
+	ajaxCall("/profitCost/selectReserChartDataByParkSeq", searchDateValue, function(data){
+		var list = data.list;
+		drawChart(list)
+	});
 }

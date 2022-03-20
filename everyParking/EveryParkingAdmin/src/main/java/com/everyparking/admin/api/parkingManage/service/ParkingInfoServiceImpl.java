@@ -67,7 +67,7 @@ public class ParkingInfoServiceImpl implements ParkingInfoService{
         for(String SEC_TYPE : SEC_TYPE_arr) {
             params2.put("PARK_SEQ", PARK_SEQ);
             params2.put("SEC_TYPE", SEC_TYPE);
-            params2.put("REG_SEQ", params.get("REG_SEQ"));
+            params2.put("REG_SEQ", params.get("REG_SEQ"));            
             params2.put("SEC_COUNT", SEC_COUNT_arr[i]);
             params2.put("SEC_DIS", SEC_DIS_arr[i]);
             this.insertSection(params2);

@@ -5,10 +5,13 @@ import java.util.List;
 
 public interface CostManageDao {
 
-	public List<HashMap<String, Object>> selectListCostM(HashMap<String, Object> params) throws Exception;
+	public List<HashMap<String, Object>> selectListCost(HashMap<String, Object> params) throws Exception;
 	public int selectListCountCost(HashMap<String, Object> params) throws Exception;
-	public HashMap<String, Object> selectOneProfitCost(HashMap<String, Object> params) throws Exception;
-    public int deletetCost(HashMap<String,Object> params) throws Exception;
+	public HashMap<String, Object> selectOneCost(HashMap<String, Object> params) throws Exception;
+    public int insertCost(HashMap<String,Object> params) throws Exception;
+    public int updateCost(HashMap<String,Object> params) throws Exception;
+    public int deleteCost(HashMap<String,Object> params) throws Exception;
     public int deleteCostRese(HashMap<String,Object> params) throws Exception;
+   
 }
 

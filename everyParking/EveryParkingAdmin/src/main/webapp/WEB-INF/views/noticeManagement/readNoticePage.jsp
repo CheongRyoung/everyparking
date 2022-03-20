@@ -16,19 +16,19 @@
         <div class="col mx-3" style="height: 600px;">
             <div class="row mt-4">
                 <div class="col">
-                    <h4 style="font-weight: bold;">2월 4주차 주차장 관리일지</h4>
+                    <h4 style="font-weight: bold;">${noti.NOTI_TITLE }</h4>
                 </div>
             </div>
             <div class="row my-4">
                 <div class="col">
                     <span style="font-weight: bold;">작성자 </span>
-                    <span>아무개</span>
+                    <span>${noti.USER_NAME }</span>
                     <span>|</span>
                     <span style="font-weight: bold;">등록일 </span>
-                    <span>2022.02.26</span>
+                    <span>${noti.REG_DATE }</span>
                     <span>|</span>
                     <span style="font-weight: bold;">조회수 </span>
-                    <span>0</span>
+                    <span>${noti.NOTI_COUNT }</span>
                 </div>
             </div>
             <div class="row mt-2">
@@ -37,7 +37,7 @@
             <!-- 내용 영역인데 에디터가 들어가야할 공간이 필요하대서 그냥 height 값 설정해둘게요 -->
             <div class="row my-3">
                 <div class="col mt-3" style="height: 320px;">
-                    안녕하세요. 우주관리자입니다. 2월 4주차 관리일지를 공개합니다.
+                   	<textarea id="readEditor" style="display: none;">${noti.NOTI_CONT }</textarea>
                 </div>
             </div>
 

@@ -64,13 +64,4 @@
 	   <div id="pagingBlock3" style="display: flex; justify-content: center; position: absolute; bottom: 1%;"></div>
 	</div>
 </div>
-<div> 로그인된 ID :: ${sessionScope.member.member_no}</div>
-    <button type="button" onclick="testLogin()">로그인부터 하자</button>
-<script type="text/javascript">
-    function testLogin(){
-        ajaxCall("/noticeManagement/testlogin", {}, function(data){
-            console.log(data);
-        })
-    }
-</script>
 <script type="text/javascript" src="/js/noticeManagement/noticeManagement.js"></script>

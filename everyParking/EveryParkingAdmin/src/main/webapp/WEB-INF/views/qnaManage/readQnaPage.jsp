@@ -12,19 +12,19 @@
         <div class="col mx-3" style="height: 600px;">
             <div class="row mt-4">
                 <div class="col">
-                    <h4 style="font-weight: bold;">2월 4주차 주차장 이용할때</h4>
+                    <h4 style="font-weight: bold;">${qna.QNA_TITLE }</h4>
                 </div>
             </div>
             <div class="row my-4">
                 <div class="col">
                     <span style="font-weight: bold;">작성자 </span>
-                    <span>아무개</span>
+                    <span>${qna.USER_NAME}</span>
                     <span>|</span>
                     <span style="font-weight: bold;">등록일 </span>
-                    <span>2022.02.26</span>
+                    <span>${qna.REG_DATE}</span>
                     <span>|</span>
                     <span style="font-weight: bold;">조회수 </span>
-                    <span>0</span>
+                    <span>${qna.QNA_COUNT }</span>
                 </div>
             </div>
             <div class="row mt-2">
@@ -33,7 +33,7 @@
             <!-- 내용 영역인데 에디터가 들어가야할 공간이 필요하대서 그냥 height 값 설정해둘게요 -->
             <div class="row my-3">
                 <div class="col mt-3" style="height: 180px;">
-                    안녕하세요 이용자입니다. 주차장 이용할 때 이게 너무 불편한데 어떻게 해야하나요?
+                    ${qna.QNA_CONT}
                 </div>
             </div>
 

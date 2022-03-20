@@ -6,35 +6,25 @@
 	
 
 	<sql id="costManageSql">
-		SELECT t1.*, @ROWNUM:=@ROWNUM+1 AS RNUM 
-		FROM (
-				SELECT
-				pp.PARK_NAME AS PARKNAME,
-				'비용' AS CATE,
-				pc.COST_PRICE AS PRICE,
-				PC.REG_DATE AS REGDATE,
-				pc.COST_SEQ AS TSEQ,
-				pc.USE_YN AS USE
-				FROM P_COSTMANAGE pc , P_PARKINGINFO pp
-				WHERE 1=1
-				AND pc.PARK_SEQ = pp.PARK_SEQ
-				AND pc.PARK_SEQ = 2
-				UNION ALL
-				SELECT
-				pp.PARK_NAME AS PARKNAME,
-				'수익' AS CATE ,
-				pr.RESE_PRICE AS PRICE,
-				pr.REG_DATE AS REGDATE,
-				pr.RESE_SEQ AS TSEQ,
-				pr.USE_YN AS USE
-				FROM P_RESERVATION pr , P_SECTION ps , P_PARKINGINFO pp
-				WHERE 1=1
-				AND pp.PARK_SEQ = ps.PARK_SEQ
-				AND pr.SEC_SEQ = ps.SEC_SEQ
-				AND ps.PARK_SEQ = 2
-			  ) t1, (SELECT @ROWNUM:=0) R
-		WHERE 1=1
-		AND USE = 'Y'
+		SELECT 
+			COST_SEQ
+			,pp.PARK_SEQ
+			,COST_NAME
+			,COST_CONT
+			,COST_PRICE
+			,DATE_FORMAT(COST_DATE, '%Y-%m-%d') AS COST_DATE
+			,PARK_NAME
+			,pc.REG_SEQ
+			,pc.REG_DATE
+			,pc.MOD_SEQ
+			,pc.MOD_DATE
+			,pc.NOTE
+			,pc.USE_YN
+		FROM p_costmanage as pc
+		join p_parkinginfo as pp
+		on pc.PARK_SEQ = pp.PARK_SEQ 
+		where 1=1
+		AND pc.USE_YN = 'Y'
 	</sql>
 	<sql id="costSearch">
 		<if test='SEARCHCOND != null and !SEARCHCOND.equals("")'>
@@ -47,7 +37,18 @@
 	</sql>
 
 
-	<select id="selectListCostM" parameterType="hashMap" resultType="hashMap">
+	<select id="selectListCost" parameterType="hashMap" resultType="hashMap">
+		<include refid="costManageSql"></include>
+		<include refid="costSearch"></include>
+		<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+		<if test='ORDER != null and !ORDER.equals("")'>
+			ORDER BY ${ORDER} ${ORDER_TYPE}
+			</if>
+			LIMIT #{START}, #{CNT}
+		</if>
+	</select>
+
+	<!-- <select id="selectListCostM" parameterType="hashMap" resultType="hashMap">
 		/* profitCostMapper.selectListProfitCost [ 수익 조회 목록 - 김장문 ] */
 		<include refid="costManageSql"></include>
 		<include refid="costSearch"></include>
@@ -57,7 +58,7 @@
 			</if>
 			LIMIT #{START}, #{CNT}
 		</if>
-	</select>
+	</select>-->
 
 	<select id="selectListCountCost" parameterType="hashMap" resultType="int">
 		/* profitCostMapper.selectListCountProfitCost [ 수익 목록카운트 조회 - 김장문 ] */
@@ -67,9 +68,49 @@
 		)z
 	</select>
 
+	<select id="selectOneCost" parameterType="hashMap" resultType="hashMap">
+		/* profitCostMapper.selectOneCost [ 수익 조회 - 정자운 ] */
+		<include refid="costManageSql"></include>
+	 	AND COST_SEQ = #{COST_SEQ}
+	</select>
+	
+	<update id="insertCost" parameterType="hashMap">
+        /* profitCostMapper.insertCost [ 수익 수정 - 정자운 ]  */
+        INSERT INTO p_costmanage (
+        	PARK_SEQ    
+			, COST_NAME 
+			, COST_CONT 
+			, COST_PRICE
+			, COST_DATE 
+			, REG_SEQ 
+			, REG_DATE
+		) VALUES (
+			#{ PARK_SEQ   }    
+			, #{ COST_NAME  }   
+			, #{ COST_CONT  }   
+			, #{ COST_PRICE }   
+			, #{ COST_DATE  }   
+			, #{ REG_SEQ }
+			, NOW()
+		)
+    </update>
+	
+	
+	<update id="updateCost" parameterType="hashMap">
+        /* profitCostMapper.updateCost [ 수익 수정 - 정자운 ]  */
+        UPDATE p_costmanage SET
+			PARK_SEQ   = #{ PARK_SEQ   }
+			, COST_NAME  = #{ COST_NAME  }
+			, COST_CONT  = #{ COST_CONT  }
+			, COST_PRICE = #{ COST_PRICE }
+			, COST_DATE  = #{ COST_DATE  }
+			, MOD_SEQ = #{ MOD_SEQ }
+			, MOD_DATE = NOW()
+        WHERE COST_SEQ = #{ COST_SEQ }
+    </update>
 
 	<update id="deleteCost" parameterType="hashMap">
-        /* profitCostMapper.deleteProfit [ 수익 비용 삭제 - 김장문 ]  */
+        /* profitCostMapper.deleteCost [ 수익 비용 삭제 - 김장문 ]  */
         UPDATE p_costmanage SET
            USE_YN = 'N'
            , MOD_SEQ = #{MOD_SEQ}

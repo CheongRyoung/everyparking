@@ -142,10 +142,10 @@
 						</div>
 						<div class="row me-3 mt-3">
 							<div class="col-4 mt-1">문의시간</div>
-							<div class="col">OPEN : 
+							<div class="col pe-0">OPEN : 
 								<input class="inputTime" onkeypress="onlyTimeNum(event);" type="time" name="PARK_OPEN">
 							</div>					
-							<div class="col">CLOSE :
+							<div class="col pe-0">CLOSE :
 								<input class="inputTime" onkeypress="onlyTimeNum(event);" type="time" name="PARK_CLOSE">
 							</div>						
 						</div>

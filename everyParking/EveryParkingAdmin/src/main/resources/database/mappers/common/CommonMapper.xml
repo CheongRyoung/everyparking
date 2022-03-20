@@ -7,7 +7,6 @@
         <selectKey keyProperty="USER_SEQ" resultType="integer" order="AFTER">
             SELECT MAX(USER_SEQ) From P_USER
         </selectKey>
-
         INSERT INTO P_USER(
         USER_TYPE,
         USER_MAIL,

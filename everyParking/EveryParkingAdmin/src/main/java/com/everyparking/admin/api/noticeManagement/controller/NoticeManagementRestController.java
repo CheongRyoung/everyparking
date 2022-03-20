@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.everyparking.admin.api.noticeManagement.service.NoticeService;
+import com.everyparking.admin.api.noticeManagement.service.NoticeServiceImpl;
 import com.everyparking.admin.framework.common.controller.BaseController;
 import com.everyparking.admin.framework.common.util.SessionUtil;
 import com.everyparking.admin.framework.common.vo.Ajax;
@@ -29,6 +30,7 @@ public class NoticeManagementRestController extends BaseController {
 	@Autowired
 	private NoticeService noticeService;
 
+	/*
 	@RequestMapping("/uploadTest")
 	public String uploadTest(HttpServletRequest request
 							, @RequestParam HashMap<String,Object> params
@@ -39,6 +41,7 @@ public class NoticeManagementRestController extends BaseController {
 		noticeService.insertNotiTest(editorData, notiTitle, request, params);
 		return "sucess";
 	}
+	*/
 	
 	@RequestMapping("/selectListNoti")
 	public ModelAndView selectListNoti(@RequestBody HashMap<String,Object> params) throws Exception{
@@ -52,6 +55,7 @@ public class NoticeManagementRestController extends BaseController {
 		return mav;
 	}
 
+	
 	@RequestMapping("/updateNoti")
 	public ModelAndView updateNoti(HttpServletRequest request
 								, @RequestBody HashMap<String,Object> params) throws Exception{

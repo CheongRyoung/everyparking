@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -75,11 +76,11 @@ public class ProfitCostRestController extends BaseController {
     }
     
     
-    @RequestMapping("/selectProfitChartDataByMonth")
+    @RequestMapping("/selectReserChartDataByParkSeq")
     public ModelAndView selectProfitChartDataByMonth(@RequestBody HashMap<String, Object> params) throws Exception{
     	ModelAndView mav = super.createMav();
     	try {
-    		mav = super.createMav(profitCostService.selectProfitChartDataByMonth());
+    		mav = super.createMav(profitCostService.selectChartByParkSeq(params));
         }catch (Exception e){
             logger.error(e.getMessage());
             super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
@@ -87,5 +88,27 @@ public class ProfitCostRestController extends BaseController {
         return mav;
     }
     
-    
+//    @RequestMapping("/selectReservationPriceByParkSeq")
+//    public ModelAndView selectReservationPriceByParkSeq(@RequestParam int PARK_SEQ) throws Exception{
+//    	ModelAndView mav = super.createMav();
+//    	try {
+//    		mav = super.createMav(profitCostService.selectReservationPriceByParkSeq(PARK_SEQ));
+//        }catch (Exception e){
+//            logger.error(e.getMessage());
+//            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+//        }
+//        return mav;
+//    }
+//    
+//    @RequestMapping("/selectCostPriceByParkSeq")
+//    public ModelAndView selectCostPriceByParkSeq(@RequestParam int PARK_SEQ) throws Exception{
+//    	ModelAndView mav = super.createMav();
+//    	try {
+//    		mav = super.createMav(profitCostService.selectCostPriceByParkSeq(PARK_SEQ));
+//        }catch (Exception e){
+//            logger.error(e.getMessage());
+//            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+//        }
+//        return mav;
+//    }
 }

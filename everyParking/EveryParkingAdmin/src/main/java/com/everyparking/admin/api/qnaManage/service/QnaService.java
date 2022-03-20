@@ -9,4 +9,9 @@ public interface QnaService {
 	
 	public int selectListCountQna(HashMap<String,Object> params) throws Exception;
 	
+	public HashMap<String, Object> getQna(int QNA_SEQ) throws Exception;
+	
+	public int qnaReadCount(int QNA_SEQ) throws Exception;
+	
+	public int insertComment(HashMap<String, Object> params) throws Exception;
 }

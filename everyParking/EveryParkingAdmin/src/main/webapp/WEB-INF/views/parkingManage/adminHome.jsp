@@ -22,19 +22,15 @@
 			<div class="row">
 				<div class="col mt-4 pe-3 d-grid">
 					<form action="">
-						<button type="button"
-							class="btn btn-light btn-sm adminBorder borderBottom">이용
-							내역 조회</button>
+						<button type="button" class="btn btn-light btn-sm adminBorder borderBottom">이용 내역 조회</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- 차트 들어가는 공간-->
-	<div
-		class="row mt-3 mb-3 backgroundColorwhite adminBorder borderBottom"
-		style="height: 400px;">
+	<!-- 차트 들어가는 공간 -->
+	<div class="row mt-3 mb-3 backgroundColorwhite adminBorder borderBottom" style="height: 400px;">
 		<div class="col"></div>
 	</div>
 

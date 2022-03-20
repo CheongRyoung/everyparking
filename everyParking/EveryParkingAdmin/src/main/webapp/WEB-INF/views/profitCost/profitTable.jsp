@@ -13,7 +13,7 @@
 			</h1>
 		</div>
 		<div class="col-2 mt-4 px-0 text-end">
-			<button class="btn btn-light btn-sm adminBorder borderBottom" onclick="excelDwon('#profitTable', '/excel/profitCost')">다운로드</button>
+			<button class="btn btn-light btn-sm adminBorder borderBottom" onclick="excelDown('#profitTable', '/excel/profitCost')">다운로드</button>
 		</div>
 	</div>
 	
@@ -21,7 +21,7 @@
 			<!-- 검색 옵션 구역-->
 			<div class="col-2 px-0">
 				<select class="form-select" aria-label="Default select example" onchange="searchGrid('#profitTable', this.value)">
-					<option selected>전체</option>
+					<option selected>주차장 선택</option>
 					<c:forEach items="${list}" var="data">
 						<option value="${data.PARK_NAME}">${data.PARK_NAME}</option>
 					</c:forEach>

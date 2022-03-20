@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.everyparking.admin.api.userhistory.dao.UserHistoryDao">
+	
+
+	<sql id="userHistorySql">
+		SELECT
+			RESE_SEQ
+			,PARK_NAME 
+			,RESE_CAR_NO 
+			,RESE_START 
+			,RESE_PRICE 
+			,pr.REG_DATE 
+			,pr.NOTE
+			,pr.USE_YN 
+			FROM p_section as ps 
+			join p_parkinginfo as pp  
+			on ps.PARK_SEQ = pp.PARK_SEQ 
+			inner join 
+			p_reservation pr 
+			on pr.SEC_SEQ = ps.SEC_SEQ  
+			where 1=1
+			AND pr.USE_YN = 'Y'
+	</sql>
+	<sql id="historySearch">
+		<if test='SEARCHCOND != null and !SEARCHCOND.equals("")'>
+			AND t1.PARKNAME LIKE CONCAT('%',#{SEARCHCOND},'%')
+		</if>
+		<if test='SEARCHKEY != null and !SEARCHKEY.equals("")'>
+			AND <![CDATA[ t1.REGDATE => str.to.date(substr("#{SEARCHKEY}", 1, 10), '%Y-%m-%d')
+            AND t1.REGDATE <= str.to.date(substr("#{SEARCHKEY}", 14, 24), '%Y-%m-%d') ]]>
+		</if>
+	</sql>
+
+
+	<select id="selectListHistory" parameterType="hashMap" resultType="hashMap">
+		<include refid="userHistorySql"></include>
+		<include refid="historySearch"></include>
+		<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+		<if test='ORDER != null and !ORDER.equals("")'>
+			ORDER BY ${ORDER} ${ORDER_TYPE}
+			</if>
+			LIMIT #{START}, #{CNT}
+		</if>
+	</select>
+
+	<!-- <select id="selectListCostM" parameterType="hashMap" resultType="hashMap">
+		/* profitCostMapper.selectListProfitCost [ 수익 조회 목록 - 김장문 ] */
+		<include refid="costManageSql"></include>
+		<include refid="costSearch"></include>
+		<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+			<if test='ORDER != null and !ORDER.equals("")'>
+				ORDER BY ${ORDER} ${ORDER_TYPE}
+			</if>
+			LIMIT #{START}, #{CNT}
+		</if>
+	</select>-->
+
+	<select id="selectListCountHistory" parameterType="hashMap" resultType="int">
+		/* profitCostMapper.selectListCountProfitCost [ 수익 목록카운트 조회 - 김장문 ] */
+		SELECT COUNT(*) FROM(
+		<include refid="userHistorySql"></include>
+		<include refid="historySearch"></include>
+		)z
+	</select>
+
+<!-- 
+	<update id="deleteCost" parameterType="hashMap">
+        /* profitCostMapper.deleteProfit [ 수익 비용 삭제 - 김장문 ]  */
+        UPDATE p_costmanage SET
+           USE_YN = 'N'
+           , MOD_SEQ = #{MOD_SEQ}
+           , MOD_DATE = NOW()
+        WHERE COST_SEQ = #{COST_SEQ}
+    </update>
+
+
+	<update id="deleteCostRese" parameterType="hashMap">
+        /* profitCostMapper.deleteProfitCostRese [ 예약 비용 삭제 - 김장문 ]  */
+        UPDATE p_reservation SET
+           USE_YN = 'N'
+           , MOD_SEQ = #{MOD_SEQ}
+           , MOD_DATE = NOW()
+        WHERE RESE_SEQ = #{RESE_SEQ}
+    </update>
+ -->
+
+</mapper>
+

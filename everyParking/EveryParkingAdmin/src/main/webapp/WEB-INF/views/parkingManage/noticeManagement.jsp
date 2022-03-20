@@ -11,8 +11,8 @@
 			<p style="vertical-align: text-bottom;"></p>
 		</div>
 		<div class="col-2 mt-4 px-0 text-end">
-			<button class="btn btn-light btn-sm adminBorder borderBottom" data-bs-toggle="modal" data-bs-target="#noticeInsertModal">공지사항
-				등록</button>
+			<a href="./noticeInsertForm"><button class="btn btn-light btn-sm adminBorder borderBottom" data-bs-toggle="modal" data-bs-target="#noticeInsertModal">공지사항
+				등록</button></a>
 		</div>
 	</div>
 	<div class="row mt-4 adminBorder borderBottom">

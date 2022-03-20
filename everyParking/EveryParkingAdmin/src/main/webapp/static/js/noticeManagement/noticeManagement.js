@@ -1,8 +1,30 @@
 /**
  * 03/14 종화 작성
  */
+// ,  filter:function(data, rowData, ridx, cidx, $this){
+//	                    return `<a href="/noticeManagement/readNoticePage?NOTI_SEQ=${rowData.NOTI_SEQ}" class="btn btn-outline-primary btn-sm">이동하기</a>`}
 
 const writeEditor = document.getElementById('writeEditor');
+const readEditor = document.getElementById('readEditor');
+
+
+if(readEditor){
+    ClassicEditor
+        .create( document.querySelector( '#readEditor' ))
+
+        .then( editor => {
+            window.editor = editor;
+            editor.isReadOnly = true;
+            const toolbarElement = editor.ui.view.toolbar.element;
+            toolbarElement.style.display = 'none';
+        } )
+        .catch( error => {
+            console.error( 'Oops, something went wrong!' );
+            console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+            console.warn( 'Build id: g64ljk55ssvc-goqlohse75uw' );
+            console.error( error );
+        } );
+}
 
 if(writeEditor){
     let editor;
@@ -29,24 +51,36 @@ if(writeEditor){
         } );
     
     function uploadData() {
-        const editorData = editor.getData();
-        console.log(typeof(editorData));
+    	if(!validate()){
+    		return false;
+    	}
+    		
+    	
+        let editorData = editor.getData();
+        $('input[name=editorData]').val(editorData);
         
-        const notiTitle = document.getElementById("notititle").value;
-        console.log(typeof(notiTitle));
+        return true;
         
-        var xhr = new XMLHttpRequest();
-        
-        xhr.onreadystatechange = function() {
-            if(xhr.readyState==4&&xhr.status==200) {
-        		location.href="/noticeManagement/noticeManagement"           	
-            }
-        }
-        xhr.open("post", "../noticeManagement/uploadTest", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-        xhr.send("editorData=" + editorData + "&notiTitle=" + notiTitle);
+//        let param = cmm.formToJson("#noticeInsertDetail");
+//        param.editorData = ;
+//        console.log(param)
+//        ajaxCall("/noticeManagement/insertNoti", param, function(data){
+//        	cmm.alert(data.message, function(){
+//        		if(data.code =='S'){
+//            		location.href="/noticeManagement/noticeManagement"
+//            	}	
+//        	})
+//        })
     }
   
+    function validate(){
+    	if(!$('input[name=notititle]').val()){
+    		return false;
+    	}
+    	return true;
+    }
+    
+    
     function updateData() {
         let editorData = editor.getData();
 //        console.log(typeof(editorData));
@@ -91,7 +125,7 @@ let noticeManagement = {
 	            cols : [
 	                {title : "번호", name: "NOTI_SEQ", type:"number", colWidth:"10", order: true},
 	                {title : "공지사항 제목", name: "NOTI_TITLE"},
-	                {title : "작성자", name: "USER_SEQ", colWidth:"10"},
+	                {title : "작성자", name: "USER_NAME", colWidth:"10"},
 	                {title : "등록일", name: "REG_DATE", type:"date", colWidth:"20"},
 	                {title : "수정", name: "modify", filter:function(data, rowData, ridx, cidx, $this){
 	                    return `<a href="/noticeManagement/noticeUpdateForm?NOTI_SEQ=${rowData.NOTI_SEQ}" class="btn btn-outline-primary btn-sm">수정</a>`
@@ -99,6 +133,10 @@ let noticeManagement = {
 	                {title : "삭제", name: "NOTI_SEQ", filter:function(data, rowData, ridx, cidx, $this) {
 	                    return `<a class="btn btn-outline-danger btn-sm" onclick="noticeManagement.deleteNotice(${ridx})">삭제</a>`
 	                }, colWidth:"10"},
+	                {title : "이동", name: "NOTI_SEQ",  filter:function(data, rowData, ridx, cidx, $this){
+	                    return `<a href="/noticeManagement/readNoticePage?NOTI_SEQ=${rowData.NOTI_SEQ}" class="btn btn-outline-primary btn-sm">이동하기</a>`
+	                }, colWidth:"10"}
+
 	            ],
 	            pagingEl : '#pagingBlock3',
 	            getParam : getParam

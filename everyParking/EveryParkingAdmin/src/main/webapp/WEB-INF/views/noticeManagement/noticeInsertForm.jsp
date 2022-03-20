@@ -10,15 +10,16 @@
 		</div>     
 
 		<div class="col-2 mt-3 text-end">
-			<form action="">
+			<a href="./noticeInsertForm">
 				<button type="button"
 					class="btn btn-light btn-sm adminBorder borderBottom"
 					data-bs-toggle="modal" data-bs-target="#costModalinsert">
 					새로 등록</button>
-			</form>
+			</a>
 		</div>
 	</div>
 	<!-- 테이블 -->
+	<form id="noticeInsertDetail" enctype="multipart/form-data">
 	<div
 		class="row mt-2 mb-3 backgroundColorwhite adminBorder borderBottom"
 		style="min-height: 600px;">
@@ -29,7 +30,7 @@
 					<div class="row mt-5">
 						<div class="col-3">공지사항 제목</div>
 						<div class="col">
-							<input class="form-control" type="text" id="notititle" placeholder="제목을 입력해주세요.">
+							<input class="form-control" type="text" name="notiTitle" id="notititle" placeholder="제목을 입력해주세요.">
 						</div>
 					</div>
 					<div class="row mt-3 mb-5">
@@ -41,6 +42,9 @@
 						</div>
 					</div>
 					<div class="row my-3">
+						<div class="col">
+						<input type="file" name="" id="files">
+						</div>
 						<div class="col text-end">
 							<button type="button" class="modalBtn btn btn-secondary"
 								style="background-color: #e0e0e0; color: #000;">취소</button>
@@ -53,6 +57,7 @@
 
 		</div>
 	</div>
+	</form>
 </div>
 <script type="text/javascript" src="/js/noticeManagement/noticeManagement.js"></script>
 

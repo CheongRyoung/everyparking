@@ -13,18 +13,25 @@
             , REG_DATE 
             , MOD_SEQ 
             , MOD_DATE
-            , NOTE 
+            , NOTE
+            , NOTI_COUNT
         FROM p_notification
         WHERE 1=1
         AND USE_YN = 'Y'
 	</sql>
 	
 	<select id="getNotice" parameterType="int" resultType="hashMap">
-		<include refid="notiManageSQL"></include> 
-		AND NOTI_SEQ = #{NOTI_SEQ}
+		SELECT pn.* , pu.USER_NAME
+		FROM p_notification pn , p_user pu 
+		where pn.USER_SEQ = pu.USER_SEQ 
+		and pn.NOTI_SEQ = #{NOTI_SEQ}
+		order by pn.NOTI_SEQ ASC
 	</select>
 	
-	<insert id="insertNotiTest" parameterType="hashMap">
+	<insert id="insertNoti" parameterType="hashMap">
+		<selectKey keyProperty="NOTI_SEQ" keyColumn="NOTI_SEQ" resultType="INT" order="AFTER">
+			SELECT MAX(NOTI_SEQ) from p_notification
+		</selectKey>
 		/* 03/12 종화 작성 */
 		INSERT INTO p_notification(
 			USER_SEQ
@@ -34,16 +41,20 @@
 			, MOD_SEQ
 			, MOD_DATE
 			, NOTE
+			, FILE_SEQ
+			, NOTI_COUNT
 		)
-		VALUES(
-		NULL
-		, #{notiTitle}
-		, #{editorData}
-		, NOW()
-		, 0
-		, NULL
-		, NULL
-	)
+			VALUES(
+			#{USER_SEQ}
+			, #{notiTitle}
+			, #{editorData}
+			, NOW()
+			, #{MOD_SEQ}
+			, #{MOD_DATE}
+			, #{NOTE}
+			, #{FILE_SEQ}
+			, 0
+		)
 	</insert>
 	
 	<select id="selectListNoti" parameterType="hashMap" resultType="hashMap">
@@ -77,6 +88,12 @@
 			USE_YN = 'N'
 			, MOD_SEQ = #{MOD_SEQ}
 			, MOD_DATE = NOW()
+		WHERE NOTI_SEQ = #{NOTI_SEQ}
+	</update>
+	
+	<update id="notiReadCount">
+		UPDATE p_notification SET
+			NOTI_COUNT = NOTI_COUNT+1
 		WHERE NOTI_SEQ = #{NOTI_SEQ}
 	</update>
 </mapper>
