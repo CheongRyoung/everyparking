@@ -53,7 +53,7 @@ public class ParkingBlockServiceImpl implements ParkingBlockService {
 		for(int i=0; i<insert; i++) {
 			result.add(params);
 		}
-		if(count - use > insert) {
+		if(count - use >= insert) {
 			return parkingBlockDao.insertBlock(result);
 		} else {
 			return -1;

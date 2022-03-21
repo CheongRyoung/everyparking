@@ -91,7 +91,7 @@
 		FROM p_reservation
 		WHERE USE_YN = 'Y') AS plus
 		WHERE 1=1
-		AND (STR_TO_DATE((Concat(LEFT(#{daterange}, 12), ':00:01')), '%Y-%m-%d %T') BETWEEN START AND END
+		AND (STR_TO_DATE((Concat(LEFT(#{daterange}, 13), ':00:01')), '%Y-%m-%d %T') BETWEEN START AND END
 		OR STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T') BETWEEN START AND END)
 		GROUP BY SEC_SEQ) AS tion
 		RIGHT JOIN p_section AS sec
@@ -120,7 +120,7 @@
 					<foreach collection="list" item="item" separator=",">
 					       (
 					#{item.SEC_SEQ},
-					STR_TO_DATE((Concat(LEFT(#{item.daterange}, 12), ':00:01')), '%Y-%m-%d %T'),
+					STR_TO_DATE((Concat(LEFT(#{item.daterange}, 13), ':00:01')), '%Y-%m-%d %T'),
 					STR_TO_DATE((substring(#{item.daterange}, 18, 13)), '%Y-%m-%d %T'),
 					#{item.BLO_CONT},
 					null,

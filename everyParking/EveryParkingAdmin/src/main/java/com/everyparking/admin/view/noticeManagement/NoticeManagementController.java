@@ -63,21 +63,5 @@ public class NoticeManagementController extends BaseController {
 		return"/noticeManagement/noticeUpdateForm";
 	}
 	
-	@RequestMapping("/insertNoti")
-	public ModelAndView insertNoti(HttpServletRequest request
-			, @RequestParam HashMap<String, Object> params
-			) throws Exception{
-		
-		ModelAndView mav = super.createMav();
-		try {
-			SessionUtil.setCreator(request, params);
-			mav = super.createMav(noticeService.insertNoti(request, params));
-			super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.TYPE_SUCCESS);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.TYPE_FAIL);
-		}
-		mav.setViewName("redirect: /noticeManagement/noticeManagement");
-		return mav;
-	}
+	
 }

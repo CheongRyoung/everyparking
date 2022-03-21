@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/admin/test")
 public class TestController extends BaseController {
 	
 	@Autowired
@@ -58,36 +56,6 @@ public class TestController extends BaseController {
 		excelMap.put("filename", "test파일명123!@#_");
 		// ExcelDounloadUtil 객체의 excelDownload메소드를 사용 응답을 해줘야 되니 response 꼭 필요
 
-	}
-	
-	
-	// 에디터용
-	@ResponseBody
-	@RequestMapping("imageUpload")
-	public Map<String, Object> imageUpload(@RequestParam("upload") MultipartFile image) {
-		Map<String, Object> data = new HashMap<String, Object>();
-		if(image != null) {
-			String originalName = image.getOriginalFilename();
-			/**
-			 *   -------------------------------
-			 *   db에 이미지 기존 이름 저장
-			 *   -------------------------------
-			 * **/
-
-			/**  new FileUtil(MultipartFile image, enum객체로 폴더 선택)     **/
-
-//			String imgPath = fileUtil.folderPath(image, ImageFolerName.NOTIFICATION);
-			/**
-			 *   -------------------------------
-			 *   db에 이미지 url저장
-			 *   -------------------------------
-			 * **/
-
-			data.put("uploaded", 1);
-			data.put("fileName", originalName);
-//			data.put("url", "/uploadImage/" + imgPath);
-		}
-		return data;
 	}
 
 	@RequestMapping("/fileUploadTestForm")

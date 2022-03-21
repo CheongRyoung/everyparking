@@ -4,62 +4,63 @@
 // ,  filter:function(data, rowData, ridx, cidx, $this){
 //	                    return `<a href="/noticeManagement/readNoticePage?NOTI_SEQ=${rowData.NOTI_SEQ}" class="btn btn-outline-primary btn-sm">이동하기</a>`}
 
-const writeEditor = document.getElementById('writeEditor');
-const readEditor = document.getElementById('readEditor');
+// const writeEditor = document.getElementById('writeEditor');
+// const readEditor = document.getElementById('readEditor');
+//
+//
+// if(readEditor){
+//     ClassicEditor
+//         .create( document.querySelector( '#readEditor' ))
+//
+//         .then( editor => {
+//             window.editor = editor;
+//             editor.isReadOnly = true;
+//             const toolbarElement = editor.ui.view.toolbar.element;
+//             toolbarElement.style.display = 'none';
+//         } )
+//         .catch( error => {
+//             console.error( 'Oops, something went wrong!' );
+//             console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+//             console.warn( 'Build id: g64ljk55ssvc-goqlohse75uw' );
+//             console.error( error );
+//         } );
+// }
+//
+// if(writeEditor){
+//     let editor;
+//
+//     ClassicEditor
+//         .create( document.querySelector( '#writeEditor' ) , {
+//             ckfinder: {
+//                 uploadUrl: '/admin/test/imageUpload'
+//             }
+//         } )
+//         .then( newEditor => {
+//             editor = newEditor;
+//         } )
+//
+//         .then( editor => {
+//             window.editor = editor;
+//
+//         } )
+//         .catch( error => {
+//             console.error( 'Oops, something went wrong!' );
+//             console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+//             console.warn( 'Build id: g64ljk55ssvc-goqlohse75uw' );
+//             conosle.error( error );
+//         } );
 
-
-if(readEditor){
-    ClassicEditor
-        .create( document.querySelector( '#readEditor' ))
-
-        .then( editor => {
-            window.editor = editor;
-            editor.isReadOnly = true;
-            const toolbarElement = editor.ui.view.toolbar.element;
-            toolbarElement.style.display = 'none';
-        } )
-        .catch( error => {
-            console.error( 'Oops, something went wrong!' );
-            console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
-            console.warn( 'Build id: g64ljk55ssvc-goqlohse75uw' );
-            console.error( error );
-        } );
-}
-
-if(writeEditor){
-    let editor;
-
-    ClassicEditor
-        .create( document.querySelector( '#writeEditor' ) , {
-            ckfinder: {
-                uploadUrl: '/admin/test/imageUpload'
-            }
-        } )
-        .then( newEditor => {
-            editor = newEditor;
-        } )
-
-        .then( editor => {
-            window.editor = editor;
-
-        } )
-        .catch( error => {
-            console.error( 'Oops, something went wrong!' );
-            console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
-            console.warn( 'Build id: g64ljk55ssvc-goqlohse75uw' );
-            console.error( error );
-        } );
-    
-    function uploadData() {
-    	if(!validate()){
-    		return false;
-    	}
-    		
-    	
-        let editorData = editor.getData();
-        $('input[name=editorData]').val(editorData);
-        
-        return true;
+//     function uploadData() {
+//
+//
+// //    	if(!validate()){
+// //    		return false;
+// //    	}
+//
+//         let editorData = editor.getData();
+//         $('input[name=editorData]').val(editorData);
+//
+//        return true;
         
 //        let param = cmm.formToJson("#noticeInsertDetail");
 //        param.editorData = ;
@@ -71,14 +72,14 @@ if(writeEditor){
 //            	}	
 //        	})
 //        })
-    }
+//     }
   
-    function validate(){
-    	if(!$('input[name=notititle]').val()){
-    		return false;
-    	}
-    	return true;
-    }
+//    function validate(){
+//    	if(!$('input[name=notititle]').val()){
+//    		return false;
+//    	}
+//    	return true;
+//    }
     
     
     function updateData() {
@@ -114,7 +115,7 @@ if(writeEditor){
         })
         
     }
-}
+// }
 
 let noticeManagement = {
 	    gridOption:{},
@@ -177,10 +178,4 @@ let noticeManagement = {
 
 	    )
 	})
-	
-	function testLogin(){
-        ajaxCall("/noticeManagement/testlogin", {}, function(data){
-            console.log(data);
-        })
-    }
 

@@ -52,7 +52,7 @@
                     <div class="row me-3 mt-3">
                         <div class="col-4 mt-1">차단 시간</div>
                         <div class="col">
-                            <input type="text" id="datepickerR" name="daterange" class="datepicker"
+                            <input type="text" id="datepickerR" name="daterange" class="form-control datepicker"
                                    style="width: 100%; height: 35px; padding-left: 10px;"/>
                         </div>
                     </div>
@@ -72,7 +72,6 @@
                         <div class="col"></div>
                         <div class="col-5 text-end d-gird">
                             <button type="button" class="btn btn-outline-primary" onclick="blockRegister()">등록완료</button>
-                            <input type="submit" value="Submit!">
                         </div>
                     </div>
                 </div>
@@ -81,4 +80,4 @@
     </div>
     </form>
 </div>
-<script src="/js/parkingBlock/parkingBlock.js"></script>
+<script src="/js/parkingBlock/parkingBlockRegi.js"></script>

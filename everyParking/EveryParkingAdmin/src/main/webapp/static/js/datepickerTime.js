@@ -931,7 +931,7 @@
             //
             // minutes
             //
-            if(datepickerR) {
+            if(document.getElementById('datepickerR')) {
                 html += '<select class="minuteselect" style="display: none;">';
             } else {
                 html += ': <select class="minuteselect">';

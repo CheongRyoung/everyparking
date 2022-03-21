@@ -19,7 +19,8 @@
 		</div>
 	</div>
 	<!-- 테이블 -->
-	<form id="noticeInsertDetail" enctype="multipart/form-data">
+	<form action="/noticeManagement/insertNoti" id="noticeInsertDetail" method="post" enctype="multipart/form-data" onsubmit="uploadData()">
+	<input type="hidden" name="editorData">
 	<div
 		class="row mt-2 mb-3 backgroundColorwhite adminBorder borderBottom"
 		style="min-height: 600px;">
@@ -43,12 +44,12 @@
 					</div>
 					<div class="row my-3">
 						<div class="col">
-						<input type="file" name="" id="files">
+						<input type="file" name="FILE_SEQ" id="files">
 						</div>
 						<div class="col text-end">
 							<button type="button" class="modalBtn btn btn-secondary"
 								style="background-color: #e0e0e0; color: #000;">취소</button>
-							<button type="button" class="modalBtn btn btn-primary"  onclick="uploadData()">등록</button>
+							<button type="submit" class="modalBtn btn btn-primary">등록</button>
 						</div>
 					</div>
 				</div>

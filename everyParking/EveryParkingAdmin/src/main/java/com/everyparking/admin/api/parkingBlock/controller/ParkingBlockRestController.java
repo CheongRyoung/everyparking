@@ -86,19 +86,18 @@ public class ParkingBlockRestController extends BaseController {
 
     @RequestMapping("/insertBlock")
     public ModelAndView insertBlock(@RequestParam HashMap<String, Object> params) {
-        ModelAndView mav = null;
+        ModelAndView mav = createMav();
         try {
             int result = parkingBlockService.insertBlock(params);
             if(result > -1) {
                 mav = super.createMav(result);
-                super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.SAVE.SUCCESS);
             } else {
-                throw new Exception();
+                mav = super.createMav(result);
+                mav = createMav(Ajax.FAIL+"."+Ajax.TYPE_FAIL);
             }
         } catch (Exception e) {
             super.setMessage(mav, Ajax.FAIL+"."+Ajax.TYPE_FAIL);
             logger.error(e.getMessage());
-            return mav;
         }
         return mav;
     }

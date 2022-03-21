@@ -34,7 +34,9 @@ public class NoticeServiceImpl implements NoticeService{
 		        params.put("FILE_SEQ", file_seq.get(0));
 		        //int NOTI_SEQ = (int) params.get("NOTI_SEQ");
 		    }
-		return noticedao.insertNoti(params);
+		   
+		    noticedao.insertNoti(params);
+		return 1;
 	}
 	
 	/*

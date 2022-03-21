@@ -91,7 +91,6 @@ public class FileUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
 		folderPath = sdf.format(date);
 
-
 		File todayFolder = new File(rootPath + contextPath + folderPath);
 
 		if(!todayFolder.exists()) {
@@ -112,7 +111,7 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 		// 파일 url 리턴
-		return  contextPath + folderPath + newfileName;
+		return  "/uploadImage/" + contextPath + folderPath + newfileName;
 	}
 
 }
