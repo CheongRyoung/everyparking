@@ -99,7 +99,7 @@ if(writeEditor){
     ClassicEditor
         .create( writeEditor , {
             ckfinder: {
-                uploadUrl: 'http://localhost:8123/test/imageUpload'
+                uploadUrl: '/test/imageUpload/'
             }
         } )
         .then( newEditor => {
@@ -168,9 +168,15 @@ function postcoderun() {
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('postcodeName').value = addr;
+
+
             //주소-좌표 변환 객체를 생성합니다
             transGeocode();
-        }
+        },
+        onresize: function (size) {
+            element_wrap.style.height = 400 + 'px';
+        },
+        width: '100%'
     }).open();
 }
 
@@ -270,7 +276,6 @@ if(reservationStateBox) {
         spanBox.setAttribute("onmouseover","cancel(this)");
         spanBox.innerText = "예약완료";
         h6Box.appendChild(spanBox);
-
 
     }
 

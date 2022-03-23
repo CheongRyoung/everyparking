@@ -24,7 +24,6 @@ public class ReviewContorller {
 
     @RequestMapping("/list")
     public ModelAndView checkUsageReviewPage() {
-
         return new ModelAndView("/mypage/review/checkUsageReviewPage");
     }
 

@@ -52,10 +52,9 @@ function DaumPostcode() {
         },
         // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
         onresize: function (size) {
-            element_wrap.style.height = size.height + 'px';
+            element_wrap.style.height = 400 + 'px';
         },
-        width: '100%',
-        height: '100%'
+        width: '100%'
     }).embed(element_wrap);
 
     // iframe을 넣은 element를 보이게 한다.

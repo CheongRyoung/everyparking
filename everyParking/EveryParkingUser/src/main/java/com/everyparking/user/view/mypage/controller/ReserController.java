@@ -12,22 +12,10 @@ import javax.servlet.http.HttpSession;
 public class ReserController {
 
 
-    @RequestMapping("/cancelList")
-    public ModelAndView checkUsageCancelPage() {
-
-        return new ModelAndView("/mypage/reservation/checkUsageCancelPage");
-    }
-
-    @RequestMapping("/currentList")
-    public ModelAndView checkUsageDetailsPage() {
-
-        return new ModelAndView("/mypage/reservation/checkUsageDetailsPage");
-    }
-
-    @RequestMapping("/pastList")
+    @RequestMapping("/list")
     public ModelAndView checkUsageReviewListPage(HttpSession session) {
         ModelAndView mav = SessionUtil.checkSession(session);
-        mav.setViewName("/mypage/reservation/checkUsageReviewListPage");
+        mav.setViewName("/mypage/reservation/list");
         return mav;
     }
 }

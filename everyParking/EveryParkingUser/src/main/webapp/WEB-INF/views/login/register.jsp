@@ -69,19 +69,20 @@
 	                                <div class="row mb-3">
 	                                    <div class="col">
 	                                    	<c:forEach items="${getSubCodeRoyalUserList}" var="royalUser">
+												<c:if test="${royalUser.SUB_NAME != '일반'}">
 												<input type="checkbox" name="SUB_CODE" value="${royalUser.SUB_CODE}">${royalUser.SUB_NAME }
+												</c:if>
 											</c:forEach>
 	                                    </div>
 	                                </div>
 	                                <div class="row mb-1">
 	                                    <div class="col">
-	                                        장애인 우대 약관
+	                                        장애인 우대 약관 
 	                                    </div>
 	                                </div>
 	                                <div class="row mb-1">
 	                                    <div class="col  d-grid">
-	                                        <textarea readonly rows="3">1. 장애인전용주차구역 주차표지가 붙어있는 자동차로서 보행에 장애가 있는 사람이 타고 있는 자동차만 주차할 수 있습니다.
-	        2. 이를 위반한 사람에 대하여는 10만원의 과태료를 부과합니다.</textarea>
+	                                        <textarea readonly rows="3">1. 장애인전용주차구역 주차표지가 붙어있는 자동차로서 보행에 장애가 있는 사람이 타고 있는 자동차만 주차할 수 있습니다.&#10;2. 이를 위반한 사람에 대하여는 10만원의 과태료를 부과합니다.</textarea>
 	                                    </div>
 	                                </div>
 	                                <div class="row mb-3">

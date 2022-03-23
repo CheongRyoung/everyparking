@@ -1,5 +1,6 @@
 package com.everyparking.user.api.main.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +23,15 @@ public class MainServiceImpl implements MainService {
 	
 	@Override
 	public List<HashMap<String, Object>> selectParkingInfoList(HashMap<String, Object> params) throws Exception {
-		return mainDao.selectParkingInfoList(params);
+		
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		
+		for(HashMap<String, Object> data : mainDao.selectParkingInfoList(params)) {
+			data.put("sectionList", mainDao.selectSectionList(data));
+			list.add(data);
+		}
+		
+		return list;
 	}
 	
 	

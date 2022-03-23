@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-
 <!-- 지도가 나오는 배경 -->
 <div class="kakaoMap"  id="mainMap" style="width:100%; height:92vh; position: absolute; left: 0; z-index: 1;">
     <div class="row my-3 mx-1">
@@ -9,13 +8,13 @@
             <button style="z-index: 2;" class="input-group-text bg-primary" id="basic-addon2" onclick="panTo()">
                 <i class="bi bi-search text-white"></i>
             </button>
-            <input style="border: 0px; z-index: 2;" name="postcodeName" id="postcodeName" type="text" class="form-control" placeholder="지역명, 위치를 검색하세요" onclick="DaumPostcode()" readonly>
+            <input style="border: 0px; z-index: 2; background-color: white;" name="postcodeName" id="postcodeName" type="text" class="form-control" placeholder="지역명, 위치를 검색하세요" onclick="DaumPostcode()" readonly>
             </div>
         <div class="col-2 d-flex flex-row-reverse" style="z-index: 2;">
-            <a href="mainList.html"><button type="button" class="btn btn-primary" style="height: 38px;"><i class="bi bi-list-check"></i></button></a>
+            <button type="button" class="btn btn-primary" style="height: 38px;" onclick="listOpen();"><i class="bi bi-list-check"></i></button>
         </div>
     </div>
-    <div class="col" id="wrap" style="display: none; position: relative; z-index: 99;">
+    <div class="col" id="wrap" style="display: none; position: relative; z-index: 99; overflow:scroll; height: 200px;">
         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
     </div>
 </div>
@@ -44,7 +43,7 @@
                         <div class="col"><span class="mainContentTitle" id="parkName"></span></div>
                     </div>
                     <div class="row">
-                        <div class="col"><span class="mainContentSubNg">총 공간 : 50면 | </span><span class="mainContentSubNg">주차면: 일반 여성 장애인 전기차</span></div>
+                        <div class="col"><span class="mainContentSubNg">총 공간 : <span id="totalSectionCount"></span> 면 </span></div>
                     </div>
                     <div class="row" >
                         <div class="col px-0" style="margin-top: 10px;">
@@ -84,19 +83,43 @@
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-5"><span class="mainContentSubTitle">할 인 율</span></div>
                         <div class="col align-self-center" id="section">
-                        	
                             <!-- 구역 할인률 노출 -->
                         </div>
                     </div>
                     <!-- 리뷰 작성-->
                     <div class="row my-4" style="border-bottom: 3px solid #EEEEEE; border-top: 3px solid #EEEEEE; margin-top: 10px; height: 40px;">
                         <div class="col align-self-center">
-                            <span class="mainContentSubSubNg" id="review">리뷰(10)</span>
+                            <span class="mainContentSubSubNg">리뷰 (</span><span class="mainContentSubSubNg" id="reviewCount"></span><span class="mainContentSubSubNg">)</span>
                         </div>
                     </div>
 					<!-- 리뷰 데이터 노출 -->
+					<div id="review"></div>
                 </div>
             </div>
         </main>
     </div>
 </div>
+<!-- 오른쪽 리스트 팝업창  -->
+<div class="list" id="list">
+	<div class="container-fluid">
+	    <header>
+	        <div class="row headerBox py-2 px-0">
+	            <div class="col-1 px-0" onclick="listClose();"><i class="bi bi-arrow-left fs-5"></i></div>
+	            <div class="col px-0">
+	                <h5 class="title">주차장 목록</h5>
+	            </div>
+	            <div class="col-1 px-0"></div>
+	        </div>
+	    </header>
+	    <main>
+	        <div class="row pt-3 mb-3 topBox">
+	            <div class="col listCountBox">
+	                <i class="bi bi-layers"></i>총<span class="listCountNum" id="totalParkingCount"></span>건
+	            </div>
+	        </div>
+	        <div id="listBox">
+	        </div>
+	    </main>
+	</div>
+</div>
+

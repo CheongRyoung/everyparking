@@ -29,6 +29,8 @@
 				USE_YN
 		FROM p_parkinginfo
 		WHERE 1=1
+		AND PARK_ADDR_X BETWEEN #{x1} AND #{x2}
+		AND PARK_ADDR_Y BETWEEN #{y1} AND #{y2}
 		AND USE_YN = 'Y'
   	</select>
  
@@ -37,6 +39,10 @@
 		/* MainMapper.selectMarkerListCount [ 마커 좌표 개수 조회 - 김장문 ] */
 		SELECT COUNT(*)
 		FROM p_parkinginfo
+		WHERE 1=1
+		AND PARK_ADDR_X BETWEEN #{x1} AND #{x2}
+		AND PARK_ADDR_Y BETWEEN #{y1} AND #{y2}
+		AND USE_YN = 'Y'
 	</select>
 
 	
@@ -61,8 +67,10 @@
 			, MOD_DATE
 			, NOTE
 			, USE_YN
-		FROM p_parkinginfo
+			<!-- , FILE_URL -->
+		FROM p_parkinginfo <!-- p_file pf -->
 		WHERE 1=1
+		<!-- AND pp.FILE_SEQ = pf.FILE_SEQ -->
 		AND USE_YN = 'Y'
 		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
 			AND PARK_SEQ = #{PARK_SEQ}
@@ -114,6 +122,7 @@
 		</if>
 	</select>
 	
+	
 	<select id="selectReviewListCount" parameterType="hashMap" resultType="int">
 		/* MainMapper.selectReviewListCount [ 주차장 개별의 리뷰 카운트 조회 - 김장문 ] */
 		SELECT COUNT(*)
@@ -124,6 +133,8 @@
 			AND ps.PARK_SEQ = #{PARK_SEQ}
 		</if>
 	</select>
+	
+	
 	
 
 </mapper>

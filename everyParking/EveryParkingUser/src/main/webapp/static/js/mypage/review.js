@@ -1,20 +1,24 @@
 const reservationBox = document.getElementById('reservationBox');
 
-$(function() {
-
-})
+window.onload = () => {
+    if(reservationBox) {
+        showMyList('PAST_DAY');
+    }
+}
 
 function showMyList(choose) {
     var date = new Date();
     if(choose == 'PAST_DAY') {
         url = '/mypage/review/pastHistory';
+        params = {'PAST_DAY' : moment(date).format("YYYY-MM-DD")}
     } else if(choose == 'CURRENT_DAY'){
         url = '/mypage/review/currentHistory';
+        params = {'CURRENT_DAY' : moment(date).format("YYYY-MM-DD")}
     } else if(choose == 'STATE_NAME') {
         url = '/mypage/review/cancleHistory';
+        params = {'STATE_NAME' : moment(date).format("YYYY-MM-DD")}
     }
-    ajaxCall(url, {choose: moment(date).format("YYYY-MM-DD")}, function(data) {
-
+    ajaxCall(url, params, function(data) {
         if(data.code == 'F') {
             cmm.alert("데이터를 받아오지 못했습니다.")
         } else {

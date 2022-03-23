@@ -1,14 +1,19 @@
-
 /** main map 관련 스크립트 **/
 
 const mainMap = document.getElementById("mainMap");
 const mainMapX = document.getElementById("postcodeX");
 const mainMapY = document.getElementById("postcodeY");
-var valueX = parseFloat(mainMapX.value);
-var valueY = parseFloat(mainMapY.value);
+if(mainMap){
+	var valueX = parseFloat(mainMapX.value);
+	var valueY = parseFloat(mainMapY.value);
+	var showFstX = "";
+	var showSecX = "";
+	var showFstY = "";
+	var showSecY = "";
+}
 
 
-// 주차장 정보 넣을 element 생성
+// info - 주차장 정보 넣을 element 생성
 var parkNameBox = document.getElementById("parkName");
 var totalSectionCountBox = document.getElementById("totalSectionCount");
 var parkingAddBox = document.getElementById("parkingAdd");
@@ -17,10 +22,20 @@ var openTimeBox = document.getElementById("openTime");
 var endTimeBox = document.getElementById("endTime");
 var parkPriceBox = document.getElementById("parkPrice");
 var reviewCountBox = document.getElementById("reviewCount");
+var section = document.getElementById("section");
+var review = document.getElementById("review");
+var listBox = document.getElementById("listBox");
+
+
+// list - 정보 넣을 element 생성
+var totalParkingCountBox = document.getElementById("totalParkingCount");
 
 
 
-// 지도 생성
+var result = new Map();
+
+
+//지도 생성
 if(mainMap) {
 
     var mapContainer = document.getElementById('mainMap'), // 지도를 표시할 div
@@ -31,38 +46,177 @@ if(mainMap) {
 
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+    
+    // 지도가 이동, 확대, 축소로 인해 지도영역이 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+   kakao.maps.event.addListener(map, 'tilesloaded', function() {
+      getInfoByMap();
+      
+   
+      })
+      
+   };
+
+function getInfoByMap() {
+    // 지도 영역정보를 얻어옵니다 
+   var bounds = map.getBounds();
+   
+   // 지도의 남서쪽 좌표 가져오기
+   var swLatLng = bounds.getSouthWest(); 
+    
+   // 지도의 북동쪽 좌표 가져오기
+   var neLatLng = bounds.getNorthEast(); 
+   
+   
+   var result = new Map();
+   
+   result = {'x1' : swLatLng.La, 'y1' : swLatLng.Ma, 'x2' : neLatLng.La, 'y2' : neLatLng.Ma};
+   markerLoad(result);
+
+}
+
+
+
+
+var carparkPositions = [];
+var parkingNumList = [];
+var carparkMarkers = []; // 주차장 마커 객체를 가지고 있을 배열입니다
+
+
+// 불러오는 타일에 마커 찍어주기
+function markerLoad(result) {
+   var params = "";
+   if(result == null) {
+      params = {}
+   } else {
+      params = result
+   }
+
+   ajaxCall("/main/selectParkingInfoList", params, function(data) {
+	   
+      carparkPositions = [];
+      parkingNumList = [];
+      carparkMarkers = [];
+
+      for (var i = 0; i < data.list.length; i++) {
+         // 예시좌표 서버에서 이쪽으로 좌표값 받아와야함
+         carparkPositions[i] = new kakao.maps.LatLng(data.list[i].PARK_ADDR_Y, data.list[i].PARK_ADDR_X);
+
+         // 이쪽에는 주차장 넘버 받아와야함
+         parkingNumList[i] = data.list[i].PARK_SEQ;
+
+         if (i == data.list.length - 1) {
+            createCarparkMarkers();  // 주차장 마커를 생성하고 주차장 마커 배열에 추가합니다
+            setCarparkMarkers(map);
+         }
+      }
+   
+      
+      totalParkingCountBox.innerText = data.totalCnt;
+      
+      // list for문 수행할 곳
+      listBox.innerHTML = "";
+      for(listBoxData of data.list){
+    	  var totalParkingCount = 0;
+    	  var sectionNameList = "";
+    	  var womanSection = "";
+    	  var disableSection = "";
+    	  var electroSection = "";
+    	  for(var i = 0; i < (listBoxData.sectionList).length; i++){
+    		  totalParkingCount += listBoxData.sectionList[i].SEC_COUNT;
+    		  sectionNameList += " " + listBoxData.sectionList[i].SUB_NAME;
+    		  if(listBoxData.sectionList[i].SUB_CODE == "RY01"){
+    			  continue;
+    		  }else if(listBoxData.sectionList[i].SUB_CODE == "RY02"){
+    			  disableSection = listBoxData.sectionList[i].SEC_COUNT;
+    		  }else if(listBoxData.sectionList[i].SUB_CODE == "RY03"){
+    			  womanSection = listBoxData.sectionList[i].SEC_COUNT;
+    		  }else if(listBoxData.sectionList[i].SUB_CODE == "RY04"){
+    			  electroSection = listBoxData.sectionList[i].SEC_COUNT;
+    		  }
+    	  }
+    	  var modalHtml = ``;
+    	  modalHtml +=` <div class="row parkingImageBox">`;
+		  modalHtml +=`         <div class="col pb-2">`;
+		  modalHtml +=`         <div class="row mb-3">`;
+		  modalHtml +=`             <div class="col p-0">`;
+		  modalHtml +=`                 <img class="imageInfoBox" src="/img/p6.jpeg">`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`         </div>`;
+	      modalHtml +=`         <div class="row mb-2">`;
+	      modalHtml +=`             <div class="col parkingSpotName">`;
+	      modalHtml +=`             		<span>${listBoxData.PARK_NAME}</span>`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`         </div>`;
+	      modalHtml +=`         <div class="row mb-3">`;
+	      modalHtml +=`             <div class="col parkingSpotInfo">`;
+	      modalHtml +=`                	<span>총 공간 : </span><span>${totalParkingCount}</span><span>면 | 주차면 : </span><span>${sectionNameList}</span>`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`         </div>`;
+	      modalHtml +=`         <div class="row soptBox mb-3">`;
+	      modalHtml +=`             <div class="col">`;
+	      for(var i = 0; i < (listBoxData.sectionList).length; i++){
+	      	if(listBoxData.sectionList[i].SUB_CODE == "RY03" && listBoxData.sectionList[i].SEC_COUNT != 0){
+	      		modalHtml +=`                 <img src="/img/womanIcon.png" style="width:16px;height:16px"><span class="sopt">${womanSection}</span><span>면</span>`;
+	      	}else{
+	      		modalHtml +=``;
+	      	}
+	      }
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`             <div class="col">`;
+	      for(var i = 0; i < (listBoxData.sectionList).length; i++){
+		    if(listBoxData.sectionList[i].SUB_CODE == "RY02" && listBoxData.sectionList[i].SEC_COUNT != 0){
+		      	modalHtml +=`                 <img src="/img/disabledPerson.png" style="width:16px;height:16px;vertical-align: text-bottom;"><span class="sopt">${disableSection}</span><span>면</span>`;
+		    }else{
+		      	modalHtml +=``;
+		    }
+		  }
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`             <div class="col">`;
+	      for(var i = 0; i < (listBoxData.sectionList).length; i++){
+		    if(listBoxData.sectionList[i].SUB_CODE == "RY04" && listBoxData.sectionList[i].SEC_COUNT != 0){
+		      	modalHtml +=`                 <i class="bi bi-lightning" style="vertical-align: text-top;"></i><span class="sopt">${electroSection}</span><span>면</span>`;
+		    }else{
+		      	modalHtml +=``;
+		    }
+		  }
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`         </div>`;
+	      modalHtml +=`         <div class="row parkingSpotExRowBox">`;
+	      modalHtml +=`             <div class="col-4">`;
+	      modalHtml +=`                 <i class="bi bi-geo-alt"></i><span class="parkingSpotIconEx">위치</span>`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`             <div class="col parkingSpotEx">`;
+	      modalHtml +=`					<span>${listBoxData.PARK_ADDR1}</span>`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`         </div>`;
+	      modalHtml +=`         <div class="row parkingSpotExRowBox">`;
+	      modalHtml +=`             <div class="col-4">`;
+	      modalHtml +=`                 <i class="bi bi-credit-card"></i><span class="parkingSpotIconEx">주차요금</span>`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`             <div class="col parkingSpotEx">`;
+	      modalHtml +=`                 <span>1시간 </span><span>${listBoxData.PARK_PRICE}</span><span>원</span>`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`         </div>`;
+	      modalHtml +=`         <div class="row parkingSpotExRowBox">`;
+	      modalHtml +=`             <div class="col-4">`;
+	      modalHtml +=`                 <i class="bi bi-stopwatch"></i><span class="parkingSpotIconEx">문의시간</span>`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`             <div class="col parkingSpotEx">`;
+	      modalHtml +=`                 <span>${listBoxData.PARK_OPEN}</span> ~ <span>${listBoxData.PARK_CLOSE}</span>`;
+	      modalHtml +=`             </div>`;
+	      modalHtml +=`         </div>`;
+	      modalHtml +=`     </div>`;
+	      modalHtml +=` </div>`;
+	      $("#listBox").append(modalHtml);
+	      modalHtml = ``;
+	      
+      }
+
+   
+   })
+   
+   
 };
-
-
-var listData = "";
-
-ajaxCall("/main/selectParkingInfoList", {}, function(data){
-	listData = data;
-});	
-
-
-	var carparkPositions = [];
-	var parkingNumList = [];
-	var carparkMarkers = []; // 주차장 마커 객체를 가지고 있을 배열입니다
-	
-	for(var i = 0; i < listData.list.length; i++){
-		// 예시좌표 서버에서 이쪽으로 좌표값 받아와야함
-		carparkPositions[i] = new kakao.maps.LatLng(listData.list[i].PARK_ADDR_Y, listData.list[i].PARK_ADDR_X);
-		console.log(listData.list[i].PARK_ADDR_X);
-		// 이쪽에는 주차장 넘버 받아와야함
-		parkingNumList[i] = listData.list[i].PARK_SEQ;
-		
-		if(i == listData.list.length -1 ) {
-			console.log(i);
-			createCarparkMarkers();  // 주차장 마커를 생성하고 주차장 마커 배열에 추가합니다
-			setCarparkMarkers(map);
-		}
-	}
-    
-
-    
-
-    
 
 
 // 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
@@ -75,8 +229,8 @@ ajaxCall("/main/selectParkingInfoList", {}, function(data){
     function createMarker(position, image, num) {
 
         var marker = new kakao.maps.Marker({
-            position: position,
-            image: image
+            position: position
+            
         });
         marker.value=num;
 
@@ -95,7 +249,6 @@ ajaxCall("/main/selectParkingInfoList", {}, function(data){
             // params를 날릴때 ajaxCall에서 정한 방식인 Map형식을 지켜줘야함
             ajaxCall("/main/selectOneParkingInfo", {'PARK_SEQ' : marker.value}, function(data){
             	map = data;
-            	console.log(map.data.parkingInfo.PARK_NAME);
             })
             
             
@@ -105,11 +258,12 @@ ajaxCall("/main/selectParkingInfoList", {}, function(data){
             openTimeBox.innerText = map.data.parkingInfo.PARK_OPEN;
             endTimeBox.innerText = map.data.parkingInfo.PARK_CLOSE;
             parkPriceBox.innerText = map.data.parkingInfo.PARK_PRICE;
+            reviewCountBox.innerText = map.data.reviewCount;
             
-
+            
+            section.innerHTML = "";
             for(sectionData of map.data.sectionList){
             	if(sectionData.SUB_CODE != 'RY01'){
-            		console.log(sectionData.SEC_DIS);
             		var modalHtml = ``;
                 	modalHtml +=` <div class="row">`;
                 	modalHtml +=` 	<div class="col-7 discountTitleNg">`;
@@ -120,23 +274,35 @@ ajaxCall("/main/selectParkingInfoList", {}, function(data){
                 	modalHtml +=` 	</div>`;
                 	modalHtml +=` </div>`;
                 	$("#section").append(modalHtml);
+                	
             	}
             	
             }
             
-            
+            review.innerHTML = "";
             for(reviewData of map.data.reviewList){
-            	console.log(reviewData.USER_NAME);
+            	
+            	var reviewDate = new Date(reviewData.REG_DATE);
+            	// 자바스크립트는 month가 0부터 시작
+            	reviewDate = reviewDate.getFullYear() + "-" + (reviewDate.getMonth() + 1) + "-" + reviewDate.getDate() + " " + String(reviewDate.getHours()).padStart(2, "0") + ":" + String(reviewDate.getMinutes()).padStart(2, "0");
+            	var reviewStar = '';
+            	for(let i = 1; i <= 5; i++){
+            		if(reviewData.REV_STAR >= i){
+            			reviewStar += '★';
+            		}else{
+            			reviewStar += '☆';
+            		}
+            	}
             	var modalHtml = ``;
             	modalHtml +=`<div class="row mt-2" style="margin: 1px;">`;
             	modalHtml +=`	<div class="col d-flex justify-content-between">`;
             	modalHtml +=`		<span class="mainContentSubSubNg">${reviewData.USER_NAME}</span>`;
-            	modalHtml +=`    	<span class="mainContentSubSubNg">${reviewData.REG_DATE}</span>`;
+            	modalHtml +=`    	<span class="mainContentSubSubNg">${reviewDate}</span>`;
             	modalHtml +=`    </div>`;
             	modalHtml +=`</div>`;
             	modalHtml +=`<div class="row" style="margin-left: 1px;">`;
             	modalHtml +=` 	<div class="col">`;
-            	modalHtml +=` 		<p>${reviewData.REV_STAR}</p>`;
+            	modalHtml +=` 		<p>${reviewStar}</p>`;
             	modalHtml +=` 	</div>`;
             	modalHtml +=`</div>`;
             	modalHtml +=`<div class="row mb-2 pb-1" style="margin: 1px; border-bottom: 1px solid #EEEEEE;">`;
@@ -149,7 +315,15 @@ ajaxCall("/main/selectParkingInfoList", {}, function(data){
             	modalHtml +=`	</div>`;
             	modalHtml +=`</div>`;
             	$("#review").append(modalHtml);
+            	modalHtml = ``;
             }
+            
+            var totalSectionCount = 0;
+            for(totalSectionCountData of map.data.sectionList){
+            	totalSectionCount += totalSectionCountData.SEC_COUNT;
+            	
+            }
+            totalSectionCountBox.innerText = totalSectionCount;
                 	
     });
         
@@ -168,7 +342,7 @@ ajaxCall("/main/selectParkingInfoList", {}, function(data){
                 };
 
             // 마커이미지와 마커를 생성합니다
-            var markerImage = createMarkerImage("../img/park.png", imageSize, imageOptions),
+            var markerImage = createMarkerImage("../img/ping.png", imageSize, imageOptions),
                 marker = createMarker(carparkPositions[i], markerImage, parkingNumList[i]);
 
             // 생성된 마커를 주차장 마커 배열에 추가합니다
@@ -181,12 +355,6 @@ ajaxCall("/main/selectParkingInfoList", {}, function(data){
         for (var i = 0; i < carparkMarkers.length; i++) {
             carparkMarkers[i].setMap(map);
         }
-    }
-
-    // 창로드가 완료되면 마커를 생성함
-    window.onload = function() {
-        // 주차장 마커 지도에 표시하도록 설정합니다
-        
     }
 
 
@@ -205,9 +373,24 @@ if(valueX > -1) {
     panTo();
 }
 
+
+// info 창 열고 닫기
 function infoClose(){
 	infoHandle.style.left = "-100%";
 }
 
-
 var infoHandle = document.querySelector(".info");
+
+
+
+// list 창 열고 닫기
+var listHandle = document.getElementById("list");
+
+function listOpen(){
+	listHandle.style.right = "0%";
+}
+
+function listClose(){
+	listHandle.style.right = "-100%";
+}
+
