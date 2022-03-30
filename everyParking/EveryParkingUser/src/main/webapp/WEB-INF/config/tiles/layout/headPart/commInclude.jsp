@@ -19,5 +19,9 @@
 <script type="text/javascript" src="/js/common/common.js"></script>
 <script type="text/javascript" src="/js/common/grid.js"></script>
 
+<!-- 주소변환 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9172cdc2957ac573fa666cf07db8587&libraries=services"></script>
+<script type="text/javascript" src="/js/each/trans.js"></script>
 
 

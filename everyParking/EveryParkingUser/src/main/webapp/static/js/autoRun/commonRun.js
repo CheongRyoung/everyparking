@@ -12,6 +12,7 @@ const readEditor = document.getElementById('readEditor');
 const writeEditor = document.getElementById('writeEditor');
 const testGridid = document.getElementById('testGrid');
 const testajax = document.getElementById('testajax');
+let editor;
 
 // 시간을 포함해서 날짜를 선택해야할때
 if(datepickerR) {
@@ -22,7 +23,7 @@ if(datepickerR) {
         timePicker24Hour: true,
         locale: {
             "separator": " ~ ",                     // 시작일시와 종료일시 구분자
-            "format": 'YYYY년 MM월 DD일 HH시',                 // 일시 노출 포맷
+            "format": 'YYYY-MM-DD HH시',             // 일시 노출 포맷
             "applyLabel": "확인",                    // 확인 버튼 텍스트
             "cancelLabel": "취소",                   // 취소 버튼 텍스트
             "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
@@ -94,12 +95,12 @@ if(readEditor){
 
 // ckeitor 작성을 위한 함수입니다.
 if(writeEditor){
-    let editor;
 
     ClassicEditor
-        .create( writeEditor , {
+        .create( document.querySelector( '#writeEditor' ) , {
+            placeholder: '여기서 본문을 작성해주세요',
             ckfinder: {
-                uploadUrl: '/test/imageUpload/'
+                uploadUrl: '/admin/editor/uploadView'
             }
         } )
         .then( newEditor => {
@@ -117,7 +118,7 @@ if(writeEditor){
             console.error( error );
         } );
 
-    function uploadData() {
+    function uploadDataExample() {
         const editorData = editor.getData();
         console.log(typeof(editorData));
 
@@ -180,16 +181,21 @@ function postcoderun() {
     }).open();
 }
 
-function transGeocode() {
+function transGeocode(obj) {
     var geocoder = new kakao.maps.services.Geocoder();
     geocoder.addressSearch(addr, function(result, status) {
-        console.log(result);
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
-
-            document.getElementById('postcodeX').value = result[0].x;
-            document.getElementById('postcodeY').value = result[0].y;
-
+            if(document.getElementById('postcodeX')) {
+                document.getElementById('postcodeX').value = result[0].x;
+                document.getElementById('postcodeY').value = result[0].y;
+                panTo();
+            }
+            if(obj == document.getElementById('navSearch')) {
+                document.getElementById('navpostcodeX').value = result[0].x;
+                document.getElementById('navpostcodeY').value = result[0].y;
+                obj.submit();
+            }
         }
     });
 }
@@ -286,21 +292,6 @@ if(reservationStateBox) {
 
 }
 
-
-// 버튼 버블 css 형성
-var areaSelectBtnList = document.querySelectorAll('.areaSelect button');
-for(var i=0; i<areaSelectBtnList.length; i++){
-    areaSelectBtnList[i].addEventListener('click', Handlerbubble);
-}
-function Handlerbubble(evt) {
-    for(var i=0; i<areaSelectBtnList.length; i++){
-        areaSelectBtnList[i].setAttribute("class", "btn fw-bold text-white");
-    }
-    var eventNode = evt.target;
-    eventNode.setAttribute("class", "btn bubble fw-bold text-primary");
-}
-
-
 // 별점 구현
 // 별점
 const checkStar = document.querySelectorAll(".checkStar");
@@ -320,31 +311,26 @@ function color(event) {
     switch(num) {
         case 1:  // if (x === 'value1')
             chooseWord.style.color = 'red';
-            chooseWord.innerText = "1점 별로에요";
             break;
 
         case 2:  // if (x === 'value2')
             chooseWord.style.color = 'red';
-            chooseWord.innerText = "2점 그저그래요";
             break;
 
         case 3:  // if (x === 'value2')
             chooseWord.style.color = 'red';
-            chooseWord.innerText = "3점 괜찮아요";
             break;
 
         case 4:  // if (x === 'value2')
             chooseWord.style.color = 'red';
-            chooseWord.innerText = "4점 좋아요";
             break;
 
         case 5:  // if (x === 'value2')
             chooseWord.style.color = 'red';
-            chooseWord.innerText = "5점 최고에요";
             break;
     }
 }
 
 for(var i=0; i<checkStar.length; i++){
-    checkStar[i].addEventListener("click", color);
+    checkStar[i].addEventListener("change", color);
 }

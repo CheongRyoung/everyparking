@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.user.api.mypage.dao.ReviewDao">
+
+	<select id="selectMyReviewList" parameterType="hashMap" resultType="hashMap">
+	 	/* ReviewMapper.selectMyReviewList [작성자 - 전지나]  */
+		SELECT pr.REV_SEQ AS REV_SEQ
+		   , pp.PARK_NAME AS PARK_NAME
+		   , pp.PARK_ADDR1 AS PARK_ADDR1
+		   , pp.PARK_ADDR2 AS PARK_ADDR2
+		   , pv.USER_SEQ AS USER_SEQ
+		   , pv.RESE_CAR_NO AS RESE_CAR_NO
+		   , date_format(pv.REG_DATE, '%Y-%m-%d') AS REG_DATE
+		   , date_format(pv.RESE_START, '%Y-%m-%d %h:%i') AS RESE_START
+		   , date_format(pv.RESE_END, '%Y-%m-%d %h:%i') AS RESE_END
+		   , pv.RESE_SEQ AS RESE_SEQ
+		FROM P_REVIEW pr, P_RESERVATION pv, P_SECTION ps, P_PARKINGINFO pp
+		WHERE 1=1
+		AND pr.RESE_SEQ = pv.RESE_SEQ
+		AND pv.SEC_SEQ = ps.SEC_SEQ 
+		AND ps.PARK_SEQ = pp.PARK_SEQ 
+		AND pv.RESE_STATE = 'PM01' 
+		AND pr.USE_YN = 'Y'
+		AND pv.USER_SEQ = #{USER_SEQ}
+		ORDER BY pr.REG_DATE DESC
+	</select>
+	
+	<select id="selectOneMyReservationInfo" resultType="hashMap">
+		/* ReviewMapper.selectOneMyReservationInfo 후기 작성 시 해당 구매 건에 대한 정보  [작성자 - 전지나] */
+		SELECT pr.RESE_SEQ AS RESE_SEQ 
+			   , pp.PARK_NAME AS PARK_NAME
+			   , date_format(pr.RESE_START, '%Y-%m-%d %h:%i') AS RESE_START
+			   , date_format(pr.RESE_END, '%Y-%m-%d %h:%i') AS RESE_END
+		FROM P_RESERVATION pr, p_section ps, p_parkinginfo pp
+		WHERE 1=1
+		AND pr.SEC_SEQ = ps.SEC_SEQ 
+		AND ps.PARK_SEQ = pp.PARK_SEQ
+		AND pr.RESE_SEQ = #{RESE_SEQ}
+	</select>
+
+	<insert id="insertReview" parameterType="hashMap"> 
+		/* ReviewMapper.insertReview [작성자 - 전지나]  */
+		INSERT INTO P_REVIEW(RESE_SEQ, REV_STAR, REV_CONT, REG_SEQ, REG_DATE) VALUES(#{RESE_SEQ}, #{REV_STAR}, #{REV_CONT}, #{REG_SEQ}, SYSDATE())
+	</insert>
+	
+	<select id="selectOneReviewInfo" resultType="hashMap">
+		/* ReviewMapper.selectOneReview [작성자 - 전지나]*/
+		SELECT * FROM P_REVIEW WHERE REV_SEQ = #{REV_SEQ}
+	</select>
+	
+	<update id="updateReview" parameterType="hashMap">
+		/* ReviewMapper.updateReview [작성자 - 전지나]  */
+		UPDATE P_REVIEW 
+		SET REV_STAR = #{REV_STAR}
+			, REV_CONT = #{REV_CONT}
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = SYSDATE() 
+		WHERE 1=1 
+		AND REV_SEQ = #{REV_SEQ}
+	</update>
+
+	<update id="deleteReview" parameterType="hashMap">
+		/* ReviewMapper.deleteReview [작성자 - 전지나]  */
+		UPDATE P_REVIEW 
+		SET USE_YN = 'N'
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = SYSDATE() 
+		WHERE 1=1 
+		AND REV_SEQ = #{REV_SEQ}
+	</update>
+	
+</mapper>

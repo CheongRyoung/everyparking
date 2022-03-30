@@ -1,43 +1,45 @@
 package com.everyparking.user.api.mypage.service;
 
-import com.everyparking.user.api.mypage.dao.ReviewDao;
-import com.everyparking.user.framework.common.util.SessionUtil;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
+import com.everyparking.user.api.mypage.dao.ReviewDao;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
-    @Autowired
-    ReviewDao reviewDao;
+	@Autowired
+	ReviewDao reviewDao;
+	
+	public List<HashMap<String, Object>> selectMyReviewList(HashMap<String, Object> params) throws Exception{
+		return reviewDao.selectMyReviewList(params);
+	}
+	
+	public HashMap<String, Object> selectOneMyReservationInfo(HashMap<String, Object> params) throws Exception{
+		return reviewDao.selectOneMyReservationInfo(params);
+	}
+	
+	public HashMap<String, Object> selectOneReviewInfo(HashMap<String, Object> params) throws Exception{
+		return reviewDao.selectOneReviewInfo(params);
+	}
+	public int insertReview(HashMap<String, Object> params) throws Exception{
+		return reviewDao.insertReview(params);
+	}
+	
+	public int updateReview(HashMap<String, Object> params) throws Exception{
+		return reviewDao.updateReview(params);
+	}
 
-    @Override
-    public List<HashMap<String, Object>> getReservationList(HashMap<String, Object> params) {
-        return reviewDao.getReservationList(params);
-    }
-
-    @Override
-    public HashMap<String, Object> getReservationInfo(HashMap<String, Object> params) {
-        return reviewDao.getReservationInfo(params);
-    }
-
-    @Override
-    public int insertReview(HashMap<String, Object> params) {
-        return insertReview(params);
-    }
-
-    @Override
-    public int updateReview(HashMap<String, Object> params) {
-        return updateReview(params);
-    }
-
-    @Override
-    public int deleteReview(HashMap<String, Object> params) {
-        return deleteReview(params);
-    }
+	public int deleteReview(HashMap<String, Object> params) throws Exception{
+		return reviewDao.deleteReview(params);
+	}
+	
+	
 }

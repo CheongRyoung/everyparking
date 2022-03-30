@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.user.api.operation.dao.QnaDao">
+	<sql id="qnaManageSQL">
+		SELECT
+			QNA_SEQ
+			, USER_SEQ
+			, SUB_CODE
+			, QNA_TITLE
+			, QNA_CONT
+			, REG_DATE
+			, MOD_SEQ
+			, MOD_DATE
+			, NOTE
+			, QNA_COUNT
+		FROM p_qna
+		WHERE 1=1
+		AND USE_YN = 'Y'
+	</sql>
+	
+	<insert id="insertQna" parameterType="hashMap">
+		<selectKey keyProperty="QNA_SEQ" keyColumn="QNA_SEQ" resultType="INT" order="AFTER">
+			SELECT MAX(QNA_SEQ) from p_qna
+		</selectKey>
+		INSERT INTO p_qna(
+			USER_SEQ
+			, SUB_CODE
+			, QNA_TITLE
+			, QNA_CONT
+			, REG_DATE
+			, MOD_SEQ
+			, MOD_DATE
+			, NOTE
+			, USE_YN
+			, QNA_COUNT
+			, QNA_ANS
+			, FILE_SEQ
+		)
+			VALUES(
+			#{USER_SEQ}
+			, #{SUB_CODE}
+			, #{QNA_TITLE}
+			, #{editorData}
+			, NOW()
+			, #{MOD_SEQ}
+			, #{MOD_DATE}
+			, #{NOTE}
+			, 'Y'
+			, 0
+			, 'N'
+			, #{FILE_SEQ}
+		)
+	</insert>
+	
+	<update id="updateQna" parameterType="hashMap">
+		UPDATE p_qna SET
+			QNA_TITLE = #{QNA_TITLE}
+			, QNA_CONT = #{editorData}
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = NOW()
+			, NOTE = NULL
+		WHERE QNA_SEQ = #{QNA_SEQ}
+	</update>
+	
+	<update id="deleteQna" parameterType="INT">
+		UPDATE p_qna SET
+			USE_YN = 'N'
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = NOW()
+		WHERE QNA_SEQ = #{QNA_SEQ}
+	</update>
+	
+	
+	<select id="selectListQna" parameterType="hashMap" resultType="hashMap">
+			select pq.* , ps.SUB_NAME
+			from p_qna pq , p_subcode ps
+			where pq.SUB_CODE = ps.SUB_CODE
+			and pq.USE_YN = 'Y'
+			order by pq.QNA_SEQ DESC
+			<if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+            <if test='ORDER != null and !ORDER.equals("")'>
+                ORDER BY ${ORDER} ${ORDER_TYPE}
+            </if>
+            LIMIT #{START}, #{CNT}
+        </if>
+	</select>
+	
+	<select id="selectListCountQna" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) FROM(
+		<include refid="qnaManageSQL"></include>
+		)z
+	</select>
+	
+	<select id="getQna" parameterType="int" resultType="hashMap">
+		SELECT pq.* , pu.USER_NAME
+		FROM p_qna pq , p_user pu
+		where pq.USER_SEQ = pu.USER_SEQ
+		and pq.QNA_SEQ = #{QNA_SEQ}
+		order by pq.QNA_SEQ ASC 		
+	</select>
+		
+	<update id="qnaReadCount">
+		UPDATE p_qna SET
+			QNA_COUNT = QNA_COUNT+1
+		WHERE QNA_SEQ = #{QNA_SEQ}	
+	</update>
+	
+	<insert id="insertComment" parameterType="hashMap">
+		<selectKey keyProperty="QNAC_SEQ" keyColumn="QNAC_SEQ" resultType="INT" order="AFTER">
+			SELECT MAX(QNAC_SEQ) from p_qnacomment
+		</selectKey>
+		INSERT INTO p_qnacomment(
+		QNA_SEQ
+		, USER_SEQ
+		, QNAC_CONT
+		, REG_DATE
+		, MOD_SEQ
+		, MOD_DATE
+		, NOTE
+		) VALUES (
+		#{QNA_SEQ}
+		, #{USER_SEQ}
+		, #{QNAC_CONT}
+		, NOW()
+		, #{MOD_SEQ}
+		, #{MOD_DATE}
+		, #{NOTE}
+		)
+	</insert>
+	
+	<select id="getCommentList" parameterType="int" resultType="hashMap">
+		SELECT pqc.* , pu.USER_NAME
+			FROM p_qnacomment pqc , p_user pu 
+			where pqc.USER_SEQ = pu.USER_SEQ
+			and pqc.QNA_SEQ = #{QNA_SEQ}
+			and pqc.USE_YN = 'Y'
+		order by pqc.QNA_SEQ ASC
+	</select>
+	
+	<update id="deleteComment" parameterType="int">
+		UPDATE p_qnacomment SET
+			USE_YN = 'N'
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = NOW()
+		WHERE QNAC_SEQ = #{QNAC_SEQ}
+	</update>	
+	
+	<update id="updateComment" parameterType="hashMap">
+		UPDATE p_qnacomment SET
+			QNAC_CONT = #{QNAC_CONT}
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = NOW()
+		WHERE QNAC_SEQ = #{QNAC_SEQ}
+	</update>
+	
+	<select id="getNextPrev" parameterType="hashMap" resultType="hashMap">
+	<![CDATA[
+		SELECT
+			QNA_SEQ 
+			,(SELECT QNA_SEQ  FROM p_qna WHERE QNA_SEQ < #{QNA_SEQ} AND USE_YN ='Y' ORDER BY QNA_SEQ DESC LIMIT 1) AS QNA_NEXT
+			,(SELECT QNA_SEQ  FROM p_qna WHERE QNA_SEQ > #{QNA_SEQ} AND USE_YN ='Y' ORDER BY QNA_SEQ LIMIT 1) AS QNA_PREV
+			 FROM p_qna
+		WHERE QNA_SEQ = #{QNA_SEQ}
+	]]>
+	</select>
+	
+</mapper>

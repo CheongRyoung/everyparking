@@ -2,8 +2,8 @@ package com.everyparking.user.framework.common.vo;
 
 public interface Ajax {
     public static String SUCCESS = "S";
-    public static String TPYE_SUCCESS = "success";
-    public static String TPYE_FAIL = "fail";
+    public static String TYPE_SUCCESS = "success";
+    public static String TYPE_FAIL = "fail";
     public static String FAIL = "F";
     public static String MASSAGE = "message";
     public static String CODE = "code";

@@ -2,15 +2,7 @@ package com.everyparking.user.framework.common.util;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -19,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class FileUtil {
@@ -94,7 +88,6 @@ public class FileUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
 		folderPath = sdf.format(date);
 
-
 		File todayFolder = new File(rootPath + contextPath + folderPath);
 
 		if(!todayFolder.exists()) {
@@ -115,7 +108,7 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 		// 파일 url 리턴
-		return  contextPath + folderPath + newfileName;
+		return  "/uploadImage/" + contextPath + folderPath + newfileName;
 	}
 
 }

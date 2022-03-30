@@ -46,7 +46,7 @@ function ajaxCall(url, params, callback, errorCallback, asyncType){
         dataType: "json",               	// 서버에서 보내줄 데이터의 타입
         async : asyncType					// 동기 , 비동기
     }).done(callback)                       // 성공시
-        .fail(commErrorCallback);           // 실패시
+    .fail(commErrorCallback);               // 실패시
 }
 
 /**
@@ -346,17 +346,18 @@ Common = function(){
     /**
      * 공통 confirm
      */
-    this.confirmFlag=false;
     this.confirmModal=null;
-    this.confirm = function(title, message, content, num, sort, option){
+    this.confirm = function(title, message, option, okCallbk, cancelCallbk){
         if(this.confirmModal) {
             this.confirmModal.remove();
         }
-        let btn1 = "삭제";
+        let btn1 = "확인";
         let btn2 = "취소";
         if(option){
-            btn1 = option.btn1;
-            btn2 = option.btn2;
+        	if(option.hasOwnProperty("btn1"))
+        		btn1 = option.btn1;
+        	if(option.hasOwnProperty("btn2"))
+        		btn2 = option.btn2;
         }
         var modalHtml=``;
         modalHtml+=`<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">`;
@@ -370,76 +371,77 @@ Common = function(){
         modalHtml+=`        ${message}`;
         modalHtml+=`      </div>`;
         modalHtml+=`      <div class="modal-footer">`;
-        if(num != undefined){
-            modalHtml+=`        <button id="Y" type="button" class="btn btn-danger">${btn1}</button>`;
-            modalHtml+=`        <button id="N" type="button" class="btn btn-secondary" data-bs-dismiss="modal">${btn2}</button>`;
-        }
+        modalHtml+=`        <button id="Y" type="button" class="btn btn-danger">${btn1}</button>`;
+        modalHtml+=`        <button id="N" type="button" class="btn btn-secondary" data-bs-dismiss="modal">${btn2}</button>`;
         modalHtml+=`      </div>`;
         modalHtml+=`    </div>`;
         modalHtml+=`  </div>`;
         modalHtml+=`</div>`;
         $("body").append(modalHtml);
         this.confirmModal = $('#confirmModal')
-
-        this.confirmModal.find('#confirmModalLabel').html(`<i class="bi bi-dash-circle"></i> ${title}`);
-        this.confirmModal.find('#confirmModalContent').html(`${message}`);
-        if(num != undefined) {
-            this.confirmModal.find('#Y').text(`${btn1}`);
-            this.confirmModal.find('#N').text(`${btn2}`);
-        }
         this.confirmModal.modal('show');
         var modal = bootstrap.Modal.getOrCreateInstance(this.confirmModal[0])
         modal.show()
 
-        this.confirmFlag = true;
         var that =this;
         this.confirmModal.find("#Y").off().click(function(){
-            that.confirmFlag = false;
-            if(content == "review"){
-                alert(num + ", " + '../test/tests' + "를 실행한다!!");
-            }
-            if(content == "profit") {
-                if(sort == '수익'){
-                    param = {'RESE_SEQ': num};
-                    ajaxCall('/profitCost/deleteProfitCost', param, function() {
-                        modal.hide();
-                        cmm.confirm("삭제", "삭제가 완료되었습니다", "complete");
-                        grids[0].reSearch();
-                    });
-                } else {
-                    param = {'COST_SEQ': num};
-                    ajaxCall('/profitCost/deleteProfitCost', param, function() {
-                        modal.hide();
-                        cmm.confirm("삭제", "삭제가 완료되었습니다", "complete");
-                        grids[0].reSearch();
-                    });
-                }
-            }
-            if(content == "parking") {
-                param = {'PARK_SEQ': num};
-                ajaxCall('/parkingManage/deleteParkingInfo', param, function() {
-                    modal.hide();
-                    cmm.confirm("삭제", "삭제가 완료되었습니다", "complete");
-                    grids[0].reSearch();
-                });
-            }
+        	modal.hide();
+        	if(typeof okCallbk == 'function'){
+        		okCallbk();
+        	}
         });
-        // this.confirmModal.find("#N").off().click(function(){
-        //     that.confirmFlag = false;
-        //     if(callbk){
-        //         callbk();
-        //     }
-        // });
+         this.confirmModal.find("#N,.btn-close").off().click(function(){
+         	modal.hide();
+             if(typeof cancelCallbk == 'function'){
+            	 cancelCallbk();
+             }
+         });
     }
+
 
     /**
      * 공통 alert
      */
-    this.alert=function(message, callbk){
-        alert(message);
-        if(typeof callbk == 'function'){
-            callbk();
+    this.alertModal = null;
+    this.alert=function(message, callbk, option){
+    	if(this.alertModal) {
+            this.alertModal.remove();
         }
+        let btn = "확인";
+        if(option){
+        	if(option.hasOwnProperty("btn"))
+        		btn = option.btn;
+        }
+        var modalHtml=``;
+        modalHtml+=`<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">`;
+        modalHtml+=`  <div class="modal-dialog">`;
+        modalHtml+=`    <div class="modal-content">`;
+        modalHtml+=`      <div class="modal-header">`;
+        modalHtml+=`        <h5 class="modal-title" id="alertModalLabel"><i class="bi bi-dash-circle"></i> 확인 </h5>`;
+        modalHtml+=`        <button type="button" class="btn-close"></button>`;
+        modalHtml+=`      </div>`;
+        modalHtml+=`      <div class="modal-body" id="alertModalContent">`;
+        modalHtml+=`        ${message}`;
+        modalHtml+=`      </div>`;
+        modalHtml+=`      <div class="modal-footer">`;
+        modalHtml+=`        <button id="Y" type="button" class="btn btn-danger">${btn}</button>`;
+        modalHtml+=`      </div>`;
+        modalHtml+=`    </div>`;
+        modalHtml+=`  </div>`;
+        modalHtml+=`</div>`;
+        $("body").append(modalHtml);
+        this.alertModal = $('#alertModal')
+        this.alertModal.modal('show');
+        var modal = bootstrap.Modal.getOrCreateInstance(this.alertModal[0])
+        modal.show();
+
+        var that =this;
+        this.alertModal.find("#Y,.btn-close").off().click(function(){
+        	modal.hide();
+        	if(typeof callbk == 'function'){
+        		callbk();
+        	}
+        });
     }
 
     /**
@@ -833,3 +835,10 @@ Common = function(){
 }
 
 cmm = new Common();
+
+function testLogin(){
+	 ajaxCall("/test/testlogin", {}, function(data){
+         console.log(data);
+     })
+}
+

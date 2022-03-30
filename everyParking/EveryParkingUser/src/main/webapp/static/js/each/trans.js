@@ -1,12 +1,16 @@
 // 우편번호 찾기 찾기 화면을 넣을 element
-var element_wrap = document.getElementById('wrap');
+let element_wrap;
+let inputAddr;
+window.addEventListener('DOMContentLoaded', e => {
+    element_wrap = document.getElementById('wrap');
+})
 
 function foldDaumPostcode() {
     // iframe을 넣은 element를 안보이게 한다.
     element_wrap.style.display = 'none';
 }
 
-function DaumPostcode() {
+function DaumPostcode(obj) {
     // 현재 scroll 위치를 저장해놓는다.
     var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     new daum.Postcode({
@@ -39,9 +43,11 @@ function DaumPostcode() {
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('postcodeName').value = addr;
+            if(document.getElementById('postcodeName')) {
+                document.getElementById('postcodeName').value = addr;
+            }
             //주소-좌표 변환 객체를 생성합니다
-            transGeocode();
+            transGeocode(obj);
 
             // iframe을 넣은 element를 안보이게 한다.
             // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
@@ -60,3 +66,5 @@ function DaumPostcode() {
     // iframe을 넣은 element를 보이게 한다.
     element_wrap.style.display = 'block';
 }
+
+

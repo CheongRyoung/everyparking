@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,4 +66,21 @@ public class MainServiceImpl implements MainService {
         return mainDao.selectReviewListCount(params);
     }
 	
+
+	@Override
+	public List<HashMap<String, Object>> selectSectionInfoForRese(HashMap<String, Object> params) throws Exception {
+		return mainDao.selectSectionInfoForRese(params);
+	}
+
+
+	@Override
+	public int insertReservation(HashMap<String, Object> params) throws Exception {
+		return mainDao.insertReservation(params);
+	}
+
+	@Override
+	public int deleteReservation(HashMap<String, Object> params) throws Exception {
+		return mainDao.deleteReservation(params);
+	}
+
 }

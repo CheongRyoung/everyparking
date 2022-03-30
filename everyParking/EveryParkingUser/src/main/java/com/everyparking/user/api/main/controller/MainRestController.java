@@ -3,17 +3,21 @@ package com.everyparking.user.api.main.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 
 import com.everyparking.user.api.main.service.MainService;
 import com.everyparking.user.framework.common.controller.BaseController;
+import com.everyparking.user.framework.common.util.SessionUtil;
 import com.everyparking.user.framework.common.vo.Ajax;
 
 @RestController
@@ -59,5 +63,35 @@ public class MainRestController extends BaseController {
         }
         return mav;
     }
+    
+    
+    @RequestMapping("/selectSectionInfoForRese")
+    public ModelAndView selectSectionInfoForRese(@RequestBody HashMap<String,Object> params) throws Exception{
+        ModelAndView mav = super.createMav();
+        try {
+            mav = super.createMav(mainService.selectSectionInfoForRese(params));
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+        }
+        return mav;
+    }
      
+    
+    @RequestMapping("/insertReservation")
+    public ModelAndView insertReservation(HttpServletRequest request, @RequestParam HashMap<String, Object> params) throws Exception{
+    	ModelAndView mav = super.createMav();
+    	try {
+    		SessionUtil.setCreator(request, params);
+    		mav = super.createMav(mainService.insertReservation(params));
+    	}catch (Exception e) {
+    		logger.error(e.getMessage());
+    		e.printStackTrace();
+    		super.setMessage(mav, Ajax.SAVE.TEXT+"."+Ajax.FAIL);
+    	}
+    	return mav;
+    }
+    
+    
 }

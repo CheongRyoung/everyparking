@@ -5,22 +5,22 @@ html, body{height: 100%;}
     /* 스크롤이 생성될때 auto로 길이 더 늘어날수있도록 */
     height: auto; 
     min-height: 100%;
-    padding-bottom: 300px;
+    padding-bottom: 20rem;
 }
 footer{
-    padding-bottom: 80px;
+	width:100%;
     position: relative;
     transform: translateY(-100%);
 }
 .footerBox{
     background-color: #1A1E5B;
+    padding-bottom:7rem;
+    padding-top:3rem;
+    width:100%;
 }
-.footerText{
+.footerFont{
     color: #A6A6A6; 
-    font-size: 8px;
-}
-footer .row{
-    margin: 0px;
+    font-size: 0.3rem;
 }
 
 
@@ -29,7 +29,6 @@ footer .row{
 /* main, content 부분 시작 */
 
 body{
-    overflow-x: hidden; 
     margin: 0;
     padding:0;
     width:100%;
@@ -47,41 +46,11 @@ main{
     box-shadow: 0px 0px 6px rgb(199, 199, 199);
 }
 .logoMain {
-    width: 90px;
-    height: auto;
-}
-.logoStyle {
-    width: 200px;
+    width: 7rem;
     height: auto;
 }
 .dropdown:hover .dropdown-menu {
     display: block;
-}
-.navfontbig {
-    font-size: 17px;
-    color: rgb(34, 34, 34);
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.53;
-    letter-spacing: normal;
-}
-.navfontSmall {
-    font-size: 12px;
-    color: rgb(34, 34, 34);
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.42;
-    letter-spacing: normal;
-}
-.dropDownStyle {
-    padding: 0px 15px 0px;
-}
-.dropItemStyle {
-    font-size: 13px;
-    color: rgb(0, 0, 0);
-    padding: 9px 15px;
 }
 .cardbackimg{
     width: 100vw;
@@ -100,79 +69,21 @@ main{
     color: #EEEEEE;
     padding-top: 25vh;
 }
-.areaList .areaSelect {
-    background-color: rgba(0, 0, 0, 0.65);
-    border-radius: 8px;
-    width: 340px;
-    height: 50px;
-}
-.searchSelect .btn {
-    width: 85px;
-    height: 40px;
-    font-size: 11px;
-    margin-top: 5px;
-    padding: 0;
-}
-.areaList .areaSelect .btn {
-    margin-top: 5px;
-    width: 80px;
-    height: 40px;
-    font-size: 10px;
-}
-.searchSelect {
-    background-color: rgba(0, 0, 0, 0.65);
-    border-radius: 8px;
-}
-.searchSelect .btn {
-    width: 130px;
-    height: 40px;
-}
-.bubble {
-position: relative;
-width: 110px;
-height: 40px;
-padding: 0px;
-background: #FFFFFF;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
-border-radius: 10px;
-}
-.borderBottomLine {
-    border-bottom: 1px rgba(225,225,225,1.00) solid;
-}
-.notiFont {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 20px;
-}
 p {
     margin-top: 2px;
     margin-bottom: 2px;
 }
 .login{
-    font-size: 25px;
+    font-size: 1.8rem;
     color: rgb(0, 0, 0);
-    padding: 9px 15px;
-}
-.card{
-    height: 100%;
-    border-bottom: #eeeeee solid 1px;
-    font-size: 13px;
-}
-.card-body {
-    color: rgba(0,0,0);
-}
-.card-img-top{
-    height: 200px;
-    margin: 0;
-    padding: 0;
+    padding: 0.4rem 0.8rem;
 }
 .mainContentImg{
     height: auto;
     object-fit: cover;
 }
 .mainContentTitle{
-    font-size: 30px;
+    font-size: 1.6rem;
     color: rgb(34, 34, 34);
     font-weight: bold;
     font-stretch: normal;
@@ -180,119 +91,33 @@ p {
     line-height: 2;
     letter-spacing: normal;
 }
-.mainContentSub{
-    font-size: 13px;
-    color: #A6A6A6;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    padding: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
 .mainContentSubTitle{
-    font-size: 15px;
-    color: rgb(84, 193, 210);
+    font-size: 1.1rem;
+    color: #2c0eee;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.53;
     letter-spacing: normal;
-}
-.cardTitle{
-    padding: 0;
-    margin-left: 20px;
-    font-size: 15px;
-    color: #A6A6A6;
-}
-.mainContentSubSub{
-    font-size: 15px;
-    color: #A6A6A6;
-    margin: 0;
-    padding: 0;
-}
-.commentContent{
-    font-size: 12px;
-    color: rgb(34, 34, 34);
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.53;
-    letter-spacing: normal;
-
-}
-.commentTitle{
-    font-size:13px;
-    color: #A6A6A6;
-}
-.bigTitleColorNg{
-    font-size: 20px;
-    font-weight: bold;
-    color: #222222;
-}
-.myPageLineColorNg{
-    border-top: 2px solid #a6a6a6;		
-}
-.smallTitleColorNg{
-    color: #737373;
-}
-.myPageBackgroundColorNg{
-    background-color: #f5f5f5; 
-}
-.myPageBorderRightNg{
-    border-right: solid 3px #222222;
-}
-.myPageBigFontNg{
-    font-size: 30px;
-    font-weight: bold;
-    color: #222222;
 }
 /*mainMap Animation*/
-.box{
-    width: 100px;
-    height: 100px;
-    background-color: black;
-    animation-name: box_ani;
-    animation-duration: 1s;
-    animation-iteration-count: 4;
-    animation-direction: alternate;
-}
-@keyframes box_ani {
-    from {
-        margin-bottom: 0;
-    }
-
-    to {
-        margin-bottom: 200px;
-    }
-}
-.qnaBorderColorNg{border-top: solid 1px #a6a6a6; border-bottom: solid 1px #a6a6a6;}
-.qnaAnswerBackgroundColorNg{border-right: solid 1px #a6a6a6; background-color: #f5f5f5;}
-.mainContentImg{width: 360px; height: auto; object-fit: cover;}
-.areaList .areaSelect {background-color: rgba(0, 0, 0, 0.65); border-radius: 8px; width: 340px; height: 50px;}
-.areaList .areaSelect .btn {margin-top: 5px; width: 80px; height: 40px; font-size: 15px;}
-.areaList{margin-top: 10px;}
-.areaBtn{margin-top: 60px; margin-bottom: 60px;}
-.areaSelect{background-color: rgba(0, 0, 0, 0); border-radius: 8px;}
-.commentBtn{height:25px; font-size: 15px; color: #A6A6A6; width: 23px; border: 0; padding: 0; margin: 0;}
-.commentContentNg {font-size: 15px; color: rgb(34, 34, 34); font-weight: bold; font-stretch: normal; font-style: normal; line-height: 1.53; letter-spacing: normal;}
-.mainContentSubSubNg {font-size: 15px; color: #A6A6A6; margin: 0; padding: 0;}
-.mainContentSubNg {font-size: 13px; color: #A6A6A6; font-weight: normal; font-stretch: normal; font-style: normal;
-                    line-height: 1.5; letter-spacing: normal; padding: 0; margin-top: 10px; margin-bottom: 10px;}
-.cardTitleNg {padding: 0; margin-left: 0; font-size: 15px; color: #A6A6A6;}
-.discountTitleNg {padding-left: 30px;}
-.parkingSectionNg {padding-left: 0px; padding-right: 30px;}                
-.parkingSectionNameNg {padding-right: 0px;}
-.numberSectionNg {padding-right: 20px;}
-.navfontSmallNg {font-size: 14px; color: rgb(34, 34, 34); font-weight: normal; font-stretch: normal; font-style: normal; line-height: 1.42; letter-spacing: normal;}
+.mainContentImg{object-fit: cover;}
+.areaList{margin-top: 0.8rem;}
+.areaBtn{margin-top: 3rem; margin-bottom: 3rem;}
+.commentContentNg {font-size: 0.9rem; color: rgb(34, 34, 34); font-weight: bold; font-stretch: normal; font-style: normal; line-height: 1.53; letter-spacing: normal;}
+.mainContentSubSubNg {font-size: 0.9rem; color: #A6A6A6; margin: 0; padding: 0;}
+.mainContentSubNg {font-size: 0.9rem; color: #A6A6A6; font-weight: normal; font-stretch: normal; font-style: normal; line-height: 1.5; letter-spacing: normal; padding: 0; margin-top: 0.8rem; margin-bottom: 0.8rem;}
+.cardTitleNg {padding: 0; margin-left: 0; font-size: 0.9rem; color: #A6A6A6;}
+.discountTitleNg {padding-left: 1.5rem;}
+.parkingSectionNg {padding-left: 0; padding-right: 1.5rem;}
+.parkingSectionNameNg {padding-right: 0;}
+.numberSectionNg {padding-right: 1rem;}
 
 .info{
 	overflow-x: hidden;
     left: -100%; 
     position: fixed; 
-    z-index: 3; 
+    z-index: 4; 
     background-color: white; 
     height: 100%;
     width: 100%;
@@ -309,17 +134,30 @@ p {
 	width: 100%;
 	transition: all .7s;
 }
-/* main, content 부분 종료 */ 
 
-
-/* 아이콘 부분 시작 */
-
-.memberBtn{
-    font-size: 23px;
-    color: #A6A6A6;
+.customDatePicker {
+    overflow-x: hidden;
+    bottom: -100%;
+    position: fixed;
+    z-index: 5;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    transition: all .7s;
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
+
+
+/* main, content 부분 종료 */
+
+
+/* 버튼 부분 시작 */
 .loginBtn {
-    font-size: 10px;
+    font-size: 0.8rem;
     color: rgb(34, 34, 34);
     font-weight: normal;
     font-stretch: normal;
@@ -327,47 +165,41 @@ p {
     line-height: 1.42;
     letter-spacing: normal;
 }
+.longBtn{
+	border-radius:0.5rem;
+	background-color:#2c0eee;
+	border: none;
+}
 .buttonBox{
     background-color: #1187cf;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     color:white;
     border: none;
-    height: 32px;
+    height: 1.5rem;
 }
 .redButtonBox{
     background-color: tomato;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     color:white;
     border: none;
-    height: 32px;
+    height: 1.5rem;
 }
+.commentBtn{
+	height:1rem;
+	font-size: 0.9rem;
+	color: #A6A6A6;
+	width: 1rem;
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
 
 /* 아이콘 부분 종료 */
 
 
 
 /* 예약 부분 시작 */
-
-.areaList{
-    margin-top: 10px;
-}
-.areaBtn{
-    margin-top: 60px;
-    margin-bottom: 60px;
-}
-.areaSelect{
-    background-color: rgba(0, 0, 0, 0);
-    border-radius: 8px;
-}
-.commentBtn {
-    height:25px;
-    font-size: 15px;
-    color: #A6A6A6;
-    width: 23px;
-    border: 0;
-    padding: 0;
-    margin: 0;
-}
 .star {
     font-size: 2rem;
     color: #ddd;
@@ -375,7 +207,6 @@ p {
 .checkStar {
     display: none;
 }
-
 .redStar {
     color: red;
 }
@@ -384,63 +215,47 @@ p {
 
 
 /* 지나님 전용 부분 시작 */
-
 .bi-x-lg{vertical-align: -webkit-baseline-middle;}
-.bi-map{margin-right:6px;}
-.bi-arrow-left{padding-left:11px;vertical-align: -webkit-baseline-middle;font-weight:bold;}
-.bi-chevron-down{margin-left: 2px;font-size: 14px;cursor:pointer;}
-.title{text-align:center;font-size:19px;margin-top:8px;font-weight:bold;}
-.topBox{border-top: 1px solid #eeeeee;background-color: #fff;}
-.buyDetailLineBox{border-bottom: 10px solid #eeeeee;}
-.buyDate{color:gray;font-size:13px;text-align:right;}
-.usageBox{background-color:#fff;box-shadow: 1px 2px 4px 0 rgb(117 121 125 / 10%), 0 0 1px 0 rgb(113 117 121 / 3%); border: solid 1px rgba(0, 0, 0, 11%);border-radius: 5px;}
-.parkingSpot{font-weight:bold;font-size:15px;}
+.bi-map{margin-right:0.5rem;}
+.bi-arrow-left{padding-left:0.6rem; vertical-align: -webkit-baseline-middle; font-weight:bold;}
+.bi-chevron-down{margin-left: 0.2rem;font-size: 0.9rem; cursor:pointer;}
+.title{text-align:center; font-size:1.2rem; margin-top:0.6rem; font-weight:bold; color:white;}
+.topBox{background-color: #fff;}
+.buyDetailLineBox{border-bottom: 0.6rem solid #eeeeee;}
+.usageBox{background-color:#fff;box-shadow: 1px 2px 4px 0 rgb(117 121 125 / 10%), 0 0 1px 0 rgb(113 117 121 / 3%); border: solid 0.1rem rgba(0, 0, 0, 11%);border-radius: 0.5rem;}
+.parkingSpot{font-weight:bold;font-size:1rem;}
 .ck-editor__main{font-size:smaller;}
-.ck-editor__editable{min-height:300px;max-height:300px;}
+.ck-editor__editable{min-height:18rem; max-height:18rem;}
 .ck.ck-editor__editable > .ck-placeholder::before{color:#b3b3b3;}
 .formFontSize{font-size:smaller;resize:none;}
-.state{border-radius: 10px;font-size:12px;}
-.carNo{font-size:13px;font-weight:500;display:block;color:gray;}
-.usageTime{font-size:13px;color:gray;text-align:right;}
-.reviewState{font-size:15px;text-align-last: end;margin-bottom: 0px;align-self: end;}
-.reviewBtn{font-size: 13px;background-color: #fff;color: black;border-color: #2c0eeec4;}
-.reviewBtn:hover{font-size: 13px;background-color: #2c0eeec4;border-color: #2c0eeec4;}
-.reviewBtnBox{text-align:right;width: 66px;height: 25px;}
-.btn{line-height:1.0;border-radius:2px;}
-.deleteBtn{font-size: 13px;background-color: #fff;color: black;border-color: gray;}
-.deleteBtn:hover{font-size: 13px;background-color: #e6e6e6;border-color: gray;}
-.btn-primary:focus{border-color: inherit; box-shadow:none;background-color:#fff;color:inherit}
-.btn-primary:active:focus{box-shadow:none;}
-.addressInfo{display:none;position:absolute;background-color:#fff;border:1px solid #cbdeed;border-radius:5px;margin-top:-12px;max-width:300px;box-shadow:0 3px 6px 0 rgb(0 0 0 / 10%);}
-.addressInfo p{color: #808080;padding: 4px 10px;display: block;font-weight: 300;font-size: 13px;}
-.show{display:block; margin-top: 10px;}
-.myPageTitle{color:#00AED0;font-weight:bold;text-align:center;margin-top:8px;}
+.carNo{font-size:0.8rem;font-weight:500;display:block;color:gray;}
+.usageTime{font-size:0.8rem;color:gray;text-align:right;}
+.reviewState{font-size:0.9rem;text-align-last: end;margin-bottom: 0px;align-self: end;}
+.addressInfo{display:none;position:absolute;background-color:#fff;border:0.1rem solid #cbdeed;border-radius:0.5rem;margin-top:-0.8rem;max-width:300px;box-shadow:0 3px 6px 0 rgb(0 0 0 / 10%);}
+.addressInfo p{color: #808080;padding: 0.2rem 0.5rem;display: block;font-weight: 300;font-size: 0.8rem;}
+.show{display:block; margin-top: 0.1rem;}
 ul, li{list-style: none;}
-.ulSection{padding-bottom:15px;border-bottom:2px solid #00AED0;font-size:18px;}
-.titleName{font-weight:bold;padding-top:15px;padding-bottom:15px;padding-left:83px;}
-.subTitleName{padding-bottom:8px;padding-left:78px;font-size:17px;}
-.headerBox{height:60px;align-content: center;}
-.insertBtn{width:100px;height:35px;border:none;font: -webkit-small-control;background-color: #1187CF; color: #fff;}
+.headerBox{height:3.2rem;align-content: center; background-color:#2c0eee;}
+.insertBtn{width:5.5rem;height:2.3rem;border:none;font: -webkit-small-control;background-color: #1187CF; color: #fff;}
 .insertBtn:hover{background-color: #3e8391}
-.cancelBtn{width:100px;height:35px;border:none;font: -webkit-small-control;background-color: #949a9b; color: #fff;}
+.cancelBtn{width:5.5rem;height:2.3rem;border:none;font: -webkit-small-control;background-color: #949a9b; color: #fff;}
 .cancelBtn:hover{background-color: #6d6d6d}
-.endLine{border-bottom:3px solid #1187cf;}
 .reviewInfoBox{background-color: #e6e6e6;}
 .reviewInfoBox .col{background-color: #FFF;}
 .btnBox{text-align:end;}
-.btnBox button{width:80px;margin-left:5px;}
-.parkingName{font-size:16px;}
-.reserveTime{font-size:13px;color:gray;}
-.sectionName{font-weight:bold;font-size:16px;}
+.parkingName{font-size:1.1rem;}
+.reserveTime{font-size:0.9rem;color:gray;}
+.sectionName{font-weight:bold;font-size:1.2rem;}
 
 /* 카테고리 사이드바 시작 */
-.cateSideLine{border-bottom: 1px solid #dee2e6;margin-left: 25px;margin-right: 41px;}
-.sideLogoBox{margin-left: 20px;text-align-last: center;}
-.cate-sideBar .row{max-width:max-content;margin-right:0px;}
+.cateSideLine{border-bottom: 0.1rem solid #dee2e6;margin-left: 2rem;margin-right:4rem;}
+.sideLogoBox{text-align-last: center;}
+.cate-sideBar .row{max-width:max-content;margin-right:0rem;}
+.cate-sideBarFont{font-size:0.9rem;}
 .cate-sideBar{
     position:fixed;
-    width:220px;
-    max-width:220px;
+    width:14rem;
+    max-width:14rem;
     top:0;
     left:-100%;
     height: 100%;
@@ -453,8 +268,8 @@ ul, li{list-style: none;}
 .show-cateSideBar .row{margin-right:0px;}
 .show-cateSideBar{
     position:fixed;
-    width:220px;
-    max-width:220px;
+    width:14rem;
+    max-width:14rem;
     top:0;
     left:0;
     height: 100%;
@@ -470,8 +285,8 @@ ul, li{list-style: none;}
 .my-sideBar .row{margin-left:0px;}
 .my-sideBar{
     position:fixed;
-    width:220px;
-    max-width:220px;
+    width:14rem;
+    max-width:14rem;
     top:0;
     right:-100%;
     height:100%;
@@ -483,8 +298,8 @@ ul, li{list-style: none;}
 }
 .show-mySideBar{
     position:fixed;
-    width:220px;
-    max-width:220px;
+    width:14rem;
+    max-width:14rem;
     top:0;
     right:0;
     height:100%;
@@ -495,48 +310,43 @@ ul, li{list-style: none;}
     transition: all .3s;
 }
 
-.myPageSideTitle{margin-bottom: 15px;margin-top: 15px;font-weight:bold;color: #2c0eeec4;font-size: 25px;margin-left: 24px;}
-.myList-liStyle li{padding-top: 6px;padding-bottom: 0px;padding-left:5px;font-size: 15px;}
-.logoutBox{padding-left:29px;font-size: small;}
-.bi-unlock{padding-right:5px;vertical-align: text-bottom;}
+.myPageSideTitle{margin-bottom: 1.2rem;margin-top:1.2rem;font-weight:bold;color: #2c0eee;font-size: 1.8rem;margin-left: 1.5rem;}
+.myList-liStyle li{padding-top: 0.5rem;padding-bottom: 0rem; padding-left:0.8rem;font-size: 1rem;}
+.logoutBox{padding-left:1.7rem;font-size: 1rem;}
+.bi-unlock{padding-right:0.5rem;vertical-align: text-bottom;}
 
 /* 마이페이지 사이드바 끝 */
-
-
 .category-btn{cursor:pointer;}
-.sideLine{margin-left: 15px;border-bottom: 1px solid #dee2e6;margin-right: 41px;}
-.sideTopTitle{font-size:20px;color:#212529;font-weight:600;align-self: center;}
-.categoryName{font-size:19px;color:#212529;font-weight:600;padding-left:15px;}
-.ulStyle{margin-left:16px;}
-.ulStyle li{padding-top:5px;padding-bottom:5px;}
+.sideLine{margin-left: 1rem;border-bottom: 1px solid #dee2e6; margin-right: 2rem;}
+.categoryName{font-size:1.25rem; color:#212529; font-weight:600; padding-left:1rem;}
 .btn-check:focus+.btn, .btn:focus{outline:0;box-shadow:none;}
-.btn-toggle-nav{padding-left:15px;}
-.btn-toggle-nav li{padding-top: 6px;padding-bottom: 0px;padding-left: 20px;font-size: 15px;}
-.btn-toggle-nav li a{font-size:color;}
+.btn-toggle-nav{padding-left:1rem;}
+.btn-toggle-nav li{padding-top: 0.5rem;padding-bottom: 0rem;padding-left: 1.1rem; font-size: 1rem;}
 
 
 /* 하단 고정 네비바 */
-.fixBottomNav{background-color:#fff;z-index:10;width:100%;height:80px;bottom:0;position:fixed;left:0;align-content:center;box-shadow:0 -3px 6px 0 rgb(0 0 0 / 13%);}
+.fixBottomNav{background-color:#fff; z-index:10; width:100%; max-width:100%; height:4.8rem; bottom:0; position:fixed; left:0; align-content:center; box-shadow:0 -3px 6px 0 rgb(0 0 0 / 13%)}
 .fixBottomNav .col{text-align: -webkit-center;}
 .navIcon{color:#000;}
-.navTitle{font-size:10px;color:#1d1d1d;}
+.navTitle{font-size:0.7rem;color:#1d1d1d;}
 a{color: #000; text-decoration:none;}
 
+
 /* 전지나 추가 */
-.bi-layers{margin-right:5px;}
-.listCountBox{font-size:19px;}
-.listCountNum{font-size:19px;padding-left:3px;padding-right:3px;color:#2c0eeec4;font-weight:700;vertical-align:text-bottom;}
-.listInfoBoard{border:1px solid #ddd;border-radius:10px;}
-.imageInfoBox{width:334px;height:199px;overflow:hidden;}
-.parkingImageBox{margin:auto;margin-bottom:30px;border:1px solid #ddd;border-radius:10px;overflow:hidden;box-shadow:0 3px 6px 0 rgb(0 0 0 / 10%)}
+.bi-layers{margin-right:0.6rem; margin-left:0.6rem;}
+.listCountBox{font-size:1.2rem;}
+.listCountNum{font-size:1.6rem;padding-left:0.2rem;padding-right:0.2rem;color:#2c0eeec4;font-weight:700;}
+.listInfoBoard{border:0.1rem solid #ddd;border-radius:6rem;}
+.imageInfoBox{overflow:hidden; margin:0rem;}
+.parkingImageBox{margin:auto;margin-bottom:2rem;border:0.1rem solid #ddd;border-radius:0.8rem;overflow:hidden;box-shadow:0 3px 6px 0 rgb(0 0 0 / 10%)}
 .parkingImageBox > a:hover{border-color:#222;color:black;}
-.parkingSpotName{font-size:20px;font-weight: 700;text-align:center;}
-.parkingSpotInfo{font-size:13px;color:darkgray;text-align:center;}
-.parkingSpotExRowBox{font-size:15px;margin-bottom:6px;}
+.parkingSpotName{font-size:1.4rem;font-weight: 700;}
+.parkingSpotInfo{font-size:0.8rem;color:darkgray;}
+.parkingSpotExRowBox{font-size:0.9rem;margin-bottom:0.3rem;}
 .parkingSpotEx{text-align:end;}
-.parkingSpotIconEx{padding-left:12px;font-weight:bold;}
-.soptBox{text-align: center;font-size: 13px;}
-.sopt{padding-left:3px;}
+.parkingSpotIconEx{padding-left:0.8rem;font-weight:bold;}
+.soptBox{text-align: center;font-size: 0.8rem;}
+.sopt{padding-left:0.2rem;}
 
 /* 지나님 전용 부분 종료 */
 
@@ -549,6 +359,7 @@ a{color: #000; text-decoration:none;}
 #f5f5f5 테이블 상단 배경색
 
 */
+
 .scroll-container {
     overflow-x: hidden;
 }
@@ -557,7 +368,7 @@ a{color: #000; text-decoration:none;}
     flex-wrap: no-wrap;
     transition-property: transform;
     position: relative;
-    height: 88%;
+    height: 80%;
 }
 .section {
     width: 100%;
@@ -565,7 +376,7 @@ a{color: #000; text-decoration:none;}
     height: 100%;
 }
 
-.activeBox {color: #1187CF;}
+.activeBox {color: #2c0eee;}
 .navColor {cursor: pointer;}
 
 .scrollNonBox {
@@ -576,4 +387,83 @@ a{color: #000; text-decoration:none;}
 .scrollNonBox::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
     width: 0 !important;
+}
+
+
+
+::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+    width: 0 !important;
+}
+
+li a i {
+    vertical-align: baseline;
+    padding: 1px;
+}
+
+#inputPhone::placeholder{
+	color: #A6A6A6;
+}
+
+#readEditorBox .ck.ck-editor__main > .ck-editor__editable {
+    border: 0rem;
+}
+
+#readEditorBox .ck.ck-editor__main > .ck-editor__editable {
+    border: 0rem;
+}
+
+/************ 데이트 피커 용 ***************/
+span {
+    margin: 0px;
+    padding: 0px;
+}
+
+.scrollx-container {
+    overflow-x: hidden;
+    position: relative;
+    border-bottom: 0.1rem solid #ddd;
+}
+
+.scrolly-container {
+    overflow-y: hidden;
+    height: 8rem;
+    border-bottom: 0.1rem solid #ddd;
+    position: relative;
+}
+.xinner {
+    display: flex;
+    flex-wrap: no-wrap;
+}
+
+.customDay {
+    width: 5rem;
+    height: 100%;
+    flex: 0 0 auto;
+    text-align: center;
+    color: #dddddd;
+}
+
+.customHour {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    height: 1.5rem;
+    text-align: center;
+    color: #dddddd;
+}
+
+.selectcustomHour {
+    color: #2c0eee;
+}
+
+.selectcustomDay {
+    color: white;
+    border-radius: 1rem;
+    background-color: #2c0eee;
+}
+
+.customDateBox {
+    color: #222222;
+    font-weight: bolder;
+    font-size: 1.5rem;
 }

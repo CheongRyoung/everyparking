@@ -27,12 +27,15 @@
 	</beans:bean>
 	
 	<!-- interceptor -->
-	<interceptors>
-		<interceptor>
-			<mapping path="/**"/>
-			<beans:bean id="LoggerInterceptor" class="com.everyparking.user.framework.common.interceptor.LoggerInterceptor"/>
-		</interceptor>
-	</interceptors>
+		<interceptors>
+			<interceptor >
+				<mapping path="/**"/>
+				<exclude-mapping path="/login/**"/><exclude-mapping path="/css/**"/><exclude-mapping path="/img/**"/><exclude-mapping path="/js/**"/>
+				<exclude-mapping path="/operation/notice/**"/>
+				<exclude-mapping path="/operation/QNA/list"/>
+				<beans:bean id="LoggerInterceptor" class="com.everyparking.user.framework.common.interceptor.LoggerInterceptor"></beans:bean>
+			</interceptor>
+		</interceptors>
 
 	<!--  jsonview -->
 	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">

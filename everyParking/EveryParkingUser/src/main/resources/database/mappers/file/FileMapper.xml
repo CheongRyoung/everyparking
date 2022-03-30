@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.user.framework.file.dao.FileDao">
+    <select id="getFile" parameterType="hashMap" resultType="hashMap">
+        SELECT
+            FILE_SEQ
+             , FILE_ORG_NAME
+             , FILE_CONV_NAME
+             , FILE_EXT
+             , FILE_URL
+             , FILE_TYPE
+             , FILE_SIZE
+             , REG_SEQ
+             , REG_DATE
+             , MOD_SEQ
+             , MOD_DATE
+             , NOTE
+        FROM p_file
+        WHERE FILE_SEQ = #{FILE_SEQ}
+    </select>
+
+    <insert id="insertFile" parameterType="hashMap">
+        <selectKey resultType="int"  keyColumn="FILE_SEQ" keyProperty="FILE_SEQ" order="AFTER">
+            select MAX(FILE_SEQ) from p_file
+        </selectKey>
+        INSERT INTO p_file(
+            FILE_SEQ
+            , FILE_ORG_NAME
+            , FILE_CONV_NAME
+            , FILE_EXT
+            , FILE_URL
+            , FILE_TYPE
+            , FILE_SIZE
+            , REG_SEQ
+            , REG_DATE
+            , MOD_SEQ
+            , MOD_DATE
+            , NOTE
+        )values(
+            #{FILE_SEQ}
+            , #{FILE_ORG_NAME}
+            , #{FILE_CONV_NAME}
+            , #{FILE_EXT}
+            , #{FILE_URL}
+            , #{FILE_TYPE}
+            , #{FILE_SIZE}
+            , #{REG_SEQ}
+            , NOW()
+            , #{MOD_SEQ}
+            , NOW()
+            , NULL
+        )
+    </insert>
+</mapper>

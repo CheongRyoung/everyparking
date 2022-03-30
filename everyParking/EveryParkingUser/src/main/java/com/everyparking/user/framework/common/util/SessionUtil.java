@@ -90,4 +90,11 @@ public class SessionUtil {
         data.put("USER_SEQ", sessionUser.getUSER_SEQ());
         return data;
     }
+    
+    public static int getUSER_SEQ(HttpServletRequest request) {
+        HashMap<String, Object> data = new HashMap<>();
+        HttpSession session = request.getSession();
+        MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+        return sessionUser.getUSER_SEQ();
+    }
 }

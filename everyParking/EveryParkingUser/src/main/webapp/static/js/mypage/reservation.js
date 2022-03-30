@@ -15,10 +15,8 @@ let curPos = 0;
 const cnWidth = container.clientWidth;
 
 window.addEventListener('DOMContentLoaded', e => {
-    const body = document.querySelector('body');
-    body.classList.add('scrollNonBox');
+    document.querySelector('body').classList.add('scrollNonBox')
 })
-
 // 이동이벤트
 container.addEventListener('touchstart', (e) => {
     startPos = e.touches[0].pageX;  // 터치한 x 좌표
@@ -34,23 +32,35 @@ container.addEventListener('touchmove', (e) => {
 container.addEventListener('touchend', (e) => {
     const sum = curPos + (e.changedTouches[0].pageX - startPos); //바낀 x좌표
     let finalX = Math.round(sum / cnWidth) * cnWidth;
-    let index = 0;
     clearColor();
     // 0은 첫단 영역의 시작이다  이동될 수록 -
     if (finalX >= 0) {
         finalX = 0;
-        index = 1;
+        navColor[0].classList.add("activeBox");
     }
+
     // 끝단 영역보다 더 작으면 끝단으로
     else if (finalX <= -(cnWidth * (3 - 1))) {
         finalX = -(cnWidth * (3 - 1));
-        index = 3;
+        navColor[2].classList.add("activeBox");
     } else {
-        index = 2;
+        navColor[1].classList.add("activeBox");
     }
-    ex(index, finalX)
+
+    inner.style.transform = `translate3d(${finalX}px, 0px, 0px)`;
+    bbline.style.transform = `translate3d(${-finalX/3}px, 0px, 0px)`;
+    inner.style.transitionDuration = '300ms';
+    bbline.style.transitionDuration = '300ms';
+    curPos = finalX;
+    
+    list.tabChangeEvent();
 });
 
+function clearColor() {
+    navColor.forEach(e => {
+        e.classList.remove("activeBox");
+    })
+}
 // 클릭이벤트
 navColor.forEach(e => {
     e.addEventListener('click', (e) => {
@@ -63,24 +73,14 @@ navColor.forEach(e => {
             index = 3;
         }
         let finalX = (-cnWidth * (index - 1))
-        ex(index, finalX);
-
+        clearColor()
+        navColor[index-1].classList.add("activeBox");
+        inner.style.transform = `translate3d(${finalX}px, 0px, 0px)`;
+        bbline.style.transform = `translate3d(${-finalX/3}px, 0px, 0px)`;
+        inner.style.transitionDuration = '300ms';
+        bbline.style.transitionDuration = '300ms';
+        curPos = finalX;
+        
+        list.tabChangeEvent();
     })
 })
-
-
-function clearColor() {
-    navColor.forEach(e => {
-        e.classList.remove("activeBox");
-    })
-}
-
-function ex(index, finalX) {
-    clearColor()
-    navColor[index-1].classList.add("activeBox");
-    inner.style.transform = `translate3d(${finalX}px, 0px, 0px)`;
-    bbline.style.transform = `translate3d(${-finalX/3}px, 0px, 0px)`;
-    inner.style.transitionDuration = '300ms';
-    bbline.style.transitionDuration = '300ms';
-    curPos = finalX;
-}

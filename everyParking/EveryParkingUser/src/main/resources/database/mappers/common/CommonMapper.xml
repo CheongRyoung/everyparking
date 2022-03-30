@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.everyparking.user.framework.common.dao.CommonDao">
 	<insert id="registerMember">
-
+	
 		<selectKey keyProperty="USER_SEQ" resultType="integer" order="AFTER">
 	       SELECT MAX(USER_SEQ) From P_USER
 	     </selectKey>
@@ -26,13 +26,7 @@
 			#{USER_CAR_NO}
 		)
 	</insert>
-	
-	<insert id="insertSUBCODE" parameterType="hashMap">
-			insert into P_ROYALUSER (RU_TYPE, USER_SEQ)
-			values (#{SUB_CODE}, #{USER_SEQ})
-	
-	
-	</insert>
+		
 	
 	
 	<select id="getMemberByIdAndPw" resultType="com.everyparking.user.framework.common.vo.MemberVo">
@@ -40,6 +34,7 @@
 		FROM P_USER
 		WHERE USER_MAIL=#{USER_MAIL}
 		AND USER_PW=#{USER_PW}
+		AND USE_YN = 'Y'
 	</select>
 	
 	<select id="getMemberByNo" resultType="com.everyparking.user.framework.common.vo.MemberVo">
@@ -48,9 +43,24 @@
 		WHERE USER_SEQ = #{SEQ}
 	</select>
 	
-	<select id="getCountById" resultType="int">
+	<!-- 이메일 찾기 -->
+	<select id="findEmail" resultType="com.everyparking.user.framework.common.vo.MemberVo">
+		SELECT USER_MAIL
+		FROM P_USER
+		WHERE USER_NAME = #{USER_NAME}
+		AND USER_CAR_NO = #{USER_CAR_NO}
+	</select>
+	
+	<!-- 이메일 중복확인 -->
+	<select id="getCountByEmail" resultType="int">
 		SELECT COUNT(*) FROM P_USER
 		WHERE USER_MAIL = #{USER_MAIL}
+	</select>
+	
+	<!-- 차량번호 중복확인 -->
+	<select id="getCountByCarNo" resultType="int">
+		SELECT COUNT(*) FROM P_USER
+		WHERE USER_CAR_NO = #{USER_CAR_NO}
 	</select>
 	
 	<!-- 우대사항 코드 -->
@@ -59,28 +69,48 @@
 		WHERE M_CODE = 'RY'
 	</select>
 	
+	<insert id="insertRoyalUser" parameterType="hashMap">
+		
+		<selectKey keyProperty="RU_SEQ" resultType="integer" order="AFTER">
+	       SELECT MAX(RU_SEQ) From P_ROYALUSER
+	     </selectKey>	
+	
+		INSERT INTO P_ROYALUSER (
+			  RU_TYPE
+			, USER_SEQ
+			, REG_DATE
+			, NOTE
+			) VALUES (
+			  #{RU_TYPE}
+			, #{USER_SEQ}
+			, NOW()
+			, NULL
+			)
+			
+	</insert>
+	
 	<!-- 관리자회원 업데이트 -->
 	<update id="approveAdmin">
 		UPDATE P_USER
 		SET USER_TYPE = "US02"
 		WHERE USER_SEQ = #{USER_SEQ}
 	</update>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

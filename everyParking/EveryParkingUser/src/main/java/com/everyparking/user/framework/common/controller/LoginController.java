@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.everyparking.user.framework.common.service.CommonService;
+import com.everyparking.user.framework.common.util.MessageDigestUtil;
 import com.everyparking.user.framework.common.util.SessionUtil;
 import com.everyparking.user.framework.common.vo.MemberVo;
 
@@ -21,7 +22,7 @@ import com.everyparking.user.framework.common.vo.MemberVo;
 public class LoginController extends BaseController {
 	
 	@Autowired
-	private CommonService commonService;
+	CommonService commonService;
 	
     @RequestMapping("/loginPage")
     public String loginForm(){
@@ -29,7 +30,7 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("/register")
-    public String registerForm(Model model){
+    public String registerForm(Model model) throws Exception{
     	List<HashMap<String, Object>> list = commonService.getSubCodeRoyalUser();
     	model.addAttribute("getSubCodeRoyalUserList", list);
         return "/login/register";
@@ -43,12 +44,12 @@ public class LoginController extends BaseController {
     
     
     @RequestMapping("/registerProcess")
-    public String registerProcess(MemberVo param) {
+    public String registerProcess(MemberVo param, String [] SUB_CODE) throws Exception {
     	
     	System.out.println("시스템 로그] 회원가입 프로세스 실행");
 		System.out.println("시스템 로그] id : " + param.getUSER_MAIL() + " pw : " + param.getUSER_PW());
     	
-		commonService.registerMember(param);
+		commonService.registerMember(param, SUB_CODE);
 		
 		return "/login/welcome";
     }
@@ -63,26 +64,17 @@ public class LoginController extends BaseController {
 		
 		if(sessionUser != null) {
 			mav.addObject("sessionUser", sessionUser);
-			if(sessionUser.getUSER_TYPE().equals("US02")) {
-				
-				//로그인 인증 성공 
 				SessionUtil.setSessionData(request, "sessionUser", sessionUser );
-				mav.setViewName("redirect: http://localhost:8123/parkingManage/adminHome");
-			}else {
-				SessionUtil.setSessionData(request, "sessionUser", sessionUser );
-				mav.setViewName("redirect: ../main/home");
-			}
+				mav.setViewName("redirect: /main/home");
 		} else {
 			//로그인 인증 실패
-			
-			
-			mav.setViewName("/login/loginForm");
-			mav.addObject("errMsg", "아이디 또는 비밀번호 오류입니다.");
+			mav.setViewName("/login/loginFail");
 		}
 		
 		return mav;
 	}
-	    
+	
+	//로그아웃
 	@RequestMapping("/logout")
 	public String loggout(HttpSession session, HttpServletRequest request) {
 		session.invalidate();
@@ -90,6 +82,26 @@ public class LoginController extends BaseController {
 		return "redirect:"+ referer;
 	}
 	
-
+	//이메일 찾기
+	@RequestMapping("/findEmail")
+	public String findEmail() {
+		return "/login/findEmail";
+	}
+	
+	@RequestMapping("/findEmailProcess")
+	public String findEmailProcess(MemberVo param, Model model) {
+		
+		
+		
+		MemberVo member = commonService.findEmail(param);
+		
+		if(member != null) {
+			model.addAttribute("check", 0);
+			model.addAttribute("USER_MAIL", member.getUSER_MAIL());
+		} else {
+			model.addAttribute("check", 1);
+		}
+		return "/login/findEmail";
+	}
 	
 }

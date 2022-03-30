@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.user.framework.common.dao.CodeDao">
+	<select id="getCodeList" parameterType="hashMap" resultType="hashMap">
+		SELECT 
+			SUB_CODE
+			, M_CODE
+			, SUB_NAME
+			, REG_SEQ
+			, REG_DATE
+			, MOD_SEQ
+			, MOD_DATE
+			, NOTE
+			, USE_YN
+		FROM p_subcode
+		WHERE M_CODE = #{MST_CODE}
+	</select>	
+</mapper>

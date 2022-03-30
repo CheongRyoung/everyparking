@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.everyparking.user.api.mypage.dao.MyInfoDao">
+
+	<!-- 패스워드 체크 -->
+	<select id="checkPw" resultType="int">
+		SELECT COUNT(*) FROM P_USER
+		WHERE USER_SEQ = #{USER_SEQ}
+		  AND USER_PW = #{USER_PW}
+	</select>
+
+	<sql id="updateInfoSql">
+		SELECT 
+			USER_SEQ
+			,USER_MAIL
+			,USER_PW
+			,USER_NAME
+			,USER_BIRTH
+			FROM p_user as pu 
+			where 1=1
+		AND pu.USE_YN = 'Y'
+	</sql>
+	
+	<select id="selectOneInfo" parameterType="hashMap" resultType="hashMap">
+		/* myinfoMapper.selectOneInfo  */
+		<include refid="updateInfoSql"></include>
+	 	AND USER_SEQ = #{USER_SEQ}
+	</select>
+
+	<update id="updateInfo" parameterType="hashMap">
+        /* myinfoMapper.updateInfo  */
+        UPDATE p_user SET
+			  USER_MAIL  = #{ USER_MAIL  }
+			, USER_PW  = #{ USER_PW  }
+			, USER_NAME = #{ USER_NAME }
+			, USER_BIRTH  = #{ USER_BIRTH  }
+		WHERE USER_SEQ = #{ USER_SEQ }
+    </update>
+
+	<update id="deleteInfo" parameterType="hashMap">
+         /* confirmPwMapper.deleteInfo  */
+        UPDATE p_user SET
+           USE_YN = 'N'
+           , USER_SEQ = #{USER_SEQ}
+          WHERE USER_SEQ = #{ USER_SEQ }
+    </update>
+
+	<select id="selectUserRoyal" parameterType="hashMap" resultType="String">
+		SELECT 
+			GROUP_CONCAT(RU_TYPE) AS MY_ROYAL 
+		FROM p_royaluser
+		WHERE USER_SEQ = #{USER_SEQ}
+		AND USE_YN = 'Y'
+	</select>
+
+</mapper>

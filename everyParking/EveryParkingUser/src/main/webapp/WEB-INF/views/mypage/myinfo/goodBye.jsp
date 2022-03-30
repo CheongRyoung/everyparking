@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <header>
         <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5"></i></div>
+            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;"></i></div>
             <div class="col px-0">
                 <h5 class="title">마이 페이지</h5>
             </div>
@@ -17,7 +17,7 @@
                     <div class="col text-center mt-5 ">
                         <div class="row">
                             <div class="col text-center">
-                                <img class="logoMain mt-3" src="../img/logoBG.jpg">
+                                <img class="logoMain mt-3" src="/img/newLogo.png">
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="row mt-5 mb-5 mx-1 pb-4">
-                            <div class="col d-grid"><button class="buttonBox">메인 페이지로 이동</button></div>
+                            <div class="col d-grid"><button class="buttonBox" onclick="location.href='http://localhost:9123/main/home';">메인 페이지로 이동</button></div>
                         </div>
                     </div>
                 </div>

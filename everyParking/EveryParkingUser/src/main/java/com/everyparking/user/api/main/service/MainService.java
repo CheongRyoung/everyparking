@@ -3,6 +3,8 @@ package com.everyparking.user.api.main.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface MainService {
 	
 	// 3/16 장문 지도 작업 부분
@@ -18,5 +20,11 @@ public interface MainService {
 	public List<HashMap<String, Object>> selectReviewList(HashMap<String, Object> params) throws Exception;
 	
 	public int selectReviewListCount(HashMap<String, Object> params) throws Exception;
+	
+	public List<HashMap<String, Object>> selectSectionInfoForRese(HashMap<String, Object> params) throws Exception;
+	
+	public int insertReservation(HashMap<String, Object> params) throws Exception;
+
+	public int deleteReservation(HashMap<String, Object> params) throws Exception;
 
 }

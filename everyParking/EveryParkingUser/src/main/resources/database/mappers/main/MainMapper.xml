@@ -8,30 +8,33 @@
 
  	<select id="selectParkingInfoList" parameterType="hashMap" resultType="hashMap">
  		/* MainMapper.selectMarkerList [ 주차장 정보 조회 - 김장문 ] */
-		SELECT PARK_SEQ,
-				USER_SEQ,
-				FILE_SEQ,
-				PARK_NAME,
-				PARK_ADDR1,
-				PARK_ADDR2,
-				PARK_ADDR_X,
-				PARK_ADDR_Y,
-				PARK_CALL_NUM,
-				PARK_CONT,
-				PARK_OPEN,
-				PARK_CLOSE,
-				PARK_PRICE,
-				REG_SEQ,
-				REG_DATE,
-				MOD_SEQ,
-				MOD_DATE,
-				NOTE,
-				USE_YN
-		FROM p_parkinginfo
+		SELECT pp.PARK_SEQ,
+				pp.USER_SEQ,
+				pp.FILE_SEQ,
+				pp.PARK_NAME,
+				pp.PARK_ADDR1,
+				pp.PARK_ADDR2,
+				pp.PARK_ADDR_X,
+				pp.PARK_ADDR_Y,
+				pp.PARK_CALL_NUM,
+				pp.PARK_CONT,
+				pp.PARK_OPEN,
+				pp.PARK_CLOSE,
+				pp.PARK_PRICE,
+				pp.REG_SEQ,
+				pp.REG_DATE,
+				pp.MOD_SEQ,
+				pp.MOD_DATE,
+				pp.NOTE,
+				pp.USE_YN,
+				pf.FILE_URL,
+				pf.FILE_CONV_NAME
+		FROM p_parkinginfo pp, p_file pf
 		WHERE 1=1
-		AND PARK_ADDR_X BETWEEN #{x1} AND #{x2}
-		AND PARK_ADDR_Y BETWEEN #{y1} AND #{y2}
-		AND USE_YN = 'Y'
+		AND pp.FILE_SEQ = pf.FILE_SEQ
+		AND pp.PARK_ADDR_X BETWEEN #{x1} AND #{x2}
+		AND pp.PARK_ADDR_Y BETWEEN #{y1} AND #{y2}
+		AND pp.USE_YN = 'Y'
   	</select>
  
 
@@ -48,32 +51,33 @@
 	
 	<select id="selectOneParkingInfo" parameterType="hashMap" resultType="hashMap">
 		/* MainMapper.selectOneParkingInfo [ 주차장 개별 정보 조회 - 김장문 ] */
-		SELECT PARK_SEQ
-			, USER_SEQ
-			, FILE_SEQ
-			, PARK_NAME
-			, PARK_ADDR1
-			, PARK_ADDR2
-			, PARK_ADDR_X
-			, PARK_ADDR_Y
-			, PARK_CALL_NUM
-			, PARK_CONT
-			, PARK_OPEN
-			, PARK_CLOSE
-			, PARK_PRICE
-			, REG_SEQ
-			, REG_DATE
-			, MOD_SEQ
-			, MOD_DATE
-			, NOTE
-			, USE_YN
-			<!-- , FILE_URL -->
-		FROM p_parkinginfo <!-- p_file pf -->
+		SELECT pp.PARK_SEQ
+			, pp.USER_SEQ
+			, pp.FILE_SEQ
+			, pp.PARK_NAME
+			, pp.PARK_ADDR1
+			, pp.PARK_ADDR2
+			, pp.PARK_ADDR_X
+			, pp.PARK_ADDR_Y
+			, pp.PARK_CALL_NUM
+			, pp.PARK_CONT
+			, pp.PARK_OPEN
+			, pp.PARK_CLOSE
+			, pp.PARK_PRICE
+			, pp.REG_SEQ
+			, pp.REG_DATE
+			, pp.MOD_SEQ
+			, pp.MOD_DATE
+			, pp.NOTE
+			, pp.USE_YN
+			, pf.FILE_URL
+			, pf.FILE_CONV_NAME
+		FROM p_parkinginfo pp , p_file pf
 		WHERE 1=1
-		<!-- AND pp.FILE_SEQ = pf.FILE_SEQ -->
-		AND USE_YN = 'Y'
+		AND pp.FILE_SEQ = pf.FILE_SEQ
+		AND pp.USE_YN = 'Y'
 		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
-			AND PARK_SEQ = #{PARK_SEQ}
+			AND pp.PARK_SEQ = #{PARK_SEQ}
 		</if>
 	</select>
 
@@ -133,6 +137,94 @@
 			AND ps.PARK_SEQ = #{PARK_SEQ}
 		</if>
 	</select>
+	
+	
+	<select id="selectSectionInfoForRese" parameterType="hashMap" resultType="hashMap">
+	/* MainMapper.selectSectionInfoForRese [ 주차장의 선택 시간에 대한 남은 주차 대수 조회 - 김장문 ] */
+		SELECT ps.SEC_SEQ  , ps.SEC_TYPE , ps.SEC_DIS , ps.SEC_COUNT - IFNULL((
+			SELECT t3.blockorrese 
+			FROM (
+				SELECT t2.sec_seq , MAX(t2.regcnt) as blockorrese from(
+					SELECT t1.* , (
+						SELECT SUM(inn1.cnt) FROM (
+							SELECT ps.SEC_SEQ as sec_seq , STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') as stime , STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T') as etime , 0 as cnt from p_section ps where ps.PARK_SEQ = #{PARK_SEQ} 
+							UNION ALL
+							SELECT pr.SEC_SEQ as sec_seq , GREATEST(pr.RESE_START, STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T')) as stime , pr.RESE_END as etime , 1 as cnt
+							FROM p_reservation pr 
+							WHERE 1=1
+							AND pr.SEC_SEQ IN (select ps.SEC_SEQ from p_section ps where ps.PARK_SEQ = #{PARK_SEQ})
+							AND ((pr.RESE_START between STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') and STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T'))
+							OR (pr.RESE_END between STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') and STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T')))
+							UNION ALL
+							SELECT pb.SEC_SEQ as sec_seq , GREATEST(pb.BLO_START, STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T')) as stime , pb.BLO_END as etime , 1 as cnt
+							FROM p_block pb 
+							WHERE 1=1
+							AND pb.SEC_SEQ IN (select ps.SEC_SEQ from p_section ps where ps.PARK_SEQ = #{PARK_SEQ})
+							AND ((pb.BLO_START between STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') AND STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T'))
+							OR (pb.BLO_END between STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') AND STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T')))
+						) inn1
+						WHERE inn1.sec_seq = t1.sec_seq
+						AND t1.stime between inn1.stime and inn1.etime 
+					) as regcnt 
+					from (
+						select ps.SEC_SEQ as sec_seq , STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') as stime , STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T') as etime , 0 as cnt from p_section ps where ps.PARK_SEQ = #{PARK_SEQ} 
+						union all
+						select pr.SEC_SEQ as sec_seq , GREATEST(pr.RESE_START, STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T')) as stime , pr.RESE_END as etime , 1 as cnt
+						from p_reservation pr 
+						where 1=1
+						and pr.SEC_SEQ IN (select ps.SEC_SEQ from p_section ps where ps.PARK_SEQ = #{PARK_SEQ})
+						and ((pr.RESE_START between STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') and STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T'))
+						or (pr.RESE_END between STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') and STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T')))
+						union all
+						select pb.SEC_SEQ as sec_seq , GREATEST(pb.BLO_START, STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T')) as stime , pb.BLO_END as etime , 1 as cnt
+						from p_block pb 
+						where 1=1
+						and pb.SEC_SEQ IN (select ps.SEC_SEQ from p_section ps where ps.PARK_SEQ = #{PARK_SEQ})
+						and ((pb.BLO_START between STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') and STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T'))
+						or (pb.BLO_END between STR_TO_DATE(CONCAT(LEFT(#{daterange}, 13), ':00:01'), '%Y-%m-%d %T') and STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T')))
+					) t1
+				) t2
+				group by t2.sec_seq
+			) t3
+			where t3.sec_seq = ps.SEC_SEQ
+		), 0) as remaincnt
+		from p_section ps 
+		where ps.PARK_SEQ = #{PARK_SEQ}
+	</select>
+	
+	
+	<insert id="insertReservation" parameterType="hashMap">
+		/* MainDao.insertReservation [ 예약하기 DB insert 작업 - 김장문 ] */
+		INSERT INTO p_reservation( SEC_SEQ
+								, USER_SEQ
+								, RESE_CALL_NUM
+								, RESE_CAR_NO
+								, RESE_PRICE
+								, RESE_START
+								, RESE_END
+								, RESE_TID
+								, REG_DATE
+								  )
+						VALUES ( #{SEC_SEQ}
+								, #{USER_SEQ}
+								, #{RESE_CALL_NUM}
+								, #{RESE_CAR_NO}
+								, #{RESE_PRICE}
+								, DATE_FORMAT(#{RESE_START}, '%Y-%m-%d %T')
+								, DATE_FORMAT(#{RESE_END}, '%Y-%m-%d %T')
+								, #{RESE_TID}
+								, SYSDATE()
+								  )
+	</insert>
+
+
+	<update id="deleteReservation" parameterType="hashMap">
+		UPDATE p_reservation SET
+		RESE_STATE = 'PM02'
+		WHERE RESE_SEQ = #{RESE_SEQ}
+	</update>
+	
+	
 	
 	
 	
