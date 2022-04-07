@@ -17,6 +17,8 @@ public interface QnaService {
 	
 	public int insertComment(HttpServletRequest request, HashMap<String, Object> params) throws Exception;
 	
+	public int insertReply(HttpServletRequest request, HashMap<String, Object> params) throws Exception;
+	
 	public int insertQna(HttpServletRequest request, HashMap<String, Object> params) throws Exception;
 	
 	public int updateQna(HashMap<String, Object> params) throws Exception;

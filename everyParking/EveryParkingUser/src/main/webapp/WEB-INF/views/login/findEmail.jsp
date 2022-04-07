@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid">
     <header>
-        <div class="row headerBox px-0 mb-5" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;" onclick="location.href='/login/loginPage'" style="cursor:pointer;"></i></div>
+        <div class="row headerBox px-0 mb-5">
+            <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5" onclick="location.href='/login/loginPage'" style="cursor:pointer;"></i></div>
             <div class="col px-0">
                 <h5 class="title">이메일 찾기</h5>
             </div>
@@ -17,7 +17,7 @@
                     <div class="col">
                         <div class="row my-3">
                             <div class="col text-center">
-                                <img class="logoMain my-3" src="/img/newLogo.png">
+                                <img class="logoMain my-3" src="/img/logo2.png">
                             </div>
                         </div>
                         <div class="row">
@@ -32,9 +32,9 @@
                                         <label for="floatingCarNumber">차량번호</label>
                                     </div>
                                 
-                                    <div class="row mb-5 pb-4">
+                                    <div class="row mb-5 mt-4 pb-4">
                                         <div class="col d-grid">
-                                            <button type="submit" class="longBtn" style="color:white; border:0px; height:2rem;">이메일 찾기</button>
+                                            <button type="submit" class="longBtn">이메일 찾기</button>
                                             
                                             <c:if test="${check == 1}">
                                                 <script type="text/javascript">
@@ -46,7 +46,7 @@
                                             
                                             <c:if test="${check == 0}">
                                                 <label class="mt-3 mb-2">찾으시는 이메일은 " ${USER_MAIL} " 입니다.</label>
-                                                <button class="longBtn" style="color:white; border:0px; height:2rem;" onclick="endFindEmail(); return false;">확인</button>
+                                                <button class="longBtn" onclick="endFindEmail(); return false;">확인</button>
                                             </c:if>
                                         </div>
                                     </div>

@@ -28,10 +28,10 @@
 					<div class="col"></div>
 					<div class="col-9">
 						<div class="row mt-5">
-						<input id="notiseq" type="hidden" name="NOTI_SEQ" value="${noti.NOTI_SEQ}">
+						<input type="hidden" name="NOTI_SEQ" value="${noti.NOTI_SEQ}">
 							<div class="col-3">공지사항 제목</div>
 							<div class="col">
-								<input class="form-control" type="text" name="notiTitle" id="notititle" value="${noti.NOTI_TITLE}">
+								<input class="form-control" type="text" name="notiTitle" value="${noti.NOTI_TITLE}">
 							</div>
 						</div>
 						<div class="row mt-3 mb-5">
@@ -45,7 +45,7 @@
 						<div class="row my-3">
 							<div class="col text-end">
 								<button type="button" class="modalBtn btn btn-secondary"
-									style="background-color: #e0e0e0; color: #000;">취소</button>
+									style="background-color: #e0e0e0; color: #000;" onclick="history.back();">취소</button>
 								<button type="button" class="modalBtn btn btn-primary" onclick="updateData()">등록</button>
 							</div>
 						</div>

@@ -1,8 +1,13 @@
 package com.everyparking.admin.api.costManage.dao;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.List;
 
+@Mapper
+@Repository
 public interface CostManageDao {
 
 	public List<HashMap<String, Object>> selectListCost(HashMap<String, Object> params) throws Exception;

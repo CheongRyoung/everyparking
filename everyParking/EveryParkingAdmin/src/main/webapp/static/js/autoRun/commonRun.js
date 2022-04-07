@@ -11,7 +11,7 @@ const datepickerN = document.getElementById('datepickerN');
 const readEditor = document.getElementById('readEditor');
 const writeEditor = document.getElementById('writeEditor');
 const testGridid = document.getElementById('testGrid');
-
+let editor;
 
 // 시간을 포함해서 날짜를 선택해야할때
 if(datepickerR) {
@@ -73,6 +73,8 @@ if(datepickerN) {
 }
 
 
+
+
 // ckedior Read
 if(readEditor){
     ClassicEditor
@@ -94,7 +96,6 @@ if(readEditor){
 
 // ckeitor 작성을 위한 함수입니다.
 if(writeEditor){
-    let editor;
 
     ClassicEditor
         .create( document.querySelector( '#writeEditor' ) , {
@@ -240,6 +241,46 @@ if(testGridid) {
         console.log(obj.childNodes[0].innerText);
     }
 }
+
+const navLink = document.querySelectorAll('.nav-link');
+if(location.pathname.indexOf('parkingZone') != -1) {
+    navLink[1].classList.add('active');
+}
+if(location.pathname.indexOf('costTable') != -1) {
+    navLink[2].classList.add('active');
+}
+if(location.pathname.indexOf('userHistory') != -1) {
+    navLink[3].classList.add('active');
+}
+if(location.pathname.indexOf('profitChart') != -1 || location.pathname.indexOf('profitTable') != -1) {
+    navLink[4].classList.add('active');
+}
+if(location.pathname.indexOf('parkingBlock') != -1) {
+    navLink[5].classList.add('active');
+}
+if(location.pathname.indexOf('noticeManagement') != -1) {
+    navLink[6].classList.add('active');
+}
+if(location.pathname.indexOf('qnaManage') != -1) {
+    navLink[7].classList.add('active');
+}
+
+/*
+ *  작성자 : 홍종화
+ *  작성일 : 22-04-03
+ *  html escape 용 함수
+ */
+function escapeHtml(str) {
+	var map = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#039;'
+	};
+	return str.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
 
 
 

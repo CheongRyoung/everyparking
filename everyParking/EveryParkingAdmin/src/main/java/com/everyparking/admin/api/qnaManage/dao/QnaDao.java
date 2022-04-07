@@ -18,5 +18,18 @@ public interface QnaDao {
 	
 	public int qnaReadCount(int QNA_SEQ) throws Exception;
 	
+	public int answerQna(int QNA_SEQ) throws Exception;
+	
 	public int insertComment(HashMap<String, Object> params) throws Exception;
+	
+	public int insertReply(HashMap<String, Object> params) throws Exception;
+	
+	public int deleteComment(int QNAC_SEQ) throws Exception;
+		
+	public int updateComment(HashMap<String, Object> params ) throws Exception;
+	
+	public List<HashMap<String, Object>> getCommentList(int QNA_SEQ) throws Exception;
+	
+	public HashMap<String,Object> getNextPrev (int QNA_SEQ) throws Exception;
+
 }

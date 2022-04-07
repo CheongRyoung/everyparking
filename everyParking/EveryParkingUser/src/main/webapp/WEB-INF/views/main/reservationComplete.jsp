@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container-fluid">
     <header>
-        <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;"></i></div>
+        <div class="row headerBox py-2 px-0">
+            <div class="col-1 px-0"></div>
             <div class="col px-0">
-                <h5 class="title">마이 페이지</h5>
+                <h5 class="title">예약 완료</h5>
             </div>
             <div class="col-1 px-0"></div>
         </div>
@@ -17,7 +17,7 @@
                     <div class="col text-center mt-5 ">
                         <div class="row">
                             <div class="col text-center">
-                                <img class="logoMain mt-3" src="/img/newLogo.png">
+                                <img class="logoMain mt-3" src="/img/logo2.png">
                             </div>
                         </div>
                         <div class="row mt-5">

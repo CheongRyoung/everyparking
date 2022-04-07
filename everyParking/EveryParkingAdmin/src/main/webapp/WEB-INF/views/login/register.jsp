@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: blueg
-  Date: 2022-03-11
-  Time: 오후 5:34
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,10 +13,6 @@
     <title>Document</title>
     <!-- 클래식 에디터 -->
     <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
-    <style>
-        .qnaBorderColorNg{border-top: solid 1px #a6a6a6; border-bottom: solid 1px #a6a6a6;}
-        .qnaAnswerBackgroundColorNg{border-right: solid 1px #a6a6a6; background-color: #f5f5f5;}
-    </style>
     <script>
         function back() {
             window.history.back();
@@ -31,9 +20,9 @@
     </script>
 </head>
 <body>
-<div class="container-fluid" style="max-width: 500px; background-color: #F5F5F5;">
+<div class="container-fluid" style="background-color: #F5F5F5;">
     <header>
-        <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
+        <div class="row headerBox py-2 px-0">
             <div class="col-1 px-0 mx-2"><i class="bi bi-arrow-left fs-5" onclick="back()"></i></div>
             <div class="col px-0">
                 <h5 class="title">회원 가입</h5>
@@ -49,7 +38,7 @@
                     <div class="col">
                         <div class="row my-3">
                             <div class="col text-center">
-                                <img class="logoMain my-3" src="/img/logoBG.jpg">
+                                <img class="logoMain my-3" src="/img/logo2.png">
                             </div>
                         </div>
                         <div class="row">
@@ -106,13 +95,13 @@
                                     </div>
                                     <div class="row mb-1">
                                         <div class="col">
-                                            장애인 우대 약관
+                                            	장애인 우대 약관
                                         </div>
                                     </div>
                                     <div class="row mb-1">
                                         <div class="col  d-grid">
 	                                        <textarea readonly rows="3">1. 장애인전용주차구역 주차표지가 붙어있는 자동차로서 보행에 장애가 있는 사람이 타고 있는 자동차만 주차할 수 있습니다.
-	        2. 이를 위반한 사람에 대하여는 10만원의 과태료를 부과합니다.</textarea>
+	        									2. 이를 위반한 사람에 대하여는 10만원의 과태료를 부과합니다.</textarea>
                                         </div>
                                     </div>
                                     <div class="row mb-3">

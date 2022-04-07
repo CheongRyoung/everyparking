@@ -30,20 +30,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
 
-		logger.info(pooledPBEStringEncryptor.encrypt("빈에 등록된 객체가"));
-		logger.info(pooledPBEStringEncryptor.encrypt("암호화를 해줍니다"));
-		logger.info(pooledPBEStringEncryptor.encrypt("소금도 있습니다"));
-		logger.info(pooledPBEStringEncryptor.encrypt("환경변수에 복호화키를 저장합시다"));
-
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
+		return "/parkingManage/adminHome";
 	}
 }

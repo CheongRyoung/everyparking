@@ -317,7 +317,7 @@ var Grid = function(tblEl, options, searchApiUrl){
                 html += cmm.attachComma(data);
                 break;
             case 'date' :
-                html += moment(data).format(col.format ? col.format :'YY-MM-DD HH:mm');
+                html += moment(data).format(col.format ? col.format :'YY-MM-DD');
                 break;
             case 'text' :
             default :

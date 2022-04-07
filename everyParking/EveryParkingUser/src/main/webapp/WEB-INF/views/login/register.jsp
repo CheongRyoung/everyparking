@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid">
     <header>
-        <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;" onclick="history.back();" style="cursor:pointer;"></i></div>
+        <div class="row headerBox py-2 px-0">
+            <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5" onclick="history.back();" style="cursor:pointer;"></i></div>
             <div class="col px-0">
                 <h5 class="title">회원 가입</h5>
             </div>
@@ -18,7 +18,7 @@
                     <div class="col">
                         <div class="row my-3">
                             <div class="col text-center">
-                                <img class="logoMain my-3" src="/img/newLogo.png">
+                                <img class="logoMain my-3" src="/img/logo2.png">
                             </div>
                         </div>
                         <div class="row">
@@ -73,10 +73,9 @@
 								    <div class="row mb-1">
 								        <div class="col"><span>생년월일</span></div>
 								    </div>
-								    <input type="date" class="form-control mb-3" id="inputBirth" placeholder="Birth" name="USER_BIRTH">
+								    <input type="date" class="form-control" id="inputBirth" placeholder="Birth" name="USER_BIRTH" onchange="setMaxValue();">
 								    
-								    
-								    <div class="row mb-1">
+								    <div class="row mt-3 mb-1">
 								        <div class="col"><span>차량번호</span></div>
 								    </div>
 								    <div class="form-floating mb-3">
@@ -112,7 +111,7 @@
 								    </div>
 								    <div class="row mb-1">
 								        <div class="col  d-grid">
-								            <textarea readonly rows="3" style="font-size:13px;">1. 장애인전용주차구역 주차표지가 붙어있는 자동차로서 보행에 장애가 있는 사람이 타고 있는 자동차만 주차할 수 있습니다.&#10;2. 이를 위반한 사람에 대하여는 10만원의 과태료를 부과합니다.</textarea>
+								            <textarea readonly rows="3" style="font-size:0.8rem; border:0.05rem solid #3E4AB8;">1. 장애인전용주차구역 주차표지가 붙어있는 자동차로서 보행에 장애가 있는 사람이 타고 있는 자동차만 주차할 수 있습니다.&#10;2. 이를 위반한 사람에 대하여는 10만원의 과태료를 부과합니다.</textarea>
 								        </div>
 								    </div>
 								    <div class="row mb-4 pb-3">
@@ -120,9 +119,9 @@
 								            <input type="checkbox" id="agree" disabled> 동의합니다.
 								        </div>
 								    </div>
-								    <div class="row my-4">
-								        <div class="col">
-								            <button type="button" id="rgsbtn" class="buttonBox longBtn" style="float: right;">회원 가입 완료</button>
+								    <div class="row my-5">
+								        <div class="col d-grid">
+								            <button type="button" id="rgsbtn" class="longBtn" style="float: right;">회원 가입 완료</button>
 								        </div>
 								    </div>
 								</form>	    

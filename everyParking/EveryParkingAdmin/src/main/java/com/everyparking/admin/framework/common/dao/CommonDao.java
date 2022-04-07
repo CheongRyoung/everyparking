@@ -11,9 +11,11 @@ import java.util.List;
 @Repository
 public interface CommonDao {
     public void registerMember(MemberVo vo);
+   
     public MemberVo getMemberByIdAndPw(MemberVo vo);
+    
     public MemberVo getMemberByNo(int SEQ);
-    public int getCountById(String USER_MAIL);
+   
     public List<HashMap<String, Object>> getSubCodeRoyalUser();
 
 

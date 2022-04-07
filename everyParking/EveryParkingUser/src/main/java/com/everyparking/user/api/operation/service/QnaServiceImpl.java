@@ -56,6 +56,12 @@ public class QnaServiceImpl implements QnaService{
 	}
 	
 	@Override
+	public int insertReply(HttpServletRequest request, HashMap<String, Object> params) throws Exception {
+		return qnadao.insertReply(params);
+	}
+
+	
+	@Override
 	public int updateQna(HashMap<String, Object> params) throws Exception {
 		return qnadao.updateQna(params);
 	}

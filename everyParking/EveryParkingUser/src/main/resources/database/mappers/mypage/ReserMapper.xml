@@ -10,11 +10,13 @@
 			, pr.SEC_SEQ
 			, pr.USER_SEQ
 			, PP.PARK_NAME
+			, PP.PARK_ADDR1
 			, pr.RESE_STATE
 			, pr.RESE_CALL_NUM
 			, pr.RESE_CAR_NO
 			, pr.RESE_PRICE
 			, pr.RESE_START
+			, REV_SEQ
 			, pr.RESE_END 
 			, pr.RESE_TID
 			, pr.REG_DATE
@@ -26,7 +28,9 @@
 		LEFT OUTER JOIN p_section ps 
 		  ON ps.SEC_SEQ = pr.SEC_SEQ
 		LEFT OUTER JOIN p_parkinginfo pp 
-		  ON ps.PARK_SEQ = pp.PARK_SEQ 
+		  ON ps.PARK_SEQ = pp.PARK_SEQ
+		LEFT OUTER JOIN (SELECT * FROM p_review WHERE USE_YN = 'Y') prv
+		    on pr.RESE_SEQ = prv.RESE_SEQ
 		WHERE 1=1
 		AND pr.USER_SEQ = #{USER_SEQ}
 	</sql>
@@ -36,9 +40,11 @@
 			<choose>
 				<when test="type == 1"><!-- 오늘이후것들 -->
 					<![CDATA[AND current_timestamp() <= pr.RESE_END]]> 
+					AND pr.USE_YN = 'Y'
 				</when>
 				<when test="type == 2"><!-- 과거내역 -->
 					<![CDATA[AND current_timestamp() > pr.RESE_END]]> 
+					AND pr.USE_YN = 'Y'
 				</when>
 				<otherwise>	<!-- 취소내역 -->
 					AND pr.USE_YN = 'N'

@@ -69,7 +69,17 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public List<HashMap<String, Object>> selectSectionInfoForRese(HashMap<String, Object> params) throws Exception {
-		return mainDao.selectSectionInfoForRese(params);
+		
+		List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();		
+		 
+		for(HashMap<String, Object> reseList : mainDao.selectSectionInfoForRese(params)) {
+			for(HashMap<String, Object> userList : mainDao.getUserInfo(params)) {
+				if(reseList.get("SEC_TYPE").toString().equals(userList.get("RU_TYPE").toString()) ) {
+					dataList.add(reseList);
+				}
+			}
+		}
+		return dataList;
 	}
 
 
@@ -81,6 +91,25 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public int deleteReservation(HashMap<String, Object> params) throws Exception {
 		return mainDao.deleteReservation(params);
+	}
+
+
+	@Override
+	public HashMap<String, Object> checkLogin(HashMap<String, Object> params) throws Exception {
+		return null;
+	}
+
+
+	@Override
+	public List<HashMap<String, Object>> getUserPublishCoupon(HashMap<String, Object> params) throws Exception {
+		return mainDao.getUserPublishCoupon(params);
+	}
+
+
+	@Override
+	public void updateUserCoupon(HashMap<String, Object> params) throws Exception {
+		mainDao.updateUserCoupon(params);
+		
 	}
 
 }

@@ -52,6 +52,7 @@ public class RestMyInfoController extends BaseController{
 	        try {
 	        	SessionUtil.setCreator(request, params);
 	            mav = super.createMav(myInfoService.deleteInfo(params));
+	            SessionUtil.clearSession(request.getSession());
 	        }catch (Exception e){
 	            logger.error(e.getMessage());
 	            super.setCustomMessage(mav, Ajax.FAIL, "탈퇴에 실패하였습니다. 관리자에게 문의해주세요.");

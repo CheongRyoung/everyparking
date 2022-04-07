@@ -14,6 +14,7 @@ var selectTimeDatepicker;
 var insertData = document.getElementById("insertData");
 var parkPrice = document.getElementById("parkPrice");
 var finalPrice = "";
+var averageData = 0;
 
 if(mainMap){
 	var valueX = parseFloat(mainMapX.value);
@@ -37,6 +38,7 @@ var section = document.getElementById("section");
 var review = document.getElementById("review");
 var listBox = document.getElementById("listBox");
 var imageBox = document.getElementById("image");
+var averageReviewBox = document.getElementById("averageReview");
 
 var remainCountBox = document.getElementById("remainCount");
 
@@ -158,7 +160,7 @@ function markerLoad(result) {
 	      modalHtml +=`         </div>`;
 	      modalHtml +=`         <div class="row parkingSpotExRowBox">`;
 	      modalHtml +=`             <div class="col-4">`;
-	      modalHtml +=`                 <i class="bi bi-geo-alt" style="color:#2c0eee;"></i><span class="parkingSpotIconEx">위치</span>`;
+	      modalHtml +=`                 <i class="bi bi-geo-alt" style="color:#3E4AB8;"></i><span class="parkingSpotIconEx">위치</span>`;
 	      modalHtml +=`             </div>`;
 	      modalHtml +=`             <div class="col parkingSpotEx">`;
 	      modalHtml +=`					<span style="width:10rem; overflow:hidden; text-overflow:ellipsis; display:block; white-space: nowrap; float: right;">${listBoxData.PARK_ADDR1}</span>`;
@@ -166,7 +168,7 @@ function markerLoad(result) {
 	      modalHtml +=`         </div>`;
 	      modalHtml +=`         <div class="row parkingSpotExRowBox">`;
 	      modalHtml +=`             <div class="col-4">`;
-	      modalHtml +=`                 <i class="bi bi-credit-card" style="color:#2c0eee;"></i><span class="parkingSpotIconEx">주차요금</span>`;
+	      modalHtml +=`                 <i class="bi bi-credit-card" style="color:#3E4AB8;"></i><span class="parkingSpotIconEx">주차요금</span>`;
 	      modalHtml +=`             </div>`;
 	      modalHtml +=`             <div class="col parkingSpotEx">`;
 	      modalHtml +=`                 <span>1시간 </span><span>${listBoxData.PARK_PRICE}</span><span>원</span>`;
@@ -174,7 +176,7 @@ function markerLoad(result) {
 	      modalHtml +=`         </div>`;
 	      modalHtml +=`         <div class="row parkingSpotExRowBox">`;
 	      modalHtml +=`             <div class="col-4">`;
-	      modalHtml +=`                 <i class="bi bi-stopwatch" style="color:#2c0eee;"></i><span class="parkingSpotIconEx">문의시간</span>`;
+	      modalHtml +=`                 <i class="bi bi-stopwatch" style="color:#3E4AB8;"></i><span class="parkingSpotIconEx">문의시간</span>`;
 	      modalHtml +=`             </div>`;
 	      modalHtml +=`             <div class="col parkingSpotEx">`;
 	      modalHtml +=`                 <span>${listBoxData.PARK_OPEN}</span> ~ <span>${listBoxData.PARK_CLOSE}</span>`;
@@ -291,22 +293,32 @@ function showRese(PARK_SEQ){
     
     parkPrice.innerText = parkingData.data.parkingInfo.PARK_PRICE;
     
+    for(reviewList of parkingData.data.reviewList){
+    	averageData += reviewList.REV_STAR;
+    }
+    averageData = (averageData / (parkingData.data.reviewList).length);
+    
+    if((parkingData.data.reviewList).length == 0){
+    	averageReviewBox.innerText = "0.0점";
+    }else{
+    	averageReviewBox.innerText = averageData;
+    }
+    averageData = 0;
+    
+    
     section.innerHTML = "";
     for(sectionData of parkingData.data.sectionList){
-    	if(sectionData.SUB_CODE != 'RY01'){
-    		var modalHtml = ``;
-        	modalHtml +=` <div class="row">`;
-        	modalHtml +=` 	<div class="col-7 discountTitleNg">`;
-        	modalHtml +=` 		<span class="mainContentSubSubNg">${sectionData.SUB_NAME}</span><span class="mainContentSubSubNg"> 구역</span>`;
-        	modalHtml +=` 	</div>`;
-        	modalHtml +=` 	<div class="col text-center">`;
-        	modalHtml +=` 		<span class="mainContentSubSubNg">${sectionData.SEC_DIS}</span ><span class="mainContentSubSubNg">%</span>`;
-        	modalHtml +=` 	</div>`;
-        	modalHtml +=` </div>`;
-        	$("#section").append(modalHtml);
-        	
-    	}
-    	
+		var modalHtml = ``;
+    	modalHtml +=` <div class="row">`;
+    	modalHtml +=` 	<div class="col-7 discountTitleNg">`;
+    	modalHtml +=` 		<span class="grayFontJm">${sectionData.SUB_NAME}</span><span class="grayFontJm"> 구역</span>`;
+    	modalHtml +=` 	</div>`;
+    	modalHtml +=` 	<div class="col text-center">`;
+    	modalHtml +=` 		<span class="grayFontJm">${sectionData.SEC_DIS}</span ><span class="grayFontJm">%</span>`;
+    	modalHtml +=` 	</div>`;
+    	modalHtml +=` </div>`;
+    	$("#section").append(modalHtml);
+      
     }
     
     review.innerHTML = "";
@@ -324,20 +336,24 @@ function showRese(PARK_SEQ){
     		}
     	}
     	var modalHtml = ``;
-    	modalHtml +=`<div class="row my-2 mx-1">`;
-    	modalHtml +=`	<div class="col d-flex justify-content-between">`;
-    	modalHtml +=`		<span class="mainContentSubSubNg">${reviewData.USER_NAME}</span>`;
-    	modalHtml +=`    	<span class="mainContentSubSubNg">${reviewDate}</span>`;
-    	modalHtml +=`    </div>`;
-    	modalHtml +=`</div>`;
-    	modalHtml +=`<div class="row" style="margin-left: 0.2rem;">`;
-    	modalHtml +=` 	<div class="col">`;
-    	modalHtml +=` 		<p style="color:red;">${reviewStar}</p>`;
-    	modalHtml +=` 	</div>`;
-    	modalHtml +=`</div>`;
-    	modalHtml +=`<div class="row mb-2 pb-1" style="margin: 0.2rem; border-bottom: 0.2rem solid #EEEEEE;">`;
-    	modalHtml +=` 	<div class="col">`;
-    	modalHtml +=` 		<span class="commentContentNg" style="height:">${reviewData.REV_CONT}</span>`;
+    	modalHtml +=`<div class="row my-3 mx-1" style="border: 1.5px solid rgb(243, 243, 243); box-shadow: 2px 3px 4px #d7dadf; border-radius:0.5rem;">`;
+    	modalHtml +=`	<div class="col">`;
+    	modalHtml +=`		<div class="row mb-2 mt-3 mx-1">`;
+    	modalHtml +=`			<div class="col d-flex justify-content-between">`;
+    	modalHtml +=`				<span class="grayFontJm">${reviewData.USER_NAME}</span>`;
+    	modalHtml +=`    			<span class="grayFontJm">${reviewDate}</span>`;
+    	modalHtml +=`    		</div>`;
+    	modalHtml +=`		</div>`;
+    	modalHtml +=`		<div class="row" style="margin-left: 0.2rem;">`;
+    	modalHtml +=` 			<div class="col">`;
+    	modalHtml +=` 				<p style="color:red;">${reviewStar}</p>`;
+    	modalHtml +=` 			</div>`;
+    	modalHtml +=`		</div>`;
+    	modalHtml +=`		<div class="row mb-2 pb-1" style="margin: 0.2rem;">`;
+    	modalHtml +=` 			<div class="col">`;
+    	modalHtml +=` 				<span class="commentContentNg">${reviewData.REV_CONT}</span>`;
+    	modalHtml +=` 			</div>`;
+    	modalHtml +=`		</div>`;
     	modalHtml +=` 	</div>`;
     	modalHtml +=`</div>`;
     	$("#review").append(modalHtml);
@@ -375,60 +391,67 @@ function beforeReservation(){
 	ajaxCall("/main/selectSectionInfoForRese", params, function(data){
 		var modalHtml = ``;
 		remainCount.innerHTML = "";
-		for(sectionData of data.list){
+				modalHtml +=` <div class="row">`;
+				modalHtml +=` 	<div class="col-5">`;
+				modalHtml +=` 		<span class="mainContentSubTitle">남은구역</span>`;
+				modalHtml +=` 	</div>`;
+				modalHtml +=` 	<div class="col">`;
+		for(sectionData of data.data.sectionList){
 			if(sectionData.SEC_TYPE == 'RY01' && sectionData.remaincnt > 0){
 				modalHtml +=` <div class="row my-2">`;
 				modalHtml +=`    <div class="col">`;
-				modalHtml +=`        <span class="mainContentSubSubNg">일반 전용</span>`;
+				modalHtml +=`        <span class="grayFontJm">일반 전용</span>`;
 				modalHtml +=`    </div>`;
 				modalHtml +=`    <div class="col text-end parkingSectionNg">`;
-				modalHtml +=`        <span class="mainContentSubSubNg">${sectionData.remaincnt}칸</span>`;
+				modalHtml +=`        <span class="grayFontJm">${sectionData.remaincnt}칸</span>`;
 				modalHtml +=`    </div>`;
 				modalHtml +=` </div>`;
 			}else if(sectionData.SEC_TYPE == 'RY02' && sectionData.remaincnt > 0){
 				modalHtml +=` <div class="row my-2">`;
 				modalHtml +=`    <div class="col">`;
-				modalHtml +=`        <span class="mainContentSubSubNg">장애인 전용</span>`;
+				modalHtml +=`        <span class="grayFontJm">장애인 전용</span>`;
 				modalHtml +=`    </div>`;
 				modalHtml +=`    <div class="col text-end parkingSectionNg">`;
-				modalHtml +=`        <span class="mainContentSubSubNg">${sectionData.remaincnt}칸</span>`;
+				modalHtml +=`        <span class="grayFontJm">${sectionData.remaincnt}칸</span>`;
 				modalHtml +=`    </div>`;
 				modalHtml +=` </div>`;
 			}else if(sectionData.SEC_TYPE == 'RY03' && sectionData.remaincnt > 0){
 				modalHtml +=` <div class="row my-2">`;
 				modalHtml +=`    <div class="col">`;
-				modalHtml +=`        <span class="mainContentSubSubNg">여성 전용</span>`;
+				modalHtml +=`        <span class="grayFontJm">여성 전용</span>`;
 				modalHtml +=`    </div>`;
 				modalHtml +=`    <div class="col text-end parkingSectionNg">`;
-				modalHtml +=`        <span class="mainContentSubSubNg">${sectionData.remaincnt}칸</span>`;
+				modalHtml +=`        <span class="grayFontJm">${sectionData.remaincnt}칸</span>`;
 				modalHtml +=`    </div>`;
 				modalHtml +=` </div>`;
 			}else if(sectionData.SEC_TYPE == 'RY04' && sectionData.remaincnt > 0){
 				modalHtml +=` <div class="row my-2">`;
 				modalHtml +=`    <div class="col">`;
-				modalHtml +=`        <span class="mainContentSubSubNg">전기차 전용</span>`;
+				modalHtml +=`        <span class="grayFontJm">전기차 전용</span>`;
 				modalHtml +=`    </div>`;
 				modalHtml +=`    <div class="col text-end parkingSectionNg">`;
-				modalHtml +=`        <span class="mainContentSubSubNg">${sectionData.remaincnt}칸</span>`;
+				modalHtml +=`        <span class="grayFontJm">${sectionData.remaincnt}칸</span>`;
 				modalHtml +=`    </div>`;
 				modalHtml +=` </div>`;
 			}
 		}
+		modalHtml +=` 	</div>`;
+		modalHtml +=` </div>`;
 		modalHtml +=` <div class="row my-4 py-4 areaList" style="border-bottom: #EEEEEE solid 0.5rem; border-top: #EEEEEE solid 8px;">`;
 		modalHtml +=`     <div class="col-5">`;
 		modalHtml +=`     	<span class="mainContentSubTitle">주차 구역 선택</span>`;
 		modalHtml +=`     </div>`;
-		modalHtml +=`     <div class="col text-center">`;
-		modalHtml +=`     	<select onchange="selectBox(this.value, ${priceByTime})" class="form-select" aria-label="Default select example" style="font-size: 0.8rem; color: #A6A6A6; heigth: 2rem; width: 11rem;">`;
+		modalHtml +=`     <div class="col text-center d-grid">`;
+		modalHtml +=`     	<select onchange="selectBox(this.value, ${priceByTime})" class="form-select" aria-label="Default select example" style="font-size: 0.8rem; color: #A6A6A6; heigth: 2rem;">`;
 		modalHtml +=`     		<option selected id="selectBoxValue">주차 구역</option>`;
-		for(sectionData of data.list){
-			if(sectionData.SEC_TYPE == 'RY01'){
+		for(sectionData of data.data.sectionList){
+			if(sectionData.SEC_TYPE == 'RY01' && sectionData.remaincnt > 0){
 				modalHtml +=` <option value=${sectionData.SEC_DIS} value2=${sectionData.SEC_SEQ}>일반</option>`;
-			}else if(sectionData.SEC_TYPE == 'RY02'){
+			}else if(sectionData.SEC_TYPE == 'RY02' && sectionData.remaincnt > 0){
 				modalHtml +=` <option value=${sectionData.SEC_DIS} value2=${sectionData.SEC_SEQ}>장애인</option>`;
-			}else if(sectionData.SEC_TYPE == 'RY03'){
+			}else if(sectionData.SEC_TYPE == 'RY03' && sectionData.remaincnt > 0){
 				modalHtml +=` <option value=${sectionData.SEC_DIS} value2=${sectionData.SEC_SEQ}>여성</option>`;
-			}else if(sectionData.SEC_TYPE == 'RY04'){
+			}else if(sectionData.SEC_TYPE == 'RY04' && sectionData.remaincnt > 0){
 				modalHtml +=` <option value=${sectionData.SEC_DIS} value2=${sectionData.SEC_SEQ}>전기차</option>`;
 			}
 		}
@@ -439,40 +462,62 @@ function beforeReservation(){
 	    modalHtml +=`    <div class="col-5">`;
 	    modalHtml +=`        <span class="mainContentSubTitle">전화 번호</span>`;
 	    modalHtml +=`    </div>`;
-	    modalHtml +=`    <div class="col numberSectionNg">`;
-	    modalHtml +=`        <input class="form-control form-control-sm d-grid" id="inputPhone" name="RESE_CALL_NUM" type="text" aria-label=".form-control-sm example" placeholder="휴대 전화 (-값 포함)">`;
+	    modalHtml +=`    <div class="col numberSectionNg d-grid">`;
+	    modalHtml +=`        <input class="form-control form-control-sm d-grid phoneNumber" id="inputPhone" name="RESE_CALL_NUM" type="text" aria-label=".form-control-sm example">`;
 	    modalHtml +=`    </div>`;
 	    modalHtml +=`</div>`;
 	    modalHtml +=`<div class="row my-4 pb-4 areaList" style="border-bottom: #EEEEEE solid 0.5rem;">`;
 	    modalHtml +=`    <div class="col-5">`;
 	    modalHtml +=`        <span class="mainContentSubTitle">차량 번호</span>`;
 	    modalHtml +=`    </div>`;
-	    modalHtml +=`    <div class="col numberSectionNg">`;
+	    modalHtml +=`    <div class="col numberSectionNg d-grid">`;
 	    modalHtml +=`        <input class="form-control form-control-sm" id="inputCarNo" name="RESE_CAR_NO" type="text" aria-label=".form-control-sm example">`;
 	    modalHtml +=`    </div>`;
 	    modalHtml +=`</div>`;
-	    modalHtml +=`<div class="row my-4 pb-4 areaList" style="border-bottom: #EEEEEE solid 0.5rem;">`;
+	    modalHtml +=`<div class="row mt-4 mb-2 areaList">`;
 	    modalHtml +=`    <div class="col-5">`;
-	    modalHtml +=`        <span class="mainContentSubTitle">결제 금액</span>`;
+	    modalHtml +=`        <span class="mainContentSubTitle">쿠폰 적용</span>`;
 	    modalHtml +=`    </div>`;
-	    modalHtml +=`    <div class="col numberSectionNg">`;
-		modalHtml +=` <span style="font-size: 0.9rem; color: #A6A6A6;" id="payPrice">주차구역을 선택해주세요</span>`;
+	    modalHtml +=`    <div class="col numberSectionNg d-grid">`;
+	    modalHtml +=`     	<select onchange="selectCouponBox(this.value, ${finalPrice})" class="form-select coupon" aria-label="Default select example" style="font-size: 0.8rem; color: #A6A6A6; heigth: 2rem;">`;
+		modalHtml +=`     		<option selected id="selectBoxValue">쿠폰 선택</option>`;
+		for(couponData of data.data.myCouponList){
+			modalHtml +=` <option value=${couponData.COU_PRICE} value2=${couponData.PUB_SEQ}>${couponData.COU_NAME}</option>`;
+		}
+		modalHtml +=`     	</select>`;
 	    modalHtml +=`    </div>`;
 	    modalHtml +=`</div>`;
-	    modalHtml +=`<div class="row my-4 pb-4 areaList" style="border-bottom: #EEEEEE solid 0.5rem;">`;
+	    modalHtml +=`<div class="row my-2 pb-3 areaList" style="border-bottom: #EEEEEE solid 0.5rem;">`;
+	    modalHtml +=`    <div class="col-5">`;
+	    modalHtml +=`    </div>`;
+	    modalHtml +=`    <div class="col numberSectionNg d-none text-center" id="showCouponPrice">`;
+	    modalHtml +=`    	<div class="row">`;
+	    modalHtml +=`       	<div class="col grayFontJm">`;
+	    modalHtml +=`              쿠폰 금액`;
+	    modalHtml +=`			</div>`;
+	    modalHtml +=`       	<div class="col grayFontJm">`;
+	    modalHtml +=`       		<span id="couponPrice"></span><span>원</span>`;
+	    modalHtml +=`			</div>`;
+	    modalHtml +=`		</div>`;
+	    modalHtml +=`    </div>`;
+	    modalHtml +=`</div>`;
+	    modalHtml +=`<div class="row mt-4 pb-4 areaList">`;
 	    modalHtml +=`    <div class="col-5">`;
 	    modalHtml +=`        <span class="mainContentSubTitle">결제 수단</span>`;
 	    modalHtml +=`    </div>`;
 	    modalHtml +=`    <div class="col">`;
 	    modalHtml +=`        <div class="form-check form-check-inline">`;
 	    modalHtml +=`            <input class="form-check-input" type="radio" name="payMethod" id="inlineRadio1" value="kakaoPay">`;
-	    modalHtml +=`            <label class="form-check-label mainContentSubSubNg" for="inlineRadio1">카카오페이<img src="../img/KaKao.png" alt=""></label>`;
+	    modalHtml +=`            <label class="form-check-label grayFontJm" for="inlineRadio1">카카오페이<img src="/img/KaKao.png" alt=""></label>`;
 	    modalHtml +=`        </div>`;
 	    modalHtml +=`    </div>`;
 	    modalHtml +=`</div>`;
-	    modalHtml +=`<div class="row mb-4 pb-3 areaList">`;
-	    modalHtml +=`    <div class="col d-grid">`;
-	    modalHtml +=`        <button type="button" onclick="payment()" class="btn btn-danger areaBtn" style="height: 2rem; border-radius:0.25rem;">결제하기</button>`;
+	    modalHtml +=`<div class="row headerBox mb-4" onclick="payment()" style="background-color:#3E4AB8;">`;
+	    modalHtml +=`    <div class="col d-none text-center" id="showPrice">`;
+	    modalHtml +=`        <span class="title" style="color:white;">총 </span><span id="payPrice" class="title" style="color:white;"></span><span class="title" style="color:white;"> 원</span>`;
+	    modalHtml +=`	 </div>`;
+	    modalHtml +=`    <div class="col text-center">`;
+	    modalHtml +=`		 <span class="title" style="color:white;">결제하기</span>`;
 	    modalHtml +=`    </div>`;
 	    modalHtml +=`</div>`;
 	    $('#remainCount').append(modalHtml);
@@ -487,14 +532,35 @@ function beforeReservation(){
 	document.getElementById('formData').childNodes[1].classList.remove('d-none');
 };
 
+// 우대사항 선택 박스 선택하면 금액 계산
 function selectBox(value, priceByTime){
 	if(value.length > 0){
-		var value = parseInt(value);
+		value = parseInt(value);
 		
 		const payPrice = document.getElementById('payPrice');
 		finalPrice = (priceByTime * ((100 - (value)) / 100));
 		
 		payPrice.innerText = finalPrice;
+		document.getElementById('showPrice').classList.remove('d-none');
+	}
+}
+
+//쿠폰박스 선택하면  총금액 - 쿠폰금액을 계산
+function selectCouponBox(value){
+	
+	if(value > 0){
+		
+		console.log(value);
+		finalPriceByCoupon = finalPrice - value;
+		
+		if(finalPriceByCoupon < 0) {
+			finalPriceByCoupon = 0;
+		}
+		
+		couponPrice = document.getElementById("couponPrice");
+		couponPrice.innerText = value;
+		payPrice.innerText = finalPriceByCoupon;
+		document.getElementById('showCouponPrice').classList.remove('d-none');
 	}
 }
 
@@ -502,6 +568,10 @@ function payment(){
 	
 	var secSeq1 = document.querySelector('select > option:checked');
 	var secSeq = secSeq1.getAttribute('value2');
+	
+	var couponSeq1 = document.querySelector('.coupon > option:checked');
+	var couponSeq = couponSeq1.getAttribute('value2');
+
 
 	dateX = moment(dateX, "YYYY-MM-DD hh:mm:ss");
 	dateY = moment(dateY, "YYYY-MM-DD hh:mm:ss");
@@ -515,11 +585,16 @@ function payment(){
 	var params = new FormData(document.getElementById('insertData'));
 	params.append('RESE_START' , dateX);
 	params.append('RESE_END' , dateY);
-	params.append('RESE_PRICE' , finalPrice);
+	if(couponSeq == null){
+		params.append('RESE_PRICE' , finalPrice);
+	}else{
+		params.append('RESE_PRICE' , finalPriceByCoupon);
+	}
 	params.append('SEC_SEQ' , secSeq);
 	params.append('PARK_SEQ' , parkSeq);
 	params.append('daterange' , reservationDate.value);
 	params.append('item' , parkNameBox.innerText + " " +secSeq1.innerText + "구역");
+	params.append('PUB_SEQ' , couponSeq);
 
 	if(!checkRegister()){
 		return;
@@ -535,10 +610,18 @@ function payment(){
     }
     xhr.open('post', '/order/pay');
     // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    
     xhr.send(params);
 	
 }
 
+
+// 전화번호 자동 하이픈 처리
+$(document).on("keyup", ".phoneNumber", function() {
+	
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+	
+});
 
 // 전화번호 유효성 검사
 function checkRegister(){
@@ -587,12 +670,22 @@ function listOpen(){
 function listClose(){
 	listHandle.style.right = "-100%";
 }
+
+// datePicker 창
 function pickerClose(){
 	customDatePicker.style.bottom = "-100%";
 }
 
 function pickerOpen(){
-	customDatePicker.style.bottom = "0%";
+	
+	// 버튼 누름과 동시에 로그인 확인 
+	ajaxCall("/main/checkLogin", {}, function(data){
+		if(data.code == 'F'){
+			cmm.alert("로그인이 필요합니다.");
+			return;
+		}else{
+			customDatePicker.style.bottom = "0%";
+		}
+	})
+	
 }
-
-

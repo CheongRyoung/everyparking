@@ -1,17 +1,32 @@
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+}
 a{
     color: black;
     text-decoration-line: none;
 }
 .backgroundColorwhite {
     background-color: white;
+    border-radius: 16px;
+    
 }
 
 .adminBorder {
     border: solid 1px rgb(190, 190, 190);
     border-bottom: solid 0px;
+    border-radius: 16px;
 }
 .borderBottom {
     border-bottom: solid 1px rgb(190, 190, 190);
+    font-size: 1.1rem;
+    color: #6c7e85;
+}
+
+.borderBottom a {
+    color: #6c7e85;
 }
 .bodyBox {
     width: 1200px; 
@@ -59,7 +74,8 @@ body>div.mb-5{
 .loginBox{position: absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); max-width: 500px; background-color: #F5F5F5;}
 
 .tab-content{display: none;}
-.tab-content.active{display: block;}
+
+.tab-content.selected{display: flex;}
 
 .DESC::after {
     content: "▲";
@@ -74,6 +90,8 @@ body>div.mb-5{
     cursor: pointer;
 }
 
+.profitChart{margin-top:45px;margin-left:10px;}
+
 table tr td {
 	overflow:hidden;
 	text-overflow: ellipsis; 
@@ -81,7 +99,36 @@ table tr td {
 	max-width: 150px;
 }
 
-.profitChart{width:95%;height:85%;margin-top:45px;margin-left:20px;}
 
+#chatCommentBox{margin:auto;align-content:baseline;}
+.sendBox{resize:none;}
+.contentBox{border:0.05rem solid lightgray;border-radius:0.5rem;flex-basis: fit-content;}
+.contentAdminBox{border-radius:0.5rem;flex-basis: fit-content;}
+.idBox{font-size: 1rem;font-weight: bold;}
+.chatDate{flex-basis:fit-content;align-self:self-end;font-size: 0.8rem;}
+#reciverInput{border:1px solid silver;}
+#commentInput{border:1px solid silver;}
+.nav-link {
+    color: #8391a2;
+    padding-left: 2rem;
+    font-size: 1.2rem;
+}
+.nav-link:hover{
+    color:#bccee4;
+}
+.active,  .nav-link:focus{
+    color:#fff;
+}
 
+.text-uppercase{
+    color: #6c757d;
+}
 
+.tablestyle{
+	
+  border: 1px solid #ffebb5; 
+  background-color: #ffebb5; 
+  border-radius: 16px;
+  width: 160px; height: 160px;
+
+}

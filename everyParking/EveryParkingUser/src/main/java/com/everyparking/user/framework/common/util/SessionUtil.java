@@ -97,4 +97,13 @@ public class SessionUtil {
         MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
         return sessionUser.getUSER_SEQ();
     }
+
+    public static MemberVo getSessionUser(HttpServletRequest request) {
+    	return getSessionUser(request.getSession());
+    }
+    
+    public static MemberVo getSessionUser(HttpSession session) {
+    	MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+    	return sessionUser;
+    }
 }

@@ -12,7 +12,8 @@ public interface ProfitCostDao {
     public int deleteProfitCostRese(HashMap<String,Object> params) throws Exception;
     
     // 작성자 : 전지나 | 내용 : profitChart
-    public List<HashMap<String, Object>> selectChartByParkSeq() throws Exception;
-    //public List<HashMap<String, Object>> selectReservationPriceByParkSeq(int PARK_SEQ) throws Exception;
-    //public List<HashMap<String, Object>> selectCostPriceByParkSeq(int PARK_SEQ) throws Exception;
+    public List<HashMap<String, Object>> selectChartByParkSeqAndYear(HashMap<String,Object> params) throws Exception;
+    public List<HashMap<String, Object>> selectCostChartByParkSeqAndYear(HashMap<String, Object> params) throws Exception;
+    public List<HashMap<String, Object>> selectSearchYear() throws Exception;
+
 }

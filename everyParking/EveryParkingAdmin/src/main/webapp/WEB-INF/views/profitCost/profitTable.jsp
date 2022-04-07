@@ -21,9 +21,9 @@
 			<!-- 검색 옵션 구역-->
 			<div class="col-2 px-0">
 				<select class="form-select" aria-label="Default select example" onchange="searchGrid('#profitTable', this.value)">
-					<option selected>주차장 선택</option>
+					<option selected>전체</option>
 					<c:forEach items="${list}" var="data">
-						<option value="${data.PARK_NAME}">${data.PARK_NAME}</option>
+						<option value="${data.PARK_SEQ}">${data.PARK_NAME}</option>
 					</c:forEach>
 					<!-- 예약 기간 검색 변수 아마 따로 계산 값으로? -->
 				</select>

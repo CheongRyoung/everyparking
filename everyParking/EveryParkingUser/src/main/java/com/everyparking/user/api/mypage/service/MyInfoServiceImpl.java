@@ -32,7 +32,21 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 	@Override
 	public int updateInfo(HashMap<String, Object> params) throws Exception {
-		return myInfoDao.updateInfo(params);
+    	//회원가입쪽 비밀번호 해싱
+    	String password = (String) params.get("USER_PW");
+    	password = MessageDigestUtil.getPasswordHashCode(password);
+    	params.put("USER_PW", password);
+		
+		myInfoDao.updateInfo(params);
+		
+		myInfoDao.deleteUserRoyal(params);
+		
+		String[] royals = (String[]) params.get("royal");
+		for(String royal : royals) {
+			params.put("RU_TYPE", royal);
+			myInfoDao.insertUserRoyal(params);
+		}
+		return 1;
 	}
 
 	@Override

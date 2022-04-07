@@ -9,10 +9,11 @@ let noticeManagement = {
 	        let $this = this;
 	        this.gridOption = {
 	            cols : [
-	                {title : "No", name: "NOTI_SEQ", type:"number", colWidth:"5", order: true},
-	                {title : "제목", name: "NOTI_TITLE"},
+	                {title : "", name: "NOTI_SEQ", type:"number", colWidth:"5", order: true},
+	                {title : "제목", name: "NOTI_TITLE", colWidth:"45", filter:function(data, rowData, ridx, cidx, $this) {
+	                	return escapeHtml(rowData.NOTI_TITLE);}},
 	                {title : "작성자", name: "USER_NAME"},
-	                {title : "date", name: "REG_DATE", type:"date"},
+	                {title : "작성일", name: "REG_DATE", type:"date", colWidth:"22"},
 	            ],
 	            onRowClick: "onRowClick",
 	            pagingEl : '#pagingBlock3',
@@ -27,20 +28,27 @@ let noticeManagement = {
 
 	$(function(){
 	    noticeManagement.initPage();
-	    // alert, comfirm .. > cmm.alert()
-	    // cmm.confirm
-
-
-	    // cmm
-
-	    // cmm.attachComma() >> 숫자 포맷 (콤마)
-	    // cmm.formToJson()
-	    // cmm.jsonToForm()
+	    dateJspForm();
 	    ajaxCall(
 
 	    )
 	})
+	
 	function onRowClick(num, obj){
+		
 		location.href = "/operation/notice/content?NOTI_SEQ="+ obj.childNodes[0].innerText;
+		
     }
-
+	
+	function dateJspForm(){
+		try{
+			var date = document.getElementById("dateJsp").value;		
+		}
+		catch{
+			return;
+		}
+		var dateForm = moment(date).format('YY-MM-DD HH:mm');
+		
+		$("#dateJsp").empty();
+		$("#dateJsp").append(dateForm);	
+	}

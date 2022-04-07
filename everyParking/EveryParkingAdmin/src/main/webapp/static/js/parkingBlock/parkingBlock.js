@@ -6,7 +6,7 @@ let parkingBlock = {
 			let $this = this;
 			this.gridOption = {
 					cols : [
-						{title:"번호", name:"RNUM", colWidth:"7", order:true}
+						{title:"번호", name:"BSEQ", colWidth:"7", order:true}
 						, {title:"주차장명", name:"PARKNAME", colWidth:"10"}
 						, {title:"시작 시간", name:"BSTART", type:"date", colWidth:"10"}
 						, {title:"종료 시간", name:"BEND", type:"date", colWidth:"10"}

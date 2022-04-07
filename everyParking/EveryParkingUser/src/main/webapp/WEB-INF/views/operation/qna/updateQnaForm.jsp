@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <header>
         <div class="row headerBox py-2 px-0">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;"></i></div>
+            <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5"></i></div>
             <div class="col px-0">
                 <h5 class="title">문의 작성</h5>
             </div>
@@ -49,8 +49,8 @@
                     <div class="row py-4">
                         <div class="col-5"></div>
                         <div class="col btnBox">
-                            <button type="button" onclick="updateData()" class="insertBtn btn btn-primary">등록</button>
-                            <button class="cancelBtn btn btn-primary">취소</button>
+                            <button type="button" onclick="updateData()" class="longBtn" style="width:5.5rem;">등록</button>
+                            <button class="cancelBtn btn btn-primary" onclick="history.back();">취소</button>
                         </div>
                     </div>
                 </form>

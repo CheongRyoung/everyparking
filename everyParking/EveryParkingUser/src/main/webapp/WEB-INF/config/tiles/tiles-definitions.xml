@@ -9,7 +9,6 @@
 
     </definition>
 
-
     <!--  일반 타일입니다-->
     <definition name="tiles.layouts.component" template="/WEB-INF/config/tiles/layout/commonType.jsp">
         <put-attribute name="*" expression="${*}"/>

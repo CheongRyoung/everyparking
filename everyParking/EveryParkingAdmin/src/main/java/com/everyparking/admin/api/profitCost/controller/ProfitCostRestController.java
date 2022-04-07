@@ -77,10 +77,15 @@ public class ProfitCostRestController extends BaseController {
     
     
     @RequestMapping("/selectReserChartDataByParkSeq")
-    public ModelAndView selectProfitChartDataByMonth(@RequestBody HashMap<String, Object> params) throws Exception{
+    public ModelAndView selectReserChartDataByParkSeq(@RequestParam HashMap<String, Object> params) throws Exception{
+    	HashMap<String, Object> map = new HashMap<String, Object>();
+    	
     	ModelAndView mav = super.createMav();
+    	map.put("reserList", profitCostService.selectChartByParkSeqAndYear(params));
+    	map.put("costList", profitCostService.selectCostChartByParkSeqAndYear(params));
+    	
     	try {
-    		mav = super.createMav(profitCostService.selectChartByParkSeq(params));
+    		mav = super.createMav(map);
         }catch (Exception e){
             logger.error(e.getMessage());
             super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
@@ -88,27 +93,16 @@ public class ProfitCostRestController extends BaseController {
         return mav;
     }
     
-//    @RequestMapping("/selectReservationPriceByParkSeq")
-//    public ModelAndView selectReservationPriceByParkSeq(@RequestParam int PARK_SEQ) throws Exception{
-//    	ModelAndView mav = super.createMav();
-//    	try {
-//    		mav = super.createMav(profitCostService.selectReservationPriceByParkSeq(PARK_SEQ));
-//        }catch (Exception e){
-//            logger.error(e.getMessage());
-//            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
-//        }
-//        return mav;
-//    }
-//    
-//    @RequestMapping("/selectCostPriceByParkSeq")
-//    public ModelAndView selectCostPriceByParkSeq(@RequestParam int PARK_SEQ) throws Exception{
-//    	ModelAndView mav = super.createMav();
-//    	try {
-//    		mav = super.createMav(profitCostService.selectCostPriceByParkSeq(PARK_SEQ));
-//        }catch (Exception e){
-//            logger.error(e.getMessage());
-//            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
-//        }
-//        return mav;
-//    }
+    
+    @RequestMapping("/selectSearchYear")
+    public ModelAndView selectSearchYear() throws Exception {
+    	ModelAndView mav = super.createMav();
+    	try {
+    		mav = super.createMav(profitCostService.selectSearchYear());
+    	}catch (Exception e) {
+			logger.error(e.getMessage());
+			super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+		}
+    	return mav;
+    }
 }

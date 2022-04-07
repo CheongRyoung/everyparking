@@ -124,14 +124,14 @@ public class ExcelController extends BaseController {
                 return new ModelAndView(jv, data);
         }
 
-        @RequestMapping("/blockList")
+        @RequestMapping("/parkingBlock")
         public ModelAndView blockList(@RequestParam HashMap<String,Object> params) throws Exception{
                 HashMap<String, Object> result = new HashMap<>();
                 result.put("list", parkingBlockService.selectListParkingBlock(params));
                 result.put("today", new Date());
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("data", result);
-                data.put("template", "blockList");
+                data.put("template", "parkingBlock");
                 data.put("newfileName", "blockList");
 
                 return new ModelAndView(jv, data);

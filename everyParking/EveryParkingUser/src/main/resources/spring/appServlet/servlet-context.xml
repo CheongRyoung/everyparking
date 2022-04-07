@@ -27,15 +27,20 @@
 	</beans:bean>
 	
 	<!-- interceptor -->
-		<interceptors>
-			<interceptor >
-				<mapping path="/**"/>
-				<exclude-mapping path="/login/**"/><exclude-mapping path="/css/**"/><exclude-mapping path="/img/**"/><exclude-mapping path="/js/**"/>
-				<exclude-mapping path="/operation/notice/**"/>
-				<exclude-mapping path="/operation/QNA/list"/>
-				<beans:bean id="LoggerInterceptor" class="com.everyparking.user.framework.common.interceptor.LoggerInterceptor"></beans:bean>
-			</interceptor>
-		</interceptors>
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:bean id="LoggerInterceptor" class="com.everyparking.user.framework.common.interceptor.LoggerInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<!-- 로그인이 필요한 페이지 리스트 추가 -->
+			<mapping path="/mypage/**"/> <!-- 마이페이지 -->
+			<mapping path="/operation/QNA/**"/> <!-- qna -->
+			<mapping path="/chat/**"/> <!-- 채팅 -->
+			<mapping path="/coupon/myCoupon"/> <!-- 내 쿠폰함 -->
+			<beans:bean id="LoginInterceptor" class="com.everyparking.user.framework.common.interceptor.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 
 	<!--  jsonview -->
 	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">

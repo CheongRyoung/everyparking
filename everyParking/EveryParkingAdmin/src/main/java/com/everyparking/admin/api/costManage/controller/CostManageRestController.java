@@ -61,10 +61,10 @@ public class CostManageRestController extends BaseController {
         ModelAndView mav = super.createMav();
         try {
             mav = super.createMav(costManageService.deleteCost(params));
-            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.SUCCESS);
+            super.setMessage(mav, Ajax.TYPE_SUCCESS+"."+Ajax.DELETE.TEXT);
         }catch (Exception e){
             logger.error(e.getMessage());
-            super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.FAIL);
+            super.setMessage(mav, Ajax.TYPE_FAIL+"."+Ajax.DELETE.TEXT);
         }
         return mav;
     }

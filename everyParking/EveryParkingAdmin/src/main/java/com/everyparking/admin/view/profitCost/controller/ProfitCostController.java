@@ -2,6 +2,7 @@ package com.everyparking.admin.view.profitCost.controller;
 
 import com.everyparking.admin.api.costManage.service.CostManageService;
 import com.everyparking.admin.api.parkingManage.service.ParkingInfoService;
+import com.everyparking.admin.api.profitCost.service.ProfitCostService;
 import com.everyparking.admin.framework.common.controller.BaseController;
 import com.everyparking.admin.framework.common.util.SessionUtil;
 
@@ -28,6 +29,8 @@ public class ProfitCostController extends BaseController {
     @Autowired
     CostManageService costManageService;
     
+    @Autowired
+    ProfitCostService profitCostService;
     
     @RequestMapping("/costTable")
    
@@ -52,6 +55,10 @@ public class ProfitCostController extends BaseController {
     @RequestMapping("/insertCost")
     public String insertCost(HttpServletRequest request, Model model, @RequestParam HashMap<String,Object> params) throws Exception {
     	SessionUtil.setCreator(request, params);
+        String num = String.valueOf(params.get("COST_PRICE"));
+
+        System.out.print(num.replaceAll(",", ""));
+        params.put("COST_PRICE", num.replaceAll(",", ""));
     	costManageService.insertCost(params);
         return "redirect:/profitCost/costTable";
     }
@@ -60,6 +67,7 @@ public class ProfitCostController extends BaseController {
     @RequestMapping("/costUpdateForm")
     public String costUpdateForm(HttpServletRequest request, Model model, @RequestParam HashMap<String,Object> params) throws Exception {
     	SessionUtil.setCreator(request, params);
+        model.addAttribute("list", parkingInfoService.selectListParkingInfo(new HashMap<String, Object>()));
     	model.addAttribute("data", costManageService.selectOneCost(params));
         return "/profitCost/costUpdateForm";
     }
@@ -70,11 +78,6 @@ public class ProfitCostController extends BaseController {
     	costManageService.updateCost(params);
         return "redirect:/profitCost/costTable";
     }
-
-
-    
-    
-    
 
     @RequestMapping("/profitTable")
     public String profitTable(Model model) throws Exception {
@@ -88,13 +91,11 @@ public class ProfitCostController extends BaseController {
     }
 
     @RequestMapping("/profitChart")
-    public String profitChart() {
+    public String profitChart(Model model) throws Exception {
+    	HashMap<String, Object> data = new HashMap<String, Object>();
+    	model.addAttribute("list", parkingInfoService.selectListParkingInfo(data));
+    	model.addAttribute("yearList", profitCostService.selectSearchYear());
+    	
         return "/profitCost/profitChart";
     }
-
-    @RequestMapping("/reservationInquiry")
-    public String reservationInquiry() {
-        return "/profitCost/reservationInquiry";
-    }
-
 }

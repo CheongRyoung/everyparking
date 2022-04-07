@@ -212,20 +212,31 @@ var sidebarBox = document.querySelector("#sideBox");
 var cateBtn = document.querySelector(".category-btn");
 var mySideBox = document.querySelector("#mySideBox");
 var myBtn = document.querySelector(".my-btn");
+var clickCateIcon = document.getElementById("clickCateIcon");
+var clickMyIcon = document.getElementById("clickMyIcon");
+var clickCateText = document.getElementById("clickCateText");
+var clickMyText = document.getElementById("clickMyText");
+
 
 function cateToggle(){
     if(mySideBox.classList.contains('show-mySideBar')){
         mySideBox.className="my-sideBar";
+        clickMyIcon.classList.remove('clickNav');
+        clickMyText.classList.remove('clickNav');
     }
     // sidebarBox.classList.toggle('show-cateSideBar');
     var hasClass = sidebarBox.classList.contains("cate-sideBar");
     if(!hasClass){
         // cate-sideBar가 없을 때,
         sidebarBox.className="cate-sideBar";
+        clickCateIcon.classList.remove('clickNav');
+        clickCateText.classList.remove('clickNav');
         //sidebarBox.classList.add("cate-sideBar");
     } else{
         // cate-sideBar가 있을 때,
         sidebarBox.className="show-cateSideBar";
+        clickCateIcon.classList.add('clickNav');
+        clickCateText.classList.add('clickNav');
         //sidebarBox.classList.add("showSideBar");
     }
 }
@@ -234,16 +245,23 @@ cateBtn.addEventListener('click', cateToggle);
 function myPageToggle(){
     if(sidebarBox.classList.contains('show-cateSideBar')){
         sidebarBox.className="cate-sideBar";
+        clickCateIcon.classList.remove('clickNav');
+        clickCateText.classList.remove('clickNav');
     }
-
     var hasClass = mySideBox.classList.contains("my-sideBar");
     if(!hasClass){
         mySideBox.className="my-sideBar";
+        clickMyIcon.classList.remove('clickNav');
+        clickMyText.classList.remove('clickNav');
     }else{
         mySideBox.className= "show-mySideBar";
+        clickMyIcon.classList.add('clickNav');
+        clickMyText.classList.add('clickNav');
     }
 }
 myBtn.addEventListener('click', myPageToggle);
+
+
 
 
 // 예약취소 버튼 출현
@@ -333,4 +351,23 @@ function color(event) {
 
 for(var i=0; i<checkStar.length; i++){
     checkStar[i].addEventListener("change", color);
+}
+document.querySelector('body').addEventListener('click', e => {
+        foldDaumPostcode();
+});
+
+/*
+ *  작성자 : 홍종화
+ *  작성일 : 22-04-03
+ *  html escape 용 함수
+ */
+function escapeHtml(str) {
+	var map = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#039;'
+	};
+	return str.replace(/[&<>"']/g, function(m) { return map[m]; });
 }

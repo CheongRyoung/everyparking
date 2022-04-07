@@ -29,8 +29,6 @@
     <insert id="insertSUBCODE" parameterType="hashMap">
         insert into P_ROYALUSER (RU_TYPE, USER_SEQ)
         values (#{SUB_CODE}, #{USER_SEQ})
-
-
     </insert>
 
 
@@ -45,12 +43,7 @@
         SELECT *
         FROM P_USER
         WHERE USER_SEQ = #{SEQ}
-    </select>
-
-    <select id="getCountById" resultType="int">
-        SELECT COUNT(*) FROM P_USER
-        WHERE USER_MAIL = #{USER_MAIL}
-    </select>
+    </select> 
 
     <!-- 우대사항 코드 -->
     <select id="getSubCodeRoyalUser" resultType="hashMap">

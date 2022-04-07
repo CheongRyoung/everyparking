@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.everyparking.user.api.mypage.service.MyInfoService;
 import com.everyparking.user.framework.common.controller.BaseController;
 import com.everyparking.user.framework.common.service.CodeService;
+import com.everyparking.user.framework.common.util.MessageDigestUtil;
 import com.everyparking.user.framework.common.util.SessionUtil;
 
 @Controller
@@ -56,6 +57,7 @@ public class MyInfoController extends BaseController {
     	ModelAndView mav = new ModelAndView();
     	// 비밀번호 체크 
     	params.put("USER_SEQ" , SessionUtil.getUSER_SEQ(request));
+    	
     	int result = myInfoService.checkPw(params);
     	if(result > 0) {
     		/*TODO 기존 정보 조회하여서 셋팅할것 ..  >  우대사항은 배열이니 리스트를 따로 조회해서 반복문 돌려야할것같습니다. String_agg */
@@ -78,6 +80,9 @@ public class MyInfoController extends BaseController {
     public String updateInfo(HttpServletRequest request,
     		@RequestParam(value="royal") String[] royal,   
     		@RequestParam HashMap<String,Object> params) throws Exception {
+    	SessionUtil.setCreator(request, params);
+    	params.put("royal", royal);
+    	myInfoService.updateInfo(params);
         return "/mypage/myinfo/updateComplete";
     }
 

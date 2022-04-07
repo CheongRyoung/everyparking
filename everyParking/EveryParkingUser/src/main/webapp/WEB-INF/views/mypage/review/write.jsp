@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <header>
         <div class="row headerBox py-2 px-0">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;"></i></div>
+            <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5" onclick="history.back();"></i></div>
             <div class="col px-0">
                 <h5 class="title">후기 작성</h5>
             </div>
@@ -13,7 +13,7 @@
         <!-- 수정 해야되는 부분-->
         <div class="row topBox" style="margin-top: auto;">
             <div class="col">
-                <form action="/mypage/review/insertReviewProcess" method="get">
+                <form action="/mypage/review/insertReviewProcess" method="get" onsubmit="return checkForm()">
                 	<input type="hidden" name="RESE_SEQ" value="${data.RESE_SEQ}">
                     <div class="row buyDetailLineBox">
                         <div class="col my-2 py-2">
@@ -54,7 +54,7 @@
                     <div class="row py-4">
                         <div class="col-5"></div>
                         <div class="col btnBox">
-                            <button type="submit" class="insertBtn btn btn-primary">등록</button>
+                            <button type="submit" class="insertBtn btn btn-primary" >등록</button>
                             <button class="cancelBtn btn btn-primary" onclick="javascript:history.back();">취소</button>
                         </div>
                     </div>

@@ -34,3 +34,11 @@ input{
     color: rgb(94, 94, 94);
     font-size: 15px;
 }
+
+#readEditorBox .ck.ck-editor__main > .ck-editor__editable {
+    border: 0rem;
+}
+
+#readEditorBox .ck.ck-editor__main > .ck-editor__editable {
+    border: 0rem;
+}

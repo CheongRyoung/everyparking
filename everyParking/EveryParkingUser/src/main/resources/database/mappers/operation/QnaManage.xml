@@ -107,8 +107,8 @@
 	</update>
 	
 	<insert id="insertComment" parameterType="hashMap">
-		<selectKey keyProperty="QNAC_SEQ" keyColumn="QNAC_SEQ" resultType="INT" order="AFTER">
-			SELECT MAX(QNAC_SEQ) from p_qnacomment
+		<selectKey keyProperty="QNAC_SEQ,GQNA_NUM" keyColumn="QNAC_SEQ,GQNA_NUM" resultType="map" order="BEFORE">
+			SELECT IFNULL(MAX(QNAC_SEQ) + 1, 1), IFNULL(MAX(QNAC_SEQ) + 1, 1) as GQNA_NUM from p_qnacomment
 		</selectKey>
 		INSERT INTO p_qnacomment(
 		QNA_SEQ
@@ -118,6 +118,8 @@
 		, MOD_SEQ
 		, MOD_DATE
 		, NOTE
+		, GQNA_NUM
+		, GQNA_DEP
 		) VALUES (
 		#{QNA_SEQ}
 		, #{USER_SEQ}
@@ -126,6 +128,36 @@
 		, #{MOD_SEQ}
 		, #{MOD_DATE}
 		, #{NOTE}
+		, #{GQNA_NUM}
+		, 0
+		)
+	</insert>
+	<insert id="insertReply" parameterType="hashMap">
+		<selectKey keyProperty="QNAC_SEQ,GQNA_SEQ" keyColumn="QNAC_SEQ,GQNA_SEQ" resultType="map" order="BEFORE">
+			SELECT MAX(QNAC_SEQ),MAX(GQNA_SEQ) + 1 as GQNA_SEQ from p_qnacomment	
+		</selectKey>
+		INSERT INTO p_qnacomment(
+		QNA_SEQ
+		, USER_SEQ
+		, QNAC_CONT
+		, REG_DATE
+		, MOD_SEQ
+		, MOD_DATE
+		, NOTE
+		, GQNA_NUM
+		, GQNA_DEP
+		, GQNA_SEQ
+		) VALUES (
+		#{QNA_SEQ}
+		, #{USER_SEQ}
+		, #{QNAC_CONT}
+		, NOW()
+		, #{MOD_SEQ}
+		, #{MOD_DATE}
+		, #{NOTE}
+		, #{GQNA_NUM}
+		, 1
+		, #{GQNA_SEQ}
 		)
 	</insert>
 	
@@ -135,7 +167,7 @@
 			where pqc.USER_SEQ = pu.USER_SEQ
 			and pqc.QNA_SEQ = #{QNA_SEQ}
 			and pqc.USE_YN = 'Y'
-		order by pqc.QNA_SEQ ASC
+		order by pqc.GQNA_NUM asc, GQNA_SEQ asc, QNAC_SEQ asc	
 	</select>
 	
 	<update id="deleteComment" parameterType="int">
@@ -164,5 +196,6 @@
 		WHERE QNA_SEQ = #{QNA_SEQ}
 	]]>
 	</select>
+	
 	
 </mapper>

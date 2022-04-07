@@ -232,6 +232,9 @@ var Grid = function(tblEl, options, searchApiUrl){
 
         if(this.searchCondition){
             params.SEARCHCOND = this.searchCondition;
+        }
+
+        if(this.searchKey) {
             params.SEARCHKEY = this.searchKey;
         }
 
@@ -455,7 +458,7 @@ function searchGrid(gridSelector, condition, key){
     if(condition != ''){
         $this.searchCondition = condition;
     }
-    $this.reSearch();
+    $this.search();
 }
 
 /**

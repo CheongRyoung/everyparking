@@ -2,17 +2,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid">
     <header>
-        <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;" onclick="history.back();"></i></div>
+        <div class="row headerBox py-2 px-0">
             <div class="col px-0">
                 <h5 class="title">예약 후기</h5>
             </div>
-            <div class="col-1 px-0"></div>
         </div>
     </header>
     <main>
         <div class="row pt-2 pb-5 m-0" style="width: 100%;">
             <div class="col px-0">
+                <c:if test="${empty list}">
+                    <div class="row mt-2 mb-3 mx-2 pt-2 usageBox">
+                        <div class="col text-center">
+                            <div class="row">
+                                <div class="col parkingSpot pe-0">
+                                    작성한 후기가 없습니다.
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col">
+                                    <a href="/mypage/reservation/list">지난 내역 확인하기</a>
+                                </div>
+                            </div>
+                        </div>
+                </c:if>
             	<c:forEach items="${list}" var="data">
                 <div class="row mt-2 mb-3 mx-2 pt-2 usageBox">
                     <div class="col">

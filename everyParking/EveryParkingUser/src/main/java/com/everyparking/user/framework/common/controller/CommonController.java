@@ -3,6 +3,7 @@ package com.everyparking.user.framework.common.controller;
 import com.everyparking.user.framework.common.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.everyparking.user.framework.common.service.CommonService;
@@ -55,5 +56,12 @@ public class CommonController {
             data.put("url", fileUtil.editorImg(image, "noti"));
         }
         return data;
+    }
+
+    @RequestMapping("/error")
+    public String error(Model model){
+        model.addAttribute("code", "404");
+        model.addAttribute("message", "올바르지 않는 경로입니다");
+        return "/error/error";
     }
 }

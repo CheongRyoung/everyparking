@@ -29,7 +29,18 @@
 						<div class="row mt-5">
 							<div class="col-3">주차장명</div>
 							<div class="col">
-								<input class="form-control" type="text" name="park_name" id="park_name" value="${data.PARK_NAME}">
+								<select class="form-select" name="PARK_SEQ" aria-label="Default select example">
+								<c:forEach items="${list}" var="item">
+									<c:choose>
+										<c:when test="${item.PARK_SEQ == data.PARK_SEQ}">
+											<option value="${item.PARK_SEQ}" selected>${item.PARK_NAME}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${item.PARK_SEQ}">${item.PARK_NAME}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								</select>
 							</div>
 						</div>
 						<div class="row mt-3">
@@ -41,7 +52,7 @@
 						<div class="row mt-3">
 							<div class="col-3">비용 금액</div>
 							<div class="col">
-								<input class="form-control priceBox" name="COST_PRICE" value="${data.COST_PRICE}"  type="text" onkeypress="onlyNum();">
+								<input class="form-control priceBox" name="COST_PRICE" value="${data.COST_PRICE}"  type="text" onkeyup="inputNumberFormat(this)">
 							</div>
 						</div>
 						<div class="row mt-3">
@@ -75,7 +86,4 @@
 	</div>
 	</form>
 </div>
-<script type="text/javascript">
-
-</script>
-
+<script src="/js/costManage/costTable.js"></script>

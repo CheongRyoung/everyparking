@@ -19,7 +19,7 @@
 		</div>
 	</div>
 	<!-- 테이블 -->
-	<form action="/noticeManagement/insertNoti" id="noticeInsertDetail" method="post" enctype="multipart/form-data" onsubmit="uploadData()">
+	<form action="/noticeManagement/insertNoti" method="post" enctype="multipart/form-data" onsubmit = "uploadData()" >
 	<input type="hidden" name="editorData">
 	<div
 		class="row mt-2 mb-3 backgroundColorwhite adminBorder borderBottom"
@@ -31,7 +31,7 @@
 					<div class="row mt-5">
 						<div class="col-3">공지사항 제목</div>
 						<div class="col">
-							<input class="form-control" type="text" name="notiTitle" id="notititle" placeholder="제목을 입력해주세요.">
+							<input class="form-control" type="text" name="notiTitle" placeholder="제목을 입력해주세요.">
 						</div>
 					</div>
 					<div class="row mt-3 mb-5">
@@ -39,7 +39,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<textarea id="writeEditor" style="display: none;" placeholder=";testdlqslek;"></textarea>
+							<textarea id="writeEditor" style="display: flex;" placeholder="내용을 입력해 주세요."></textarea>
 						</div>
 					</div>
 					<div class="row my-3">
@@ -48,7 +48,7 @@
 						</div>
 						<div class="col text-end">
 							<button type="button" class="modalBtn btn btn-secondary"
-								style="background-color: #e0e0e0; color: #000;">취소</button>
+								style="background-color: #e0e0e0; color: #000;"onclick="history.back();">취소</button>
 							<button type="submit" class="modalBtn btn btn-primary">등록</button>
 						</div>
 					</div>

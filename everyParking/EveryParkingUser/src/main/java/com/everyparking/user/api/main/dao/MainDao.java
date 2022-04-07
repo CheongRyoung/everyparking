@@ -31,5 +31,13 @@ public interface MainDao {
 	public int insertReservation(HashMap<String, Object> params) throws Exception;
 
 	public int deleteReservation(HashMap<String, Object> params) throws Exception;
+	
+	public HashMap<String, Object> checkLogin(HashMap<String, Object> params) throws Exception;
+	
+	public List<HashMap<String, Object>> getUserInfo(HashMap<String, Object> params) throws Exception;
+	
+	public List<HashMap<String, Object>> getUserPublishCoupon(HashMap<String, Object> params) throws Exception;
+	
+	public void updateUserCoupon(HashMap<String, Object> params) throws Exception;
 
 }

@@ -78,8 +78,7 @@ public class LoginController extends BaseController {
 	@RequestMapping("/logout")
 	public String loggout(HttpSession session, HttpServletRequest request) {
 		session.invalidate();
-		String referer = request.getHeader("Referer");
-		return "redirect:"+ referer;
+		return "redirect:/main/home";
 	}
 	
 	//이메일 찾기

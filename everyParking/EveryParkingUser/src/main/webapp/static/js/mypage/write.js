@@ -19,4 +19,28 @@ $('#textBox').keyup(function(e){
 });
 
 
+function checkForm(){
+	// 별점 체크 유효성 검사
+	var checkStarArr = document.querySelectorAll('.checkStar');
+	
+	var hasCheckedStar = 0;
+	for(var i=0;i<checkStarArr.length;i++){
+		if(checkStarArr[i].checked == true){
+			hasCheckedStar++;
+			break;
+		}
+	}
+	if(hasCheckedStar <= 0){
+		alert('별점을 남겨주세요.');
+		return false;
+	}
+	
+	// 리뷰 내용 유효성 검사
+	if($('textarea[name=REV_CONT]').val() == ''){
+		alert('후기 내용을 입력해주세요.');
+		return false;
+	}
+	return true;
+}
+
 

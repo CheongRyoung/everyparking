@@ -4,13 +4,13 @@
 <div class="kakaoMap"  id="mainMap" style="width:100%; height:92vh; position: absolute; left: 0; z-index: 1;">
     <div class="row my-3 mx-1">
         <div class="col input-group btn-group dropstart" >
-            <button style="z-index: 2; background-color:#2c0eee;" class="input-group-text" id="basic-addon2" onclick="panTo();">
+            <button style="z-index: 2; background-color:#3E4AB8;" class="input-group-text" id="basic-addon2" onclick="panTo();">
                 <i class="bi bi-search text-white"></i>
             </button>
-            <input style="border: 0px; z-index: 2; background-color: white;" name="postcodeName" id="postcodeName" type="text" class="form-control" placeholder="지역명, 위치를 검색하세요" onclick="DaumPostcode()" readonly>
+            <input style="border: 0px; z-index: 2; background-color: white;" name="postcodeName" id="postcodeName" type="text" class="form-control" placeholder="지역명, 위치를 검색하세요" onclick="DaumPostcode(event)" readonly>
             </div>
         <div class="col-2 ps-1 d-flex flex-row-reverse" style="z-index:2;">
-            <button type="button" style="width:2.5rem; height:2.5rem; background-color:#2c0eee; border:0px; border-radius: 0.2rem;" onclick="listOpen();"><i class="bi bi-list-check" style="color:white;"></i></button>
+            <button type="button" style="width:2.5rem; height:2.5rem; border:0px; border-radius: 0.2rem; background-color:#3E4AB8;" onclick="listOpen();"><i class="bi bi-list-check" style="color:white;"></i></button>
         </div>
     </div>
 </div>
@@ -29,7 +29,7 @@
     <div class="container-fluid">
         <header>
             <div class="row headerBox py-2 px-0">
-                <div class="col-1 px-0 pt-1" onclick="infoClose();"><i class="bi bi-arrow-left fs-5" style="color:white;"></i></div>
+                <div class="col-1 px-0 pt-1" onclick="infoClose();"><i class="bi bi-arrow-left fs-5"></i></div>
                 <div class="col px-0">
                     <h5 class="title">예약 상세</h5>
                 </div>
@@ -54,17 +54,22 @@
                     <div class="wraper" style="margin-top: 1.2rem;">
                         <div class="row">
                             <div class="col">
-                                <i class="bi bi-geo-alt" style="color:#2c0eee;"></i> <span class="cardTitleNg" id="parkingAdd"> </span>
+                                <i class="bi bi-geo-alt" style="color:#3E4AB8;"></i> <span class="cardTitleNg" id="parkingAdd"> </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <i class="bi bi-telephone" style="color:#2c0eee;"></i> <span class="cardTitleNg" id="phone"> </span>
+                                <i class="bi bi-telephone" style="color:#3E4AB8;"></i> <span class="cardTitleNg" id="phone"> </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <i class="bi bi-watch" style="color:#2c0eee;"></i> <span class="cardTitleNg" id="openTime"></span> ~ <span class="cardTitleNg" id="endTime"></span>
+                                <i class="bi bi-watch" style="color:#3E4AB8;"></i> <span class="cardTitleNg" id="openTime"></span> ~ <span class="cardTitleNg" id="endTime"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <i class="bi bi-star" style="color:#3E4AB8;"></i> <span class="cardTitleNg" id="averageReview" style="color:#3E4AB8; font-size:1.1rem;"></span><span class="cardTitleNg"> / 5.0점</span>
                             </div>
                         </div>
                     </div>
@@ -73,10 +78,10 @@
                         <div class="col areaList align-self-center">
                             <div class="row">
                                 <div class="col-7 discountTitleNg">
-                                    <span class="mainContentSubSubNg">1시간당</span>
+                                    <span class="grayFontJm">1시간당</span>
                                 </div>
                                 <div class="col">
-                                    <span class="mainContentSubSubNg" id="parkPrice"></span><span class="mainContentSubSubNg"> 원</span>
+                                    <span class="grayFontJm" id="parkPrice"></span><span class="grayFontJm"> 원</span>
                                 </div>
                             </div>
                         </div>
@@ -87,9 +92,9 @@
                             <!-- 구역 할인률 노출 -->
                         </div>
                     </div>
-                    <div class="row headerBox mt-5 py-2 px-0" style="border-top: #EEEEEE solid 0.5rem;" >
+                    <div class="row headerBox mt-5 py-2 px-0" style="background-color:#3E4AB8;">
                         <div class="col px-0 d-grid">
-                            <button class="btn title m-0 p-0" onclick="pickerOpen()">예약 일시 선택</button>
+                            <button class="btn title m-0 p-0" style="color:white;" onclick="pickerOpen()">예약 일시 선택</button>
                         </div>
                     </div>
 	                <form id="formData" name="formData" method="post">
@@ -101,15 +106,15 @@
                                     <span class="mainContentSubTitle">시작시간</span>
                                 </div>
                                 <div class="col text-end">
-                                    <div id="startDateResult" class="mainContentSubSubNg">시간을 선택해주세여</div>
+                                    <div id="startDateResult" class="grayFontJm" style="padding-right:0.7rem;">시간을 선택해주세요</div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row my-2">
                                 <div class="col">
                                     <span class="mainContentSubTitle">종료시간</span>
                                 </div>
                                 <div class="col text-end">
-                                    <div id="endDateResult" class="mainContentSubSubNg">시간을 선택해주세여</div>
+                                    <div id="endDateResult" class="grayFontJm" style="padding-right:0.7rem;">시간을 선택해주세요</div>
                                 </div>
                             </div>
                         </div>
@@ -119,9 +124,9 @@
 	                	<div id="remainCount"></div>
 					</form>	
                     <!-- 리뷰 작성-->
-                    <div class="row my-4 mx-0" style="border-bottom: 0.2rem solid #EEEEEE; border-top: 0.2rem solid #EEEEEE; margin-top: 0.6rem; height: 3rem;">
+                    <div class="row mt-5 mb-4 mx-0" style="border-bottom: 0.2rem solid #3E4AB8; height: 3rem;">
                         <div class="col align-self-center">
-                            <span class="mainContentSubSubNg">리뷰 (</span><span class="mainContentSubSubNg" id="reviewCount"></span><span class="mainContentSubSubNg">)</span>
+                            <span class="mainContentSubSubNg">리뷰 </span><span class="mainContentSubSubNg" id="reviewCount" style="color:#3E4AB8; font-size:1.2rem; font-weight:bold"></span><span class="mainContentSubSubNg">건</span>
                         </div>
                     </div>
 					<!-- 리뷰 데이터 노출 -->
@@ -136,7 +141,7 @@
 	<div class="container-fluid">
 	    <header>
 	        <div class="row headerBox py-2 px-0">
-	            <div class="col-1 ps-2 pt-2" onclick="listClose();"><i class="bi bi-arrow-right fs-5" style="color:white;"></i></div>
+	            <div class="col-1" onclick="listClose();" style="padding-top:0.7rem;"><i class="bi bi-arrow-right fs-5"></i></div>
 	            <div class="col px-0">
 	                <h5 class="title">주차장 목록</h5>
 	            </div>
@@ -146,7 +151,7 @@
 	    <main>
 	        <div class="row pt-2 mb-3 topBox">
 	            <div class="col listCountBox">
-	                <i class="bi bi-layers"></i>총<span class="listCountNum" id="totalParkingCount" style="color: #2c0eee;"></span>건
+	                <i class="bi bi-layers"></i>총<span class="listCountNum" id="totalParkingCount" style="color:#3E4AB8;"></span>건
 	            </div>
 	        </div>
 	        <div id="listBox">
@@ -158,7 +163,7 @@
     <div class="container-fluid" style="padding-bottom: 5rem;">
         <header>
             <div class="row headerBox py-2 px-0">
-                <div class="col-1 ps-2 pt-2" onclick="pickerClose();"><i class="bi bi-arrow-right fs-5" style="color:white;"></i></div>
+                <div class="col-1" style="padding-top:0.7rem;" onclick="pickerClose();"><i class="bi bi-x-lg"></i></div>
                 <div class="col px-0">
                     <h5 class="title">예약 시간 선택</h5>
                 </div>
@@ -169,7 +174,7 @@
             <div class="row pt-3 mb-3 topBox">
                 <div class="col customDateBox p-0">
                     <div style="text-align: center; margin: 2rem;">
-                        <span>시작시간</span>
+                        <span>입차 시간</span>
                         <span id="drawStartDateCus">2022-05-25</span>
                         <span id="drawStartHoursCus">15시</span>
                     </div>
@@ -210,7 +215,7 @@
                     </div>
 
                     <div style="text-align: center; margin: 2rem;">
-                        <span>종료시간</span>
+                        <span>출차 시간</span>
                         <span id="drawEndDateCus">2022-05-25</span>
                         <span id="drawEndHoursCus">15시</span>
                     </div>
@@ -253,9 +258,9 @@
                         <span>총 예약 시간</span>
                         <span id="resultHours">총 예약 시간</span>
                     </div>
-                    <div class="row headerBox py-2 px-0">
+                    <div class="row headerBox py-2 px-0" style="background-color:#3E4AB8;">
                         <div class="col px-0 d-grid">
-                            <button class="btn title m-0 p-0" id="selectTime">시간 선택 완료</button>
+                            <button class="btn title m-0 p-0" id="selectTime" style="color:white;">시간 선택 완료</button>
                         </div>
                     </div>
                 </div>

@@ -66,10 +66,14 @@ public class MainRestController extends BaseController {
     
     
     @RequestMapping("/selectSectionInfoForRese")
-    public ModelAndView selectSectionInfoForRese(@RequestBody HashMap<String,Object> params) throws Exception{
+    public ModelAndView selectSectionInfoForRese(HttpServletRequest request, @RequestBody HashMap<String,Object> params) throws Exception{
         ModelAndView mav = super.createMav();
+        Map<String, Object> data = new HashMap<String, Object>();
+        SessionUtil.setCreator(request, params);
+        data.put("sectionList", mainService.selectSectionInfoForRese(params));
+        data.put("myCouponList", mainService.getUserPublishCoupon(params));
         try {
-            mav = super.createMav(mainService.selectSectionInfoForRese(params));
+        	mav = super.createMav(data);
         }catch (Exception e){
             logger.error(e.getMessage());
             e.printStackTrace();
@@ -93,5 +97,19 @@ public class MainRestController extends BaseController {
     	return mav;
     }
     
+    
+    @RequestMapping("/checkLogin")
+    public ModelAndView checkLogin(HttpServletRequest request, @RequestBody HashMap<String,Object> params) throws Exception{
+        ModelAndView mav = super.createMav();
+        try {
+        	SessionUtil.setCreator(request, params);
+        	mav = super.createMav(mainService.checkLogin(params));
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.FAIL);
+        }
+        return mav;
+    }
     
 }

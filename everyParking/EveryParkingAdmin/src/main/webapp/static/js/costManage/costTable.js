@@ -11,7 +11,7 @@ let cost = {
 						, {title:"주차장명", name:"PARK_NAME", colWidth:"10"}
 						, {title:"비용사유", name:"COST_CONT"}
 						, {title:"금액", name:"COST_PRICE", type:"number", colWidth:"15"}
-						, {title:"발생일", name:"REG_DATE", type:"date", colWidth:"10"}
+						, {title:"발생일", name:"COST_DATE", type:"date", colWidth:"10"}
 						, {title : "수정", name: "modify", filter:function(data, rowData, ridx, cidx, $this){
 		                    return `<a href="/profitCost/costUpdateForm?COST_SEQ=${rowData.COST_SEQ}" class="btn btn-outline-primary btn-sm">수정</a>`
 		                }, colWidth:"10"}
@@ -45,15 +45,6 @@ let cost = {
 
 $(function(){
 	cost.initPage();
-	// alert, comfirm .. > cmm.alert()
-	// cmm.confirm
-
-
-	// cmm
-
-	// cmm.attachComma() >> 숫자 포맷 (콤마)
-	// cmm.formToJson()
-	// cmm.jsonToForm()
 	ajaxCall(
 
 	)
@@ -68,10 +59,22 @@ function searchDate(){
 
 	let getSelectedRange = getDateRangeN.value;
 
-	console.log(getSelectedRange);
-
 	searchGrid('#costTable', '', getSelectedRange);
 
+}
+
+function inputNumberFormat(obj) {
+	obj.value = comma(uncomma(obj.value));
+}
+
+function comma(str) {
+	str = String(str);
+	return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+function uncomma(str) {
+	str = String(str);
+	return str.replace(/[^\d]+/g, '');
 }
 
 

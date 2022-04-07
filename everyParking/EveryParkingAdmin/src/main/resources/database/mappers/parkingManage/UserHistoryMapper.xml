@@ -25,12 +25,12 @@
 			AND pr.USE_YN = 'Y'
 	</sql>
 	<sql id="historySearch">
-		<if test='SEARCHCOND != null and !SEARCHCOND.equals("")'>
-			AND t1.PARKNAME LIKE CONCAT('%',#{SEARCHCOND},'%')
+		<if test='SEARCHCOND != null and !SEARCHCOND.equals("전체")'>
+			AND pp.PARK_SEQ = #{SEARCHCOND}
 		</if>
 		<if test='SEARCHKEY != null and !SEARCHKEY.equals("")'>
-			AND <![CDATA[ t1.REGDATE => str.to.date(substr("#{SEARCHKEY}", 1, 10), '%Y-%m-%d')
-            AND t1.REGDATE <= str.to.date(substr("#{SEARCHKEY}", 14, 24), '%Y-%m-%d') ]]>
+			AND <![CDATA[ pr.REG_DATE >= STR_TO_DATE(substr(#{SEARCHKEY}, 1, 10), '%Y-%m-%d')
+            AND pr.REG_DATE <= STR_TO_DATE(CONCAT(substr(#{SEARCHKEY}, 14, 24), ' 23:59:59'), '%Y-%m-%d %H:%i:%s') ]]>
 		</if>
 	</sql>
 

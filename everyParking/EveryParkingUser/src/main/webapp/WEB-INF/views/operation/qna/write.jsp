@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <header>
         <div class="row headerBox py-2 px-0">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;"></i></div>
+            <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5" onclick="history.back();"></i></div>
             <div class="col px-0">
                 <h5 class="title">문의 작성</h5>
             </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="row pt-1">
                         <div class="col">
-                            <input name="QNA_TITLE" ltype="text" class="form-control formFontSize" placeholder="문의 제목을 입력해주세요.">
+                            <input name="QNA_TITLE" type="text" class="form-control formFontSize" placeholder="문의 제목을 입력해주세요.">
                         </div>
                     </div>
                     <div class="row py-3">
@@ -46,13 +46,15 @@
                             <textarea id="writeEditor" placeholder="문의할 내용을 입력해주세요."></textarea>
                         </div>
                     </div>
-                    <div class="row py-4">
-                        <div class="col-5" style="font-size: 10px">
- 						<input type="file" name="FILE_SEQ" id="files">                      
+                    <div class="row py-4" style="align-item">
+                        <div class="col" style="font-size: 1rem;">
+ 							<input type="file" name="FILE_SEQ" id="files">                      
                         </div>
-                        <div class="col btnBox">
-                            <button type="submit" class="insertBtn btn btn-primary">등록</button>
-                            <button class="cancelBtn btn btn-primary">취소</button>
+                    </div>
+                    <div class="row pt-4">
+                        <div class="col">
+                        	<button class="cancelBtn" style="float:right; width:5.5rem;" onclick="history.back();">취소</button>
+                            <button type="submit" class="longBtn" style="width:5.5rem; margin-right:0.2rem; float:right;">등록</button>
                         </div>
                     </div>
                 </form>

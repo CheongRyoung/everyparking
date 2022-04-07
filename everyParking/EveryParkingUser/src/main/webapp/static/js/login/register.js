@@ -36,6 +36,24 @@ $("#inputName").on("input",function(){
     
 });
 
+//생년월일 유효성 검사
+var dateBirth = document.getElementById('inputBirth');
+var date = new Date();
+	date = moment(date, "YYYY-MM-DD");
+	date = date.format();
+	date = date.substr(0,10);
+
+console.log(date);
+dateBirth.value = date;
+dateBirth.setAttribute("max", date);
+	
+	function setMaxValue(){
+		if(dateBirth.value > date){
+			dateBirth.value = date;
+		}
+	}
+
+
 //회원가입 버튼 눌렀을 때, 빈칸 있으면 다시 유효성 검사진행    
 $("#rgsbtn").on("click",function(){
     var email = $("#inputEmail").val();
@@ -50,29 +68,38 @@ $("#rgsbtn").on("click",function(){
     
     var emailregex = emailregex.exec(email);
     if(emailregex == null){
-        alert("이메일양식을 다시 확인해주세요");
+        cmm.alert("이메일양식을 다시 확인해주세요");
         return;
     }
     var pwregex = pwregex.exec(pw);
     if(pwregex == null){
-        alert("비밀번호양식을 다시 확인해주세요");
+        cmm.alert("비밀번호양식을 다시 확인해주세요");
         return;
     }
     var nameregex = nameregex.exec(name);
     if(nameregex == null){
-        alert("이름양식을 다시 확인해주세요");
+        cmm.alert("이름양식을 다시 확인해주세요");
         return;;
     }
+    
     var carNoregex = carNoregex.exec(carNo);
     if(carNoregex == null){
-        alert("차량번호양식을 다시 확인해주세요");
+        cmm.alert("차량번호양식을 다시 확인해주세요");
         return;
     }
     
+
     if(isConFirmed == false){
-    	alert("이메일 중복을 확인해주세요.")
+    	cmm.alert("이메일 중복을 확인해주세요.");
     	return;
     }
+    if(document.querySelector('input[value="RY02"]:checked')) {
+        if(!document.querySelector('#agree:checked')) {
+            cmm.alert("동의 체크박스를 확인해주세요.");
+            return;
+        }
+    }
+    
     
     //빈칸 없을 때 제출.
     $("#rgs").submit();
@@ -86,8 +113,10 @@ const dPerson = document.querySelector('input[value="RY02"]');  //장애박스
 dPerson.addEventListener('change', e=> {
 	if(agreeBox.disabled) {
 		agreeBox.disabled = false;
+        agreeBox.checked = '';
 	} else {
 		agreeBox.disabled = true;
+        agreeBox.checked = '';
 	}
 })
 

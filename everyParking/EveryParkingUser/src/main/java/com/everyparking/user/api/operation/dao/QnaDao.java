@@ -20,6 +20,8 @@ public interface QnaDao {
 	
 	public int insertComment(HashMap<String, Object> params) throws Exception;
 	
+	public int insertReply(HashMap<String, Object> params) throws Exception;
+	
 	public int insertQna(HashMap<String, Object> params) throws Exception;
 	
 	public int updateQna(HashMap<String, Object> params) throws Exception;

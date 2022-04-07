@@ -76,7 +76,6 @@ public class ParkingBlockRestController extends BaseController {
         ModelAndView mav = null;
         try {
             mav = super.createMav(parkingBlockService.getSectionInfo(params));
-            super.setMessage(mav, Ajax.SEARCH.TEXT+"."+Ajax.SEARCH.SUCCESS);
         } catch(Exception e) {
             logger.error(e.getMessage());
             super.setMessage(mav, Ajax.FAIL+"."+Ajax.TYPE_FAIL);

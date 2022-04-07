@@ -1,5 +1,3 @@
-
-
 window.onload = function(){
     const blockParkSelect = document.querySelector('.inputPlusSelectBox');
     const blockParkDate = document.querySelector('.drp-selected');
@@ -30,10 +28,10 @@ window.onload = function(){
                         let SEChtml = ``;
                         SEChtml += `<div class="row mb-1">`;
                         SEChtml += `    <div class="col">`;
-                        SEChtml += `        <input type="radio" value=${item.SEC_SEQ} name="SEC_SEQ" id="SEC_SEQ"> ${item.SUB_NAME}`;
+                        SEChtml += `        <input type="radio" value=${item.SEC_SEQ} name="SEC_SEQ"> ${item.SUB_NAME}`;
                         SEChtml += `    </div>`;
                         SEChtml += `    <div class="col">`;
-                        SEChtml += `        <select  class="form-select"  name="INSERT_COUNT" id="INSERT_COUNT">`;
+                        SEChtml += `        <select  class="form-select INSERT_COUNT" disabled>`;
                         for(let i=1; i<=(item.SEC_COUNT - item.SEC_USE); i++) {
                             SEChtml += `<option value=${i}> ${i} 칸 </option>`;
                         }
@@ -43,19 +41,30 @@ window.onload = function(){
                         $("#selectSection").append(SEChtml);
                     }
                 })
+
             });
         }
+    document.querySelectorAll('input[name="SEC_SEQ"]').forEach( (e, index) => {
+        e.addEventListener('click', e => {
+            const aaa = document.querySelectorAll('.INSERT_COUNT');
+            aaa.forEach( e => {
+                e.disabled = 'disabled'
+                e.firstChild.selected = 'selected';
+            })
+            aaa[index].disabled = '';
+        })
+    })
+
     }
     applyBtn.addEventListener('click', getSectionInfo);
 };
 
 function blockRegister() {
-    if(!document.querySelector('input[name="SEC_SEQ"]')) {
+    if(!document.querySelectorAll('input[name="SEC_SEQ"]')) {
         cmm.confirm("확인", "구역을 선택해주시거나 만차시 다른 시간을 선택해주세요");
         return false;
     }
-
-    if(!document.querySelector('input[name="SEC_SEQ"]').checked) {
+    if(document.querySelectorAll('input[name="SEC_SEQ"]:checked').length == 0) {
         cmm.confirm("확인", "구역을 선택해주시거나 만차시 다른 시간을 선택해주세요");
         return false;
     }
@@ -64,6 +73,10 @@ function blockRegister() {
         return false;
     }
     let params = new FormData(blockFormData);
+    const selectIndex = Array.from(document.querySelectorAll('input[name="SEC_SEQ"]')).indexOf( document.querySelector('input[name="SEC_SEQ"]:checked'))
+    const selectNodes = document.querySelectorAll('.INSERT_COUNT');
+    params.append('INSERT_COUNT', selectNodes[selectIndex].value);
+
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if(xhr.readyState==4 && xhr.status==200) {

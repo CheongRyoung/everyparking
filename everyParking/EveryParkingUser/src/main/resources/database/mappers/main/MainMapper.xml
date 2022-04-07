@@ -99,6 +99,7 @@
 		FROM p_section pc, p_subcode ps
 		WHERE 1=1
 		AND pc.SEC_TYPE = ps.SUB_CODE
+		AND pc.USE_YN = 'Y'
 		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
 			AND pc.PARK_SEQ = #{PARK_SEQ}
 		</if>
@@ -120,7 +121,8 @@
 		FROM p_review pr, p_reservation pv, p_section ps, p_user pu
 		WHERE pr.RESE_SEQ = pv.RESE_SEQ
 		AND pv.SEC_SEQ = ps.SEC_SEQ
-		AND pv.USER_SEQ = pu.USER_SEQ 
+		AND pv.USER_SEQ = pu.USER_SEQ
+		AND pr.USE_YN = 'Y'
 		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
 			AND ps.PARK_SEQ = #{PARK_SEQ}
 		</if>
@@ -133,6 +135,7 @@
 		FROM p_review pr, p_reservation pv, p_section ps
 		WHERE pr.RESE_SEQ = pv.RESE_SEQ
 		AND pv.SEC_SEQ = ps.SEC_SEQ
+		AND pr.USE_YN = 'Y'
 		<if test='PARK_SEQ!=null and !PARK_SEQ.equals("")'>
 			AND ps.PARK_SEQ = #{PARK_SEQ}
 		</if>
@@ -190,6 +193,7 @@
 		), 0) as remaincnt
 		from p_section ps 
 		where ps.PARK_SEQ = #{PARK_SEQ}
+		and ps.SEC_TYPE IN (SELECT RU_TYPE AS SEC_TYPE FROM p_royaluser WHERE USER_SEQ = #{USER_SEQ})
 	</select>
 	
 	
@@ -225,8 +229,44 @@
 	</update>
 	
 	
+	<select id="getUserInfo" parameterType="hashMap" resultType="hashMap">
+		SELECT pu.USER_SEQ 
+			, pu.USER_TYPE 
+			, pu.USER_CAR_NO 
+			, pu.USE_YN 
+			, pr.RU_TYPE
+			, ps.SUB_CODE 
+			, ps.SUB_NAME 
+		FROM p_user pu, p_royaluser pr, p_subcode ps 
+		WHERE 1=1
+		AND pu.USER_SEQ = pr.USER_SEQ 
+		AND pr.RU_TYPE = ps.SUB_CODE
+		AND pu.USER_SEQ = #{USER_SEQ}
+	</select>
 	
 	
+	<select id="checkLogin" parameterType="hashMap" resultType="hashMap">
+		SELECT *
+		FROM p_user
+		WHERE USER_SEQ = {USER_SEQ}
+	</select>
+	
+	
+	<select id="getUserPublishCoupon" resultType="hashMap">
+		SELECT pp.PUB_SEQ ,pp.USER_SEQ ,pc.COU_NAME, pc.COU_PRICE
+		FROM p_coupon pc ,p_publishcoupon pp ,p_user pu 
+		WHERE 1=1
+		AND pc.COU_SEQ = pp.COU_SEQ 
+		AND pp.USER_SEQ = pu.USER_SEQ  
+		AND pp.PUB_USE_YN = 'N'
+		AND pp.USER_SEQ = #{USER_SEQ}
+	</select>
+	
+	<update id="updateUserCoupon">
+		UPDATE p_publishcoupon 
+		SET PUB_USE_YN = 'Y'
+		WHERE PUB_SEQ = #{PUB_SEQ}
+	</update>
 	
 
 </mapper>

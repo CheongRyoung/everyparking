@@ -1,6 +1,7 @@
 package com.everyparking.admin.view.noticeManagement;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,11 +41,12 @@ public class NoticeManagementController extends BaseController {
 	
 	@RequestMapping("/readNoticePage")
 	public String readNoticePage(int NOTI_SEQ, Model model) throws Exception {
-
-		noticeService.notiReadCount(NOTI_SEQ);
 		
 		HashMap<String, Object> map = noticeService.getNotice(NOTI_SEQ);
 		model.addAttribute("noti", map);
+		
+		HashMap<String, Object> move = noticeService.getNextPrev(NOTI_SEQ);
+		model.addAttribute("move",move);
 
 		return"/noticeManagement/readNoticePage";
 	}
@@ -62,6 +64,4 @@ public class NoticeManagementController extends BaseController {
 				
 		return"/noticeManagement/noticeUpdateForm";
 	}
-	
-	
 }

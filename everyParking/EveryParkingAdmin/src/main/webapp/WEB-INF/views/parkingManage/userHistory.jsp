@@ -14,16 +14,27 @@
     </div>
     <div class="row mt-4 align-items-center"><!-- 검색 옵션 구역-->
         
-        <div class="col px-0">
-            <select class="form-select" aria-label="Default select example" onchange="searchGrid('#profitTable', this.value)">
+        <div class="col-2 px-0">
+            <select class="form-select" aria-label="Default select example" onchange="searchGrid('#userHistory', this.value)">
 					<option selected>전체</option>
 					<c:forEach items="${list}" var="data">
-						<option value="${data.PARK_NAME}">${data.PARK_NAME}</option>
+						<option value="${data.PARK_SEQ}">${data.PARK_NAME}</option>
 					</c:forEach>
 					<!-- 예약 기간 검색 변수 아마 따로 계산 값으로? -->
 				</select>
         </div>
-        <div class="col-10"></div>
+        <div class="col px-0">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col text-center">
+                    <input type="text" id='datepickerN' name="daterange" class="datepicker" style="width: 250px; height: 35px; border-style: none; text-align: center;" />
+                    <button class="btn btn-primary mb-1 ms-3 btn-sm" type="submit" style="height: 35px;" onclick="searchDate();">검색</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-auto px-0" style="font-size: 20px;">
+
+        </div>
     </div>
     <div class="row mt-3 mb-3 backgroundColorwhite adminBorder borderBottom" style="height: 600px; position: relative;">
 		<div class="col px-0">	

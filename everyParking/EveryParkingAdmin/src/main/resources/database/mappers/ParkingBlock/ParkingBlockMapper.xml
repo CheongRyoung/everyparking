@@ -99,12 +99,12 @@
 		WHERE 1=1
 		AND sec.USE_YN = 'Y'
 		<if test='PARK_SEQ != null and !PARK_SEQ.equals("")'>
-		AND sec.PARK_SEQ = #{PARK_SEQ}
+			AND sec.PARK_SEQ = #{PARK_SEQ}
 		</if>) AS final
 		JOIN p_subcode AS sub
 		ON final.SEC_TYPE = sub.SUB_CODE
 		<if test='SEC_SEQ != null and !SEC_SEQ.equals("")'>
-		WHERE SEC_SEQ = #{SEC_SEQ}
+			WHERE SEC_SEQ = #{SEC_SEQ}
 		</if>
 	</select>
 

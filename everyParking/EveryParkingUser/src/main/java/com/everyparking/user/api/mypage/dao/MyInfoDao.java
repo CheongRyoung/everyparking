@@ -18,6 +18,8 @@ public interface MyInfoDao {
 	public String selectUserRoyal(HashMap<String, Object> params) throws Exception;
     public int updateInfo(HashMap<String,Object> params) throws Exception;
     public int deleteInfo(HashMap<String,Object> params) throws Exception;
+    public int deleteUserRoyal(HashMap<String,Object> params) throws Exception;
+    public int insertUserRoyal(HashMap<String,Object> params) throws Exception;
 
 }
 

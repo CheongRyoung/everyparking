@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.admin.api.couponManagement.dao.CouponDao">
+	
+	<sql id="couponManagementSQL">
+		SELECT
+			COU_SEQ
+			, USER_SEQ
+			, FILE_SEQ
+			, COU_NAME
+			, COU_PRICE
+			, COU_COUNT
+			, REG_DATE
+		FROM P_COUPON
+		WHERE 1=1
+	</sql>
+		
+	<insert id="insertCoupon" parameterType="hashMap">
+		<selectKey keyProperty="COU_SEQ" keyColumn="COU_SEQ" resultType="INT" order="AFTER">
+			SELECT MAX(COU_SEQ) from p_coupon
+		</selectKey>
+		
+		INSERT INTO p_coupon(
+			USER_SEQ
+			,FILE_SEQ
+			,COU_NAME
+			,COU_PRICE
+			,COU_COUNT
+		)VALUES(
+			#{USER_SEQ}
+			,#{FILE_SEQ}
+			,#{COU_NAME}
+			,#{COU_PRICE}
+			,#{COU_COUNT}
+			)
+	</insert>
+	
+	<select id="selectListCoupon" parameterType="hashMap" resultType="hashMap">
+		SELECT pc.*, pf.FILE_URL, pf.FILE_CONV_NAME
+		FROM p_coupon pc , p_user pu, p_file pf 
+		where 1=1
+		AND pc.USER_SEQ = pu.USER_SEQ
+		AND pc.FILE_SEQ = pf.FILE_SEQ
+		order by pc.COU_SEQ DESC
+        <if test='PAGING_YN!=null and PAGING_YN.equals("Y")'>
+            <if test='ORDER != null and !ORDER.equals("")'>
+                ORDER BY ${ORDER} ${ORDER_TYPE}
+            </if>
+            LIMIT #{START}, #{CNT}
+        </if>
+	</select>
+	
+	<select id="selectListCountCoupon" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) FROM(
+			<include refid="couponManagementSQL"></include>
+		)g
+	</select>
+	
+	<delete id="deleteCoupon">
+		DELETE FROM P_COUPON
+		WHERE COU_SEQ = #{COU_SEQ}
+	</delete>
+		
+</mapper>

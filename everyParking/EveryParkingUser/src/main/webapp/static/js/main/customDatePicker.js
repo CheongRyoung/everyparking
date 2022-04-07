@@ -181,8 +181,8 @@ costomDayInput.forEach((e, index) => {
         })
         e.target.parentNode.parentNode.classList.add('selectcustomDay');
         startDate = e.target.value;
-        drawStartDateCus.innerText = startDate;
-        if (startHours > endHours && startDate == endDate) {
+        drawStartDateCus.innerText = moment(startDate).format('MM-DD');
+        if (startHours >= endHours && startDate == endDate) {
             endHourPick();
         }
         if (startHours < new Date().getHours()+1 && startDate == document.querySelectorAll('input[name="startDay"]')[0].value) {
@@ -245,11 +245,16 @@ containerEnd.addEventListener('touchend', (e) => {
 
     if (document.querySelector('input[name="endDay"]:checked')) {
         if (startHours != null && startDate != null && endDate != null && startDate == endDate) {
-            if (-(finalX / cnWidth - 1) <= startHours) {
+            if ((finalX == 0 ? 0 : -(finalX / cnWidth - 1)) <= startHours) {
                 finalX = (-(startHours)-1) * cnWidth;
             }
         }
     }
+    customHoursEnd.forEach(e => {
+        if (e.classList.contains('selectcustomHour')) {
+            e.classList.remove('selectcustomHour')
+        }
+    })
     let hoursIndex = -(finalX / cnWidth - 1) - 1;
     if (hoursIndex < 0) {
         hoursIndex = 0
@@ -312,7 +317,7 @@ costomDayInputEnd.forEach((e, index) => {
         })
         e.target.parentNode.parentNode.classList.add('selectcustomDay');
         endDate = e.target.value;
-        drawEndDateCus.innerText = endDate;
+        drawEndDateCus.innerText = moment(endDate).format('MM-DD');
         if (startHours >= endHours && startDate == endDate) {
             endHourPick();
         }
@@ -341,7 +346,7 @@ function startDayPick(e) {
     })
     e.parentNode.parentNode.classList.add('selectcustomDay');
     startDate = e.value;
-    drawStartDateCus.innerText = startDate;
+    drawStartDateCus.innerText = moment(startDate).format('MM-DD');;
     if (startHours < new Date().getHours()+1 && startDate == document.querySelectorAll('input[name="startDay"]')[0].value) {
         containerx.addEventListener('touchend', startHourPick())
     }
@@ -357,7 +362,7 @@ function endDayPiclk(e) {
     })
     e.parentNode.parentNode.classList.add('selectcustomDay');
     endDate = e.value;
-    drawEndDateCus.innerText = endDate;
+    drawEndDateCus.innerText = moment(endDate).format('MM-DD');
 }
 
 function startHourPick(e) {
@@ -393,7 +398,7 @@ function endHourPick(e) {
     let finalX = 0;
     if (document.querySelector('input[name="endDay"]:checked')) {
         if (startHours != null && startDate != null && endDate != null && startDate == endDate) {
-            if (-(finalX / cnWidth - 1) <= startHours) {
+            if ((finalX == 0 ? 0 : -(finalX / cnWidth - 1)) <= startHours) {
                 finalX = (-(startHours)-1) * cnWidth;
             }
         }
@@ -422,10 +427,10 @@ const resultHours = document.getElementById('resultHours');
 
 function caculateDateHours() {
     if (startDate, startHours, endDate, endHours != null) {
-        const finalstartdate = new Date(startDate + " " + startHours + ":00");
-        const finalendDate = new Date(endDate + " " + endHours + ":00");
+        const finalstartdate = new Date(moment(startDate + " " + startHours + ":00"));
+        const finalendDate = new Date(moment(endDate + " " + endHours + ":00"));
         const resultDate = finalendDate - finalstartdate;
         resultHours.innerText = resultDate / (1000 * 60 * 60) + "시간";
-        reservationDate.value = startDate + " " + startHours + "시 ~ " + endDate + " " + endHours + "시"
+        reservationDate.value = `${startDate} ${startHours<10 ? "0"+startHours : startHours}시 ~ ${endDate} ${endHours < 10 ? "0"+endHours : endHours}시`;
     }
 }

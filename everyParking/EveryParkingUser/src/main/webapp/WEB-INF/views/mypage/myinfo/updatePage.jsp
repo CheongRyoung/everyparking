@@ -2,10 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid">
-<form name="updatePage" action="/mypage/myinfo/updateComplete" method="POST" autocomplete="off">
+<form name="updatePage" action="/mypage/myinfo/updateComplete" method="POST" autocomplete="off" onsubmit="return validate()">
     <header>
-        <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;"></i></div>
+        <div class="row headerBox py-2 px-0">
+            <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5" onclick="location.href='/mypage/myinfo/confirmPw'"></i></div>
             <div class="col px-0">
                 <h5 class="title">마이 페이지</h5>
             </div>
@@ -30,35 +30,50 @@
                                     <div class="col"><span>이메일</span></div>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" name="user_mail" id="user_mail" value="${data.USER_MAIL}">
+                                    <input type="email" class="form-control" name="USER_MAIL" id="user_mail" value="${data.USER_MAIL}" readonly>
                                     <label for="floatingInput">Email address</label>
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col"><span>비밀번호</span></div>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" name="user_pw" id="user_pw" placeholder="Password" value="${data.USER_PW}">
+                                    <input type="password" class="form-control" name="USER_PW" id="user_pw" placeholder="Password">
                                     <label for="floatingPassword">Password</label>
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col"><span>이름</span></div>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" name="user_name" id="user_name" placeholder="name" value="${data.USER_NAME}">
+                                    <input type="text" class="form-control" name="USER_NAME" id="user_name" placeholder="name" value="${data.USER_NAME}">
                                     <label for="floatingName">이름</label>
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col"><span>생년월일</span></div>
                                 </div>
-                                <input type="date" class="form-control mb-3" name="user_birth" id="user_birth" placeholder="Password" value="${data.USER_BIRTH}">
+                                <input type="date" class="form-control mb-3" name="USER_BIRTH" id="user_birth" placeholder="Password" value="${data.USER_BIRTH}">
+                                <div class="row mb-1">
+                                    <div class="col"><span>차량 번호</span></div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="USER_CAR_NO" id="user_car_no" placeholder="CarNo" value="${data.USER_CAR_NO}">
+                                    <label for="floatingCarNo">차량 번호</label>
+                                </div>
                                 <div class="row mb-1">
                                     <div class="col">우대 사항</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
                                     	<c:forEach var="item" items="${royalList}">
-                                    		<input type="checkbox" name="royal" value="${item.SUB_CODE}" ${royal.indexOf(item.SUB_CODE) > -1 ? 'checked="checked"' : ''}/> ${item.SUB_NAME }
-                                    	</c:forEach>
+                                          <c:choose>
+                                                <c:when test="${item.SUB_NAME == '일반'}">
+                                                    <span class="d-none">
+                                                    <input type="checkbox" name="royal" value="${item.SUB_CODE}" checked="checked"/> ${item.SUB_NAME }</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="checkbox" name="royal" value="${item.SUB_CODE}" ${royal.indexOf(item.SUB_CODE) > -1 ? 'checked="checked"' : ''}/> ${item.SUB_NAME }
+                                                </c:otherwise>
+                                            </c:choose>
+                                       </c:forEach>
                                     </div>
                                 </div>
                                 <div class="row mb-1">
@@ -74,15 +89,15 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="checkbox"> 동의합니다.
+                                        <input type="checkbox" id="agree" disabled> 동의합니다.
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col">
-                                <button class="buttonBox" style="float: right;" id="submit" type="submit">수정 완료</button>
-                                <button class="redButtonBox mx-2" style="float: right;" type="button" onclick="deleteUser()">회원 탈퇴</button>
+                                <button class="mx-1" style="float: right; background-color:red; border:0px; border-radius: 0.2rem; width:5.5rem; height:2.3rem; color:white; margin-right:0.2rem;" type="button" onclick="deleteUser()">회원 탈퇴</button>
+                                <button style="float: right; background-color:#5865f2; border:0px; border-radius: 0.2rem; width:5.5rem; height:2.3rem; color:white; margin-right:0.2rem;" id="submit" type="submit">수정 완료</button>
                             </div>
                         </div>
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.admin.api.chat.dao.ChatDao">
+	
+	<insert id="insertAdminChat" parameterType="hashMap">
+		INSERT INTO CHAT(
+			CHAT_SENDE
+			, CHAT_RECIV
+			, CHAT_CONT
+			, CHAT_DATE) 
+		VALUES(
+		 #{CHAT_SENDE}
+		 , #{CHAT_RECIV}
+		 , #{CHAT_CONT}
+		 ,SYSDATE()
+		 )
+	</insert>
+	
+	<select id="getChatMemberInfoList" resultType="hashMap">
+		SELECT t1.*, pu.* 
+		FROM P_USER pu,	(SELECT CHAT_SENDE 
+						 FROM CHAT c, P_USER p 
+						 WHERE c.CHAT_SENDE = p.USER_SEQ 
+						 AND p.USER_TYPE not like('US02') 
+						 GROUP BY CHAT_SENDE) t1
+		WHERE t1.CHAT_SENDE = pu.USER_SEQ
+	</select>
+	
+	<select id="getAllChatList" resultType="hashMap">
+		SELECT date_format(t1.CHAT_DATE, '%p') AS CHAT_AMPM
+			   , date_format(t1.CHAT_DATE, '%h:%i') AS CHAT_TIME, t1.*, p.* 
+		FROM P_USER p
+			 , (SELECT * FROM CHAT ORDER BY CHAT_SEQ ASC) t1 
+		WHERE p.USER_SEQ = t1.CHAT_SENDE
+		AND t1.CHAT_SEQ > #{lastChatSeq}
+	</select>
+</mapper>

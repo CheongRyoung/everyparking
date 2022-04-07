@@ -10,9 +10,9 @@ let history = {
 						{title:"번호", name:"RESE_SEQ", colWidth:"6", order:true}
 						, {title:"주차장명", name:"PARK_NAME", colWidth:"10"}
 						, {title:"예약 차량", name:"RESE_CAR_NO", colWidth:"10"}
-						, {title:"예약 기간", name:"RESE_START", colWidth:"20"}
-						, {title:"예약 금액", name:"RESE_PRICE", type:"int", colWidth:"10", order:true}
-						, {title:"발생일", name:"REG_DATE", type:"date"}
+						, {title:"예약 시작일", name:"RESE_START", type:"date" , colWidth:"20"}
+						, {title:"예약 금액", name:"RESE_PRICE", type:"number", colWidth:"10", order:true}
+						, {title:"구매일", name:"REG_DATE", type:"date"}
 						,
 						{title : "비고", name: "pr.NOTE", colWidth:"10"}
 						],
@@ -49,8 +49,6 @@ let getDateRangeN = document.getElementById('datepickerN');
 function searchDate(){
 
 	let getSelectedRange = getDateRangeN.value;
-
-	console.log(getSelectedRange);
 
 	searchGrid('#userHistory', '', getSelectedRange);
 

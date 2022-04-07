@@ -13,18 +13,17 @@
 			</h1>
 		</div>
 		<div class="col-2 mt-4 px-0 text-end">
-			<button class="btn btn-light btn-sm adminBorder borderBottom"
-				data-bs-toggle="modal" data-bs-target="#costModalinsert" onclick="location.href='./costInsertForm'">비용 등록</button>
+			<button class="btn btn-light btn-sm adminBorder borderBottom" onclick="location.href='./costInsertForm'">비용 등록</button>
 		</div>
 	</div>
 	
 		<div class="row mt-4 align-items-center">
 			<!-- 검색 옵션 구역-->
 			<div class="col-2 px-0">
-				<select class="form-select" aria-label="Default select example" onchange="searchGrid('#profitTable', this.value)">
+				<select class="form-select" aria-label="Default select example" onchange="searchGrid('#costTable', this.value)">
 					<option selected>전체</option>
 					<c:forEach items="${list}" var="data">
-						<option value="${data.PARK_NAME}">${data.PARK_NAME}</option>
+						<option value="${data.PARK_SEQ}">${data.PARK_NAME}</option>
 					</c:forEach>
 					<!-- 예약 기간 검색 변수 아마 따로 계산 값으로? -->
 				</select>

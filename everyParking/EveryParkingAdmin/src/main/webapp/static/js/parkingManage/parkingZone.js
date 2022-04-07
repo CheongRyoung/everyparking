@@ -5,7 +5,7 @@ let parkingZone = {
         let $this = this;
         this.gridOption = {
             cols : [
-                {title : "번호", name: "PARK_SEQ", type:"number", colWidth:"10", order: true},
+                {title : "#", name: "PARK_SEQ", type:"number", colWidth:"10", order: true},
                 {title : "주차장명", name: "PARK_NAME", colWidth:"20" },
                 {title : "주차장 주소", name: "PARK_ADDR1"},
                 {title : "수정", name: "modify", filter:function(data, rowData, ridx, cidx, $this){

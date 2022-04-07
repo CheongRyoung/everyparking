@@ -3,6 +3,8 @@ package com.everyparking.admin.api.qnaManage.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +42,39 @@ public class QnaServiceImpl implements QnaService{
 	}
 
 	@Override
-	public int insertComment(HashMap<String, Object> params) throws Exception {
-		return qnadao.insertComment(params);	
+	public int insertComment(HttpServletRequest request, HashMap<String, Object> params) throws Exception {
+		return qnadao.insertComment(params);
+	}
+
+	@Override
+	public int insertReply(HttpServletRequest request, HashMap<String, Object> params) throws Exception {
+		return qnadao.insertReply(params);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getCommentList(int QNA_SEQ) throws Exception {
+		return qnadao.getCommentList(QNA_SEQ);
+	}
+
+	@Override
+	public int deleteComment(int QNAC_SEQ) throws Exception {
+		return qnadao.deleteComment(QNAC_SEQ);
+	}
+
+	@Override
+	public int updateComment(HashMap<String, Object> params) throws Exception {
+		return qnadao.updateComment(params);
+	}
+
+	@Override
+	public int answerQna(int QNA_SEQ) throws Exception {
+		return qnadao.answerQna(QNA_SEQ);
+	}
+	
+	@Override
+	public HashMap<String, Object> getNextPrev(int QNA_SEQ) throws Exception {
+		HashMap<String, Object> nextPrev = qnadao.getNextPrev(QNA_SEQ);
+		return nextPrev;
 	}
 
 }

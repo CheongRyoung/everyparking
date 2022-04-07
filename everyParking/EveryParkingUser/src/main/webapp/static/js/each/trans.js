@@ -10,8 +10,9 @@ function foldDaumPostcode() {
     element_wrap.style.display = 'none';
 }
 
-function DaumPostcode(obj) {
+function DaumPostcode(event) {
     // 현재 scroll 위치를 저장해놓는다.
+    event.stopPropagation();
     var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     new daum.Postcode({
         oncomplete: function (data) {
@@ -47,7 +48,7 @@ function DaumPostcode(obj) {
                 document.getElementById('postcodeName').value = addr;
             }
             //주소-좌표 변환 객체를 생성합니다
-            transGeocode(obj);
+            transGeocode(event.target);
 
             // iframe을 넣은 element를 안보이게 한다.
             // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)

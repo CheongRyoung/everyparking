@@ -40,7 +40,7 @@
 		
 	<update id="notiReadCount">
 		UPDATE p_notification SET
-			NOTI_COUNT = NOTI_COUNT+1
+			NOTI_COUNT = NOTI_COUNT + 1
 		WHERE NOTI_SEQ = #{NOTI_SEQ}
 	</update>
 	

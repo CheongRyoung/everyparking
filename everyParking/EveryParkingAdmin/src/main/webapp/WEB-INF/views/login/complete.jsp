@@ -17,7 +17,7 @@
         <div class="col">
             <div class="row my-4">
                 <div class="col text-center">
-                    <img class="logoMain mt-5" src="/img/logoBG.jpg">
+                    <img class="logoMain mt-5" src="/img/logo2.png">
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="row mt-5 mb-5 mx-1 pb-4">
-                <div class="col d-grid"><button class="buttonBox">로그인 페이지로 이동</button></div>
+                <div class="col d-grid"><button class="buttonBox" onclick="location.href='loginPage'">로그인 페이지로 이동</button></div>
             </div>
         </div>
     </div>

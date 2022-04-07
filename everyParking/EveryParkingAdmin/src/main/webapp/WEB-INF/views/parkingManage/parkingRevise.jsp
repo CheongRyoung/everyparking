@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 	<div class="col mx-3">
-		<form action="/parkingManage/updateParkingInfo" enctype="multipart/form-data" method="post" id="parkingInfoDetailForm" onsubmit="return parkingRevise.validForm()">
+		<form action="/parkingManage/updateParkingInfo" onsubmit="return checkForm()" enctype="multipart/form-data" method="post" id="parkingInfoDetailForm" onsubmit="return parkingRevise.validForm()">
 			<input type="hidden" name="PARK_SEQ">
 			<!-- 실질적 내용 변경 구역-->
 			<div class="row">
@@ -65,10 +65,10 @@
 								<div class="row mb-5" id="SEC_TYPE_${ry.SUB_CODE }">
 									<div class="col-3">${ry.SUB_NAME } 구역</div>
 									<div class="col">
-										<input type="text" name="SEC_COUNT" placeholder="가능 대수">
+										<input type="text" name="SEC_COUNT" placeholder="가능 대수" onkeypress="onlyNum();">
 									</div>
 									<div class="col">
-										<input type="text" name="SEC_DIS" placeholder="할인율(%)">
+										<input type="text" name="SEC_DIS" placeholder="할인율(%)" onkeypress="onlyNum();">
 									</div>
 								</div>
 								</c:forEach>
@@ -79,7 +79,7 @@
 								<button type="button" class="btn btn-outline-primary" onclick="parkingRevise.prevStep()">이전단계</button>
 							</div>
 							<div class="col-5 text-end d-gird">
-								<button type="button" class="btn btn-outline-primary" onclick="parkingRevise.nextStep()">다음단계</button>
+								<button type="button" class="btn btn-outline-primary" onclick="parkingRevise.nextStep2()">다음단계</button>
 							</div>
 						</div>
 					</div>
@@ -98,7 +98,7 @@
 
 				<div class="row mt-3">
 					<div class="col-4 px-0">
-						<img id="thumbNail" class="img-fluid" src="/img/image1.png">
+						<img id="thumbNail" class="img-fluid" src="/uploadImage/${imageFile.FILE_URL }${imageFile.FILE_CONV_NAME }">
 					</div>
 
 					<div class="col ms-1">
@@ -126,8 +126,7 @@
 						<div class="row me-3 mt-3">
 							<div class="col-4 mt-1">주차 비용</div>
 							<div class="col">
-								<input type="text" name="PARK_PRICE" placeholder="할인율 적용전 시간 당 비용을 입력해주세요."
-									   style="width: 100%;">
+								<input type="text" name="PARK_PRICE" placeholder="할인율 적용전 시간 당 비용을 입력해주세요." onkeypress="onlyNum();" style="width: 100%;">
 							</div>
 						</div>
 						<div class="row me-3 mt-3">
@@ -145,10 +144,10 @@
 						<div class="row me-3 mt-3">
 							<div class="col-4 mt-1">문의시간</div>
 							<div class="col">OPEN : 
-								<input class="inputTime" onkeypress="onlyTimeNum(event);" type="time" name="PARK_OPEN">
+								<input class="inputTime" type="time" name="PARK_OPEN">
 							</div>					
 							<div class="col">CLOSE :
-								<input class="inputTime" onkeypress="onlyTimeNum(event);" type="time" name="PARK_CLOSE">
+								<input class="inputTime" type="time" name="PARK_CLOSE">
 							</div>						
 						</div>
 						<div class="row me-3 mt-3">
@@ -164,7 +163,7 @@
 						<button type="button" class="btn btn-outline-primary" onclick="parkingRevise.prevStep()">이전단계</button>
 					</div>
 					<div class="col-5 text-end d-gird">
-						<button type="submit" class="btn btn-outline-primary">수정 완료</button>
+						<button type="submit" class="btn btn-outline-primary" onclick="checkForm()">수정 완료</button>
 					</div>
 				</div>
 			</div>

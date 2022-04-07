@@ -12,11 +12,11 @@
 				pc.COST_PRICE AS PRICE,
 				PC.REG_DATE AS REGDATE,
 				pc.COST_SEQ AS TSEQ,
+				pp.PARK_SEQ AS PARKSEQ,
 				pc.USE_YN AS USE_YN
 				FROM P_COSTMANAGE pc , P_PARKINGINFO pp
 				WHERE 1=1
 				AND pc.PARK_SEQ = pp.PARK_SEQ
-				AND pc.PARK_SEQ = 2
 				UNION ALL
 				SELECT
 				pp.PARK_NAME AS PARKNAME,
@@ -24,23 +24,23 @@
 				pr.RESE_PRICE AS PRICE,
 				pr.REG_DATE AS REGDATE,
 				pr.RESE_SEQ AS TSEQ,
+				pp.PARK_SEQ AS PARK_SEQ,
 				pr.USE_YN AS USE_YN
 				FROM P_RESERVATION pr , P_SECTION ps , P_PARKINGINFO pp
 				WHERE 1=1
 				AND pp.PARK_SEQ = ps.PARK_SEQ
 				AND pr.SEC_SEQ = ps.SEC_SEQ
-				AND ps.PARK_SEQ = 2
 			  ) t1, (SELECT @ROWNUM:=0) R
 		WHERE 1=1
 		AND t1.USE_YN = 'Y'
 	</sql>
 	<sql id="profitCostSearch">
-		<if test='SEARCHCOND != null and !SEARCHCOND.equals("")'>
-			AND t1.PARKNAME LIKE CONCAT('%', #{SEARCHCOND},'%')
+		<if test='SEARCHCOND != null and !SEARCHCOND.equals("전체")'>
+			AND t1.PARKSEQ = #{SEARCHCOND}
 		</if>
 		<if test='SEARCHKEY != null and !SEARCHKEY.equals("")'>
 			AND <![CDATA[ t1.REGDATE >= STR_TO_DATE(substr(#{SEARCHKEY}, 1, 10), '%Y-%m-%d')
-            AND t1.REGDATE <= STR_TO_DATE(substr(#{SEARCHKEY}, 14, 24), '%Y-%m-%d') ]]>
+            AND t1.REGDATE <= STR_TO_DATE(CONCAT(substr(#{SEARCHKEY}, 14, 24), ' 23:59:59'), '%Y-%m-%d %H:%i:%s') ]]>
 		</if>
 	</sql>
 
@@ -83,86 +83,131 @@
            , MOD_DATE = NOW()
         WHERE RESE_SEQ = #{RESE_SEQ}
     </update>
+	
+	
+	<select id="selectChartByParkSeqAndYear" resultType="hashMap">
+	/* profitCostMapper.selectChartByParkSeqAndYear [주차장 및 년도 별 검색시, 월별 예약 수익 데이터 차트 출력 - 전지나]*/
+	
+		SELECT b.yyyymmdd AS yearmonth, b.mm AS monthly, IFNULL(a.cnt, 0) AS cnt, IFNULL(a.profit, 0) AS reseTotalPrice
+		FROM (SELECT date_format(REG_DATE, '%Y-%m')as yyyymmdd, date_format(REG_DATE, '%m')as mm, count(*) cnt, sum(RESE_PRICE) as profit
+		      FROM (SELECT preser.*, psec.PARK_SEQ
+		            FROM p_reservation AS preser
+		            JOIN p_section AS psec
+		            ON preser.SEC_SEQ = psec.SEC_SEQ
+		            WHERE 1=1
+		            AND preser.USE_YN = 'Y'
+		            <if test='PARK_SEQ != null and !PARK_SEQ.equals("")'>
+		            AND psec.PARK_SEQ = #{PARK_SEQ}
+		            </if>
+		           ) bbbbb   
+	    <choose>
+	    <when test='SEARCHYEAR != null and !SEARCHYEAR.equals("")'>
+		      WHERE REG_DATE BETWEEN '${SEARCHYEAR}-01-01 00:00:00' AND '${SEARCHYEAR}-12-31 23:59:59'
+		      GROUP BY date_format(REG_DATE, '%Y-%m')) a
+		RIGHT JOIN(SELECT  @N := @N +1 AS n 
+		  		 	, date_format( date_add( '${SEARCHYEAR}-01-01' , interval @N -1 month),'%Y-%m') as yyyymmdd
+		  			, date_format( date_add( '${SEARCHYEAR}-01-01' , interval @N -1 month),'%m') as mm
+		    	   FROM (WITH RECURSIVE CTE AS (SELECT 1 AS DAY
+							             		UNION ALL
+							            		SELECT 1+CTE.DAY AS DAY
+							            		FROM CTE
+							            		<![CDATA[  WHERE CTE.DAY <= ]]> TIMESTAMPDIFF (MONTH, '${SEARCHYEAR}-01-01 00:00:00', '${SEARCHYEAR}-12-31 23:59:59') 
+		    									)
+		      		    SELECT * 
+		                FROM CTE) aaaaaa, (select @N:=0 from dual ) a
+		          ) b
+		ON a.yyyymmdd = b.yyyymmdd
+		ORDER BY b.yyyymmdd ASC
+		</when>
+		<otherwise>
+		      WHERE REG_DATE BETWEEN '2022-01-01 00:00:00' AND '2022-12-31 23:59:59'
+		      GROUP BY date_format(REG_DATE, '%Y-%m')) a
+		RIGHT JOIN(SELECT  @N := @N +1 AS n 
+		  		 	, date_format( date_add( '2022-01-01' , interval @N -1 month),'%Y-%m') as yyyymmdd
+		  			, date_format( date_add( '2022-01-01' , interval @N -1 month),'%m') as mm
+		    	   FROM (WITH RECURSIVE CTE AS (SELECT 1 AS DAY
+							             		UNION ALL
+							            		SELECT 1+CTE.DAY AS DAY
+							            		FROM CTE
+							            		<![CDATA[  WHERE CTE.DAY <= ]]> TIMESTAMPDIFF (MONTH, '2022-01-01 00:00:00', '2022-12-31 23:59:59') 
+		    									)
+		      		    SELECT * 
+		                FROM CTE) aaaaaa, (select @N:=0 from dual ) a
+		          ) b
+		ON a.yyyymmdd = b.yyyymmdd
+		ORDER BY b.yyyymmdd ASC		
+		</otherwise>
+		</choose>
+	</select>
+	
+	
+	<select id="selectCostChartByParkSeqAndYear" resultType="hashMap">
+		/* profitCostMapper.selectCostChartByParkSeqAndYear [주차장 및 년도 별 검색시, 월별 관리 비용 데이터 차트 출력 - 전지나]*/
 
-	<select	id="selectProfitChartDataByMonth" resultType="hashMap">
-		/* 테스트 - profitCostMapper.selectProfitChartDataByMonth [ 월별 순수익 차트 데이터  - 전지나 ] */
-		SELECT
-			DATE_FORMAT(REG_DATE, '%Y-%m') AS yearMonth
-			, DATE_FORMAT(REG_DATE, '%m') AS month
-			, SUM(RESE_PRICE) AS totalPrice
-		FROM p_reservation 
-		WHERE 1=1 
-		AND USE_YN='Y'
-		GROUP BY DATE_FORMAT(REG_DATE, '%Y-%m')
-	</select>
-	<!-- 주차장 별로 조회하게 만들어야하는데 search 옵션을 ajaxCall을 이용해서 구현해야 하는데 조건을 달아주는 방식에, select할 내용도 아마 추가해야하지 않을까.... -->
-	
-	<select id="selectReservationPriceByParkSeq" resultType="hashMap">
-		/* 테스트 - profitCostMapper.selectProfitChartDataByMonth [ 주차장별,연도별 예약 수익 차트 데이터  - 전지나 ] */
-		SELECT 
-			ps.PARK_SEQ
-			, sum(pr.RESE_PRICE) AS total
-			, DATE_FORMAT(pr.REG_DATE, '%Y-%m') AS yearMonth 
-		FROM P_RESERVATION pr
-			, P_SECTION ps 
-		WHERE 1=1 
-		AND pr.SEC_SEQ = ps.SEC_SEQ 
-		AND pr.USE_YN = 'Y'
-		AND ps.PARK_SEQ = #{PARK_SEQ} 
-		GROUP BY date_format(pr.REG_DATE, '%Y-%M') 
-		ORDER BY pr.REG_DATE
-	</select>
-	
-	<select id="selectCostPriceByParkSeq" resultType="hashMap">
-	/* 테스트 */
-		SELECT PARK_SEQ
-			, SUM(COST_PRICE) AS total
-			, DATE_FORMAT(COST_DATE, '%Y-%m') AS yearMonth  
-		FROM P_COSTMANAGE
-		WHERE 1=1
-		AND USE_YN = 'Y'
-		AND PARK_SEQ = 12363
-		GROUP BY DATE_FORMAT(COST_DATE, '%Y-%M')
-		ORDER BY COST_DATE
-	</select>
-	
-	<select id="selectChartByParkSeq" resultType="hashMap">
-		SELECT 
-			b.yyyymm AS yearmonth
-			, IFNULL(a.cnt, 0)
-			, IFNULL(a.profit, 0) AS totalprice
-		FROM ( SELECT date_format(REG_DATE, '%Y-%m') AS yyyymm
-					  , count(*) cnt
-					  , sum(RESE_PRICE) AS profit
-			   FROM ( SELECT preser.*
-			   				 , psec.PARK_SEQ
-			          FROM p_reservation AS preser
-			          JOIN p_section AS psec
-			          ON preser.SEC_SEQ = psec.SEC_SEQ
-			          WHERE 1=1
-			          AND preser.USE_YN = 'Y'
-			          <if test='PARK_SEQ != null and !PARK_SEQ.equals("")'>
-			             AND PARK_SEQ = #{PARK_SEQ}
-			          </if>
-			        ) z
-		<if test='SearchDate != null and !SearchDate.equals("")'>
-		AND <![CDATA[ z.REGDATE >= STRDATE(substr(#{SearchDate}, 1, 10), '%Y-%m')
-        AND z.REGDATE <= STRDATE(substr(#{SearchDate}, 14, 24), '%Y-%m') ]]>
-        </if>
-		GROUP BY date_format(REG_DATE, '%Y-%m')) a
-		RIGHT JOIN (SELECT  @N := @N +1 AS n 
-							,date_format( date_add( '2022-01-01' , interval @N -1 month),'%Y-%m') AS yyyymm
-			        FROM (WITH RECURSIVE CTE AS (SELECT 1 AS DAY
-			              						 UNION ALL
-			              						 SELECT 1+CTE.DAY AS DAY
-			            						 FROM CTE
-									 			<if test='SearchDate != null and !SearchDate.equals("")'>
-			            						 <![CDATA[
-			           							 WHERE CTE.DAY <= ]]> TIMESTAMPDIFF (MONTH, #{SearchDate}))
-			            						 </if>
-			              SELECT * FROM CTE) aa, (select @N:=0 from dual ) a
-			        ) b
+		SELECT b.yyyymm AS yearmonth
+			   , b.mm AS monthly
+			   , IFNULL(a.cnt, 0) AS cnt
+			   , IFNULL(a.manageCost, 0) AS costtotalprice
+		FROM(SELECT date_format(COST_DATE, '%Y-%m')as yyyymm, count(*) cnt, sum(COST_PRICE) as manageCost
+		     FROM (SELECT * 
+		           FROM p_costmanage) z
+		<choose>
+		<when test='SEARCHYEAR != null and !SEARCHYEAR.equals("")'>         
+		     WHERE COST_DATE BETWEEN '${SEARCHYEAR}-01-01 00:00:00' AND '${SEARCHYEAR}-12-31 23:59:59'
+		     <if test='PARK_SEQ != null and !PARK_SEQ.equals("")'>
+		     AND PARK_SEQ = #{PARK_SEQ}
+		     </if>
+		     GROUP BY date_format(COST_DATE, '%Y-%m')) a
+		RIGHT JOIN
+		    (SELECT  @N := @N +1 AS n 
+		     	, date_format( date_add( '${SEARCHYEAR}-01-01' , interval @N -1 month),'%Y-%m') as yyyymm
+		    	, date_format( date_add( '${SEARCHYEAR}-01-01' , interval @N -1 month),'%m') as mm
+		     FROM (WITH RECURSIVE CTE AS (
+		            SELECT 1 AS DAY
+		            UNION ALL
+		            SELECT 1+CTE.DAY AS DAY
+		            FROM CTE
+		            <![CDATA[  WHERE CTE.DAY <= ]]>TIMESTAMPDIFF (MONTH, '${SEARCHYEAR}-01-01 00:00:00', '${SEARCHYEAR}-12-31 23:59:59')
+		        )
+		            SELECT * FROM CTE) aaaaaa, (SELECT @N:=0 FROM DUAL) a
+		        ) b
 		ON a.yyyymm = b.yyyymm
-		ORDER BY b.yyyymm asc
+		ORDER BY b.yyyymm ASC
+		</when>
+		<otherwise>
+		     WHERE COST_DATE BETWEEN '2022-01-01 00:00:00' AND '2022-12-31 23:59:59'
+		     <if test='PARK_SEQ != null and !PARK_SEQ.equals("")'>
+		     AND PARK_SEQ = #{PARK_SEQ}
+		     </if>
+		     GROUP BY date_format(COST_DATE, '%Y-%m')) a
+		RIGHT JOIN
+		    (SELECT  @N := @N +1 AS n 
+		     	, date_format( date_add( '2022-01-01' , interval @N -1 month),'%Y-%m') as yyyymm
+		    	, date_format( date_add( '2022-01-01' , interval @N -1 month),'%m') as mm
+		     FROM (WITH RECURSIVE CTE AS (
+		            SELECT 1 AS DAY
+		            UNION ALL
+		            SELECT 1+CTE.DAY AS DAY
+		            FROM CTE
+		            <![CDATA[  WHERE CTE.DAY <= ]]>TIMESTAMPDIFF (MONTH, '2022-01-01 00:00:00', '2022-12-31 23:59:59')
+		        )
+		            SELECT * FROM CTE) aaaaaa, (SELECT @N:=0 FROM DUAL) a
+		        ) b
+		ON a.yyyymm = b.yyyymm
+		ORDER BY b.yyyymm ASC		
+		</otherwise>
+		</choose>  
+	</select>
+	
+	<select id="selectSearchYear" resultType="hashMap">
+		/* profitCostMapper.selectCostChartByParkSeqAndYear [차트 연도 검색 - 전지나] */
+		SELECT  @N := @N +1 AS n 
+				, date_format( date_add( '2021-01-01' , interval @N -1 YEAR),'%Y') AS yearData
+		FROM (WITH RECURSIVE CTE AS (SELECT 1 AS DAY
+		      						 UNION ALL
+		      						 SELECT 1+CTE.DAY AS DAY
+		      						 FROM CTE
+		    						 <![CDATA[  WHERE CTE.DAY <= ]]> TIMESTAMPDIFF (YEAR, '2022-01-01 00:00:00', '2031-12-31 23:59:59')) 
+		      SELECT * FROM CTE) aaaaaa, (select @N:=0 from dual ) a
 	</select>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface NoticeDao {
 	
+	
 	/* 03/12 종화 작성*/
 	
 	public int insertNoti(HashMap<String, Object> params) throws Exception;
@@ -25,6 +26,8 @@ public interface NoticeDao {
 	
 	public HashMap<String,Object> getNotice(int NOTI_SEQ) throws Exception;
 	
-	public int notiReadCount(int NOTI_SEQ) throws Exception;
+	public HashMap<String,Object> getNextPrev (int NOTI_SEQ) throws Exception;
 	
+	public int notiReadCount(int NOTI_SEQ) throws Exception;
+		
 }

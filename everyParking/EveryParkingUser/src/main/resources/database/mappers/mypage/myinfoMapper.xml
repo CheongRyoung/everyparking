@@ -18,6 +18,7 @@
 			,USER_PW
 			,USER_NAME
 			,USER_BIRTH
+			,USER_CAR_NO
 			FROM p_user as pu 
 			where 1=1
 		AND pu.USE_YN = 'Y'
@@ -31,11 +32,14 @@
 
 	<update id="updateInfo" parameterType="hashMap">
         /* myinfoMapper.updateInfo  */
-        UPDATE p_user SET
+        UPDATE p_user SET 
 			  USER_MAIL  = #{ USER_MAIL  }
 			, USER_PW  = #{ USER_PW  }
 			, USER_NAME = #{ USER_NAME }
 			, USER_BIRTH  = #{ USER_BIRTH  }
+			, USER_CAR_NO = #{ USER_CAR_NO }
+			, MOD_SEQ = #{USER_SEQ}
+			, MOD_DATE = CURRENT_TIMESTAMP()
 		WHERE USER_SEQ = #{ USER_SEQ }
     </update>
 
@@ -54,5 +58,23 @@
 		WHERE USER_SEQ = #{USER_SEQ}
 		AND USE_YN = 'Y'
 	</select>
-
+	
+	<update id="deleteUserRoyal" parameterType="hashMap">
+		UPDATE p_royaluser SET
+			USE_YN = 'N'
+			, MOD_SEQ = #{USER_SEQ}
+			, MOD_DATE = CURRENT_TIMESTAMP()
+		WHERE USER_SEQ = #{USER_SEQ}
+	</update>
+	
+	
+	<insert id="insertUserRoyal" parameterType="hashMap">
+		INSERT INTO p_royaluser(
+			RU_TYPE
+			, USER_SEQ
+		)VALUES(
+			#{ RU_TYPE }
+			, #{ USER_SEQ }
+		)
+	</insert>
 </mapper>

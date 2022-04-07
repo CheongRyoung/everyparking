@@ -1,68 +1,71 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="col-2"><!-- 왼편 네비바 -->
-    <div class="row backgroundColorwhite">
-        <div class="col px-0 text-center adminBorder">
-            <img src="/img/admin.png">
-        </div>
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse" style="background-color: #313a46;">
+    <div class="position-sticky pt-3">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span><i class="bi bi-house"></i> 주차장 정보</span>
+        </h6>
+        <ul class="nav flex-column mt-3">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/parkingManage/parkingZone">
+                    <span data-feather="home"></span>
+                    주차장 관리
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profitCost/costTable">
+                    <span data-feather="file"></span>
+                    유지비용 관리
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/parkingManage/userHistory">
+                    <span data-feather="shopping-cart"></span>
+                    이용 내역 조회
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profitCost/profitChart">
+                    <span data-feather="users"></span>
+                    순 수익 조회
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/parkingBlock/parkingBlock">
+                    <span data-feather="bar-chart-2"></span>
+                    차단 시간 관리
+                </a>
+            </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span><i class="bi bi-headphones"></i>고객센터</span>
+        </h6>
+        <ul class="nav flex-column mb-2 mt-3">
+            <li class="nav-item">
+                <a class="nav-link" href="/noticeManagement/noticeManagement">
+                    <span data-feather="file-text"></span>
+                    공지사항
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/qnaManage/qnaManage">
+                    <span data-feather="file-text"></span>
+                    문의내역
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/couponManagement/couponManagement">
+                    <span data-feather="file-text"></span>
+                    쿠폰발급
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/chat/adminChat">
+                    <span data-feather="file-text"></span>
+                    1:1 문의
+                </a>
+            </li>
+        </ul>
     </div>
-    <div class="row mb-5 backgroundColorwhite">
-        <div class="col text-center pb-3 adminBorder borderBottom"><br>
-        	<c:if test="${!empty sessionUser }">
-        		<a href="/login/loginPage"><i class="bi bi-unlock"></i>로그아웃</a>
-        	</c:if>
-        </div>
-    </div>
-    <div class="row backgroundColorwhite adminBorder" style="font-size: 20px; font-weight: bold; color: green;">
-        <div class="col-2 my-3"><i class="bi bi-house"></i></div>
-        <div class="col my-3"><a href="/parkingManage/adminHome" style="color: green;">관리페이지 홈</a></div>
-    </div>
-    <div class="row adminBorder">
-        <div class="col">
-            <div class="row backgroundColorwhite" style="font-size: 20px; font-weight: bold;">
-                <div class="col-2 mt-3 mb-2"><i class="bi bi-gear"></i></div>
-                <div class="col mt-3 mb-2">주차장 관리</div>
-            </div>
-            <div class="row backgroundColorwhite">
-                <div class="col-2"></div>
-                <div class="col my-1"><a href="/parkingManage/parkingZone">주차장 홈</a></div>
-            </div>
-            <div class="row backgroundColorwhite">
-                <div class="col-2"></div>
-                <div class="col my-1"><a href="/profitCost/reservationInquiry">예약 여부 관리</a></div>
-            </div>
-            <div class="row backgroundColorwhite">
-                <div class="col-2"></div>
-                <div class="col my-1"><a href="/profitCost/costTable">유지 비용 관리</a></div>
-            </div>
-            <div class="row backgroundColorwhite">
-                <div class="col-2"></div>
-                <div class="col my-1"><a href="/parkingManage/userHistory">이용 내역 조회</a></div>
-            </div>
-            <div class="row backgroundColorwhite">
-                <div class="col-2"></div>
-                <div class="col my-1"><a href="/profitCost/profitChart">순 수익 조회</a></div>
-            </div>
-            <div class="row backgroundColorwhite">
-                <div class="col-2"></div>
-                <div class="col mt-1 mb-4"><a href="/parkingBlock/parkingBlock">차단 시간 관리</a></div>
-            </div>
-        </div>
-    </div>
-    <div class="row adminBorder borderBottom">
-        <div class="col">
-            <div class="row backgroundColorwhite" style="font-size: 20px; font-weight: bold;">
-                <div class="col-2 mt-3"><i class="bi bi-headphones"></i></div>
-                <div class="col mt-3 mb-2">고객센터 관리</div>
-            </div>
-            <div class="row backgroundColorwhite">
-                <div class="col-2 my-1"></div>
-                <div class="col my-1"><a href="/noticeManagement/noticeManagement">공지사항 관리</a></div>
-            </div>
-            <div class="row backgroundColorwhite">
-                <div class="col-2"></div>
-                <div class="col mt-1 mb-4"><a href="/qnaManage/qnaManage">문의 내역 관리</a></div>
-            </div>
-        </div>
-    </div>
-</div>
+</nav>

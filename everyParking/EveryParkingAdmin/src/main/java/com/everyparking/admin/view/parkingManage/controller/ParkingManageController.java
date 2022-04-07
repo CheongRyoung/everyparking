@@ -81,6 +81,10 @@ public class ParkingManageController extends BaseController {
     	List<HashMap<String, Object>> ryList = parkingInfoService.selectSubcodeByRY();
     	model.addAttribute("ryList", ryList);
     	
+    	int parkSeq = Integer.parseInt(PARK_SEQ);
+    	HashMap<String, Object> imageFile = parkingInfoService.selectParkingInfoFileImage(parkSeq);
+    	model.addAttribute("imageFile", imageFile);
+    	
     	ModelAndView mav = super.createMav(Ajax.UPDATE.TEXT+"."+Ajax.SUCCESS);
     	
     	mav.setViewName("/parkingManage/parkingRevise");

@@ -6,6 +6,7 @@ import com.everyparking.user.api.kakaopay.vo.ReadyResponse;
 import com.everyparking.user.api.kakaopay.vo.RefundResponse;
 import com.everyparking.user.api.main.service.MainService;
 
+import com.everyparking.user.api.mypage.service.ReserService;
 import com.everyparking.user.framework.common.controller.BaseController;
 import com.everyparking.user.framework.common.util.SessionUtil;
 import com.everyparking.user.framework.common.vo.Ajax;
@@ -35,6 +36,9 @@ public class KakaopayController extends BaseController {
     
     @Autowired
     MainService mainService;
+
+    @Autowired
+    ReserService reserService;
 
     @ResponseBody
     @RequestMapping("/order/pay")
@@ -76,6 +80,7 @@ public class KakaopayController extends BaseController {
     		ApproveResponse approveResponse = kakaoService.payApprove(session, tid, pgToken);
             order.put("RESE_TID", approveResponse.getTid());
     		mainService.insertReservation(order);
+    		mainService.updateUserCoupon(order);
     		return "redirect:/main/reservationComplete";
     	}
         return "/order/pay/fail";
@@ -98,19 +103,15 @@ public class KakaopayController extends BaseController {
     @RequestMapping("/order/pay/refund")
     public @ResponseBody ModelAndView payRefund(@RequestBody HashMap<String, Object> params, HttpSession session) throws Exception {
         ModelAndView mav = createMav();
-        SessionUtil.setCreator(session, params);
         try{
+            SessionUtil.setCreator(session, params);
             HashMap<String, Object> data = kakaoService.getTid(params);
-            if(data != null) {
-                RefundResponse refundResponse = kakaoService.payRefund(data);
-                mav = createMav(mainService.deleteReservation(data));
-                super.setMessage(mav, Ajax.SUCCESS+"."+Ajax.TYPE_SUCCESS);
-            } else {
-                throw new Exception();
-            }
+            RefundResponse refundResponse = kakaoService.payRefund(data);
+            mav = super.createMav(reserService.cancelReservation(params));
+            super.setCustomMessage(mav, Ajax.SUCCESS, "예약 취소되었습니다.");
         } catch(Exception e) {
-            super.setMessage(mav, Ajax.FAIL+"."+Ajax.TYPE_FAIL);
             logger.error(e.getMessage());
+            super.setCustomMessage(mav, Ajax.FAIL, "예약 취소에 실패 하였습니다. 관리자에게 문의하세요.");
         }
         return mav;
     }

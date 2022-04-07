@@ -29,4 +29,6 @@ public interface ParkingInfoService {
     public int deleteSection(HashMap<String, Object> params) throws Exception;
     
     public List<HashMap<String, Object>> selectSubcodeByRY() throws Exception;
+    
+    public HashMap<String, Object> selectParkingInfoFileImage(int PARK_SEQ);
 }

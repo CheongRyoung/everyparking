@@ -5,8 +5,8 @@
 <div class="container-fluid">
 
     <header>
-        <div class="row headerBox py-2 px-0" style="border-bottom: 1px solid #eeeeee;">
-            <div class="col-1 px-0"><i class="bi bi-arrow-left fs-5" style="color:white;"></i></div>
+        <div class="row headerBox py-2 px-0">
+            <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5" onclick="location.href='/main/home'"></i></div>
             <div class="col px-0">
                 <h5 class="title">마이 페이지</h5>
             </div>
@@ -40,12 +40,11 @@
                        
                         <div class="row mt-4 mb-5 mx-1 pb-4">
                             <div class="col d-grid">
-                             <button type="submit" class="buttonBox" onclick="return frmCheck();">정보 수정</button>  
+                             <button type="submit" class="longBtn" onclick="return frmCheck();">확인</button>  
                            </div>
                         </div>
                     </div>
                 </div>
-            
             </div>
         </div>
        </form>

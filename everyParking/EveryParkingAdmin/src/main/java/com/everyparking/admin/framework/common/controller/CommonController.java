@@ -1,8 +1,11 @@
 package com.everyparking.admin.framework.common.controller;
 
-import com.everyparking.admin.framework.common.service.CommonService;
-import com.everyparking.admin.framework.common.util.FileUtil;
-import com.everyparking.admin.framework.common.vo.Ajax;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import com.everyparking.admin.framework.common.service.CommonService;
+import com.everyparking.admin.framework.common.util.FileUtil;
 
 @Controller
 @RequestMapping("/admin")
@@ -32,7 +32,6 @@ public class CommonController extends BaseController{
 
     @RequestMapping("/Home")
     public String adminHome(){
-        /** 세션 검사 추가해야하는데 이작업은 나중에 하셔도 됩니다 **/
         return "/parkingManage/adminHome";
     }
 

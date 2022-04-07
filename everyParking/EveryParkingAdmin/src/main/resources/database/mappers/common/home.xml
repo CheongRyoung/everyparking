@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyparking.admin.framework.common.dao.MainDao">
+    <select id="getNotiList" resultType="hashMap">
+        SELECT
+            NOTI_SEQ
+             , USER_SEQ
+             , NOTI_TITLE
+             , NOTI_CONT
+             , REG_DATE
+             , MOD_SEQ
+             , MOD_DATE
+             , NOTE
+             , NOTI_COUNT
+        FROM p_notification
+        WHERE 1=1
+        AND USE_YN = 'Y'
+        ORDER BY NOTI_SEQ DESC
+        LIMIT 0, 4;
+    </select>
+
+    <select id="getQNAList" resultType="hashMap">
+        SELECT
+            QNA_SEQ
+             , USER_SEQ
+             , SUB_CODE
+             , QNA_TITLE
+             , QNA_CONT
+             , REG_DATE
+             , MOD_SEQ
+             , MOD_DATE
+             , NOTE
+             , QNA_COUNT
+        FROM p_qna
+        WHERE 1=1
+        AND USE_YN = 'Y'
+        ORDER BY QNA_SEQ DESC
+        LIMIT 0, 4;
+    </select>
+
+    <select id="getReserTodayCount" resultType="int">
+        SELECT count(*)
+        FROM p_reservation
+        WHERE 1=1
+        AND USE_YN = 'Y'
+        AND RESE_STATE = 'PM01'
+        AND DATE_FORMAT(REG_DATE, '%Y-%m-%d') = CURDATE();
+    </select>
+
+    <select id="getReserYesterCount" resultType="int">
+        SELECT count(*)
+        FROM p_reservation
+        WHERE 1=1
+          AND USE_YN = 'Y'
+          AND RESE_STATE = 'PM01'
+          AND DATE_FORMAT(REG_DATE, '%Y-%m-%d') >= curdate()-1;
+    </select>
+
+    <select id="getReserTotalCount" resultType="int">
+        SELECT count(*)
+        FROM p_reservation
+        WHERE 1=1
+          AND USE_YN = 'Y'
+          AND RESE_STATE = 'PM01'
+    </select>
+
+    <select id="getReserTotalCountMonthAgo" resultType="int">
+        SELECT count(*)
+        FROM p_reservation
+        WHERE 1=1
+          AND USE_YN = 'Y'
+          AND RESE_STATE = 'PM01'
+          AND REG_DATE >= date_add(now(), interval -1 month)
+    </select>
+</mapper>
