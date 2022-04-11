@@ -45,6 +45,11 @@
                         <span style="font-weight: bold;">조회수 </span>
                         <span>${noti.NOTI_COUNT }</span>
                     </div>
+                    <div class="col-2">
+		                <c:if test="${!empty noti.FILE_SEQ}">                    
+		                    <a href="/downloadFile/${noti.FILE_SEQ}"><button class="btn downloadBtn"><i class="bi bi-download"></i></button></a>
+	                    </c:if>                                
+                    </div>
                 </div>
 
                 <div class="row mt-2">
@@ -62,13 +67,13 @@
                         <a href="./list"><button class="cancelBtn btn btn-primary" style="width: 5rem; border-radius:0.5rem; border: none; height: 2.5rem;">목록</button></a>
                     </div>
                     <div class="col d-flex justify-content-end">
-	                <c:if test="${!empty move.NOTI_NEXT}">                
-	                    <a href="./content?NOTI_SEQ=${move.NOTI_NEXT}"><button class="longBtn" style="width: 5rem; margin-right:0.2rem;">이전글</button></a>
-	                </c:if>    
-	                <c:if test="${!empty move.NOTI_PREV}">
-	                    <a href="./content?NOTI_SEQ=${move.NOTI_PREV}"><button class="longBtn" style="width: 5rem;">다음글</button></a>
-	                </c:if>
-                    </div>
+		                <c:if test="${!empty move.NOTI_NEXT}">                
+		                    <a href="./content?NOTI_SEQ=${move.NOTI_NEXT}"><button class="longBtn" style="width: 5rem; margin-right:0.2rem;">이전글</button></a>
+		                </c:if>    
+		                <c:if test="${!empty move.NOTI_PREV}">
+		                    <a href="./content?NOTI_SEQ=${move.NOTI_PREV}"><button class="longBtn" style="width: 5rem;">다음글</button></a>
+		                </c:if>
+	                    </div>
                 </div>
 
             </div>

@@ -92,10 +92,12 @@
                             <!-- 구역 할인률 노출 -->
                         </div>
                     </div>
-                    <div class="row headerBox mt-5 py-2 px-0" style="background-color:#3E4AB8;">
+                    <div class="row mt-5 py-2 px-0">
+                    	<div class="col-1"></div>
                         <div class="col px-0 d-grid">
-                            <button class="btn title m-0 p-0" style="color:white;" onclick="pickerOpen()">예약 일시 선택</button>
+                            <button class="btn title m-0 p-0" onclick="pickerOpen()" style="background-color:#3E4AB8; border-radius:0.5rem; color:white; height:2.5rem;">예약 일시 선택</button>
                         </div>
+                        <div class="col-1"></div>
                     </div>
 	                <form id="formData" name="formData" method="post">
 	                <div class="row d-none mt-3 py-2 px-0" style="border-bottom: #EEEEEE solid 0.5rem;">
@@ -138,7 +140,7 @@
 </div>
 <!-- 오른쪽 리스트 팝업창  -->
 <div class="list" id="list">
-	<div class="container-fluid">
+	<div class="container-fluid" style="background-image: url('/img/mainBackground.png');">
 	    <header>
 	        <div class="row headerBox py-2 px-0">
 	            <div class="col-1" onclick="listClose();" style="padding-top:0.7rem;"><i class="bi bi-arrow-right fs-5"></i></div>
@@ -149,7 +151,7 @@
 	        </div>
 	    </header>
 	    <main>
-	        <div class="row pt-2 mb-3 topBox">
+	        <div class="row pt-2 mb-3">
 	            <div class="col listCountBox">
 	                <i class="bi bi-layers"></i>총<span class="listCountNum" id="totalParkingCount" style="color:#3E4AB8;"></span>건
 	            </div>
@@ -258,10 +260,12 @@
                         <span>총 예약 시간</span>
                         <span id="resultHours">총 예약 시간</span>
                     </div>
-                    <div class="row headerBox py-2 px-0" style="background-color:#3E4AB8;">
+                    <div class="row py-2 px-0">
+                    	<div class="col-1"></div>
                         <div class="col px-0 d-grid">
-                            <button class="btn title m-0 p-0" id="selectTime" style="color:white;">시간 선택 완료</button>
+                            <button class="btn title m-0 p-0" id="selectTime" style="background-color:#3E4AB8; color:white; border-radius:0.5rem; color:white; height:2.5rem;">시간 선택 완료</button>
                         </div>
+                        <div class="col-1"></div>
                     </div>
                 </div>
             </div>

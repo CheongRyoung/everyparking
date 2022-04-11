@@ -68,6 +68,7 @@ container.addEventListener('touchstart', (e) => {
 });
 
 container.addEventListener('touchmove', (e) => {
+	e.stopPropagation();
     document.getElementById('customDatePicker').style.overflowY = "hidden";
     yinner.style.transitionDuration = '0ms';
     offset = curPos + (e.targetTouches[0].pageY - startPos); // 이동중인 x좌표
@@ -115,6 +116,11 @@ container.addEventListener('touchend', (e) => {
         hoursIndex = customHours.length - 1;
     }
     hoursIndex += 1;
+    customHours.forEach(e => {
+        if (e.classList.contains('selectcustomHour')) {
+            e.classList.remove('selectcustomHour')
+        }
+    })
     customHours[hoursIndex].classList.add('selectcustomHour');
     yinner.style.transform = `translate3d(0px, ${finalX}px, 0px)`;
     yinner.style.transitionDuration = '300ms';
@@ -211,6 +217,7 @@ containerEnd.addEventListener('touchstart', (e) => {
 });
 
 containerEnd.addEventListener('touchmove', (e) => {
+	e.stopPropagation();
     document.getElementById('customDatePicker').style.overflowY = "hidden";
     yinnerEnd.style.transitionDuration = '0ms';
     endOffset = endCurPos + (e.targetTouches[0].pageY - endStartPos); // 이동중인 x좌표
@@ -245,7 +252,7 @@ containerEnd.addEventListener('touchend', (e) => {
 
     if (document.querySelector('input[name="endDay"]:checked')) {
         if (startHours != null && startDate != null && endDate != null && startDate == endDate) {
-            if ((finalX == 0 ? 0 : -(finalX / cnWidth - 1)) <= startHours) {
+            if ((finalX == 0 ? 0 : -(finalX / cnWidth - 1)) <= startHours+1) {
                 finalX = (-(startHours)-1) * cnWidth;
             }
         }
@@ -427,8 +434,24 @@ const resultHours = document.getElementById('resultHours');
 
 function caculateDateHours() {
     if (startDate, startHours, endDate, endHours != null) {
-        const finalstartdate = new Date(moment(startDate + " " + startHours + ":00"));
-        const finalendDate = new Date(moment(endDate + " " + endHours + ":00"));
+    	
+    	let startString = startDate + " ";
+    	if(startHours < 10){
+    		startString += "0";
+    	}
+    	
+    	startString += (startHours + ":00");
+    	
+    	let endString = endDate + " ";
+    	if(endHours < 10){
+    		endString += "0";
+    	}
+
+    	endString += (endHours + ":00");
+    	
+    	
+        const finalstartdate = new Date(moment(startString));
+        const finalendDate = new Date(moment(endString));
         const resultDate = finalendDate - finalstartdate;
         resultHours.innerText = resultDate / (1000 * 60 * 60) + "시간";
         reservationDate.value = `${startDate} ${startHours<10 ? "0"+startHours : startHours}시 ~ ${endDate} ${endHours < 10 ? "0"+endHours : endHours}시`;

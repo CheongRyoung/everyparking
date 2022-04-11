@@ -7,16 +7,16 @@ let cost = {
 			let $this = this;
 			this.gridOption = {
 					cols : [
-						{title:"번호", name:"COST_SEQ", colWidth:"6", order:true}
-						, {title:"주차장명", name:"PARK_NAME", colWidth:"10"}
+						{title:"번호", name:"COST_SEQ", colWidth:"5", order:true}
+						, {title:"주차장명", name:"PARK_NAME", colWidth:"15"}
 						, {title:"비용사유", name:"COST_CONT"}
-						, {title:"금액", name:"COST_PRICE", type:"number", colWidth:"15"}
-						, {title:"발생일", name:"COST_DATE", type:"date", colWidth:"10"}
+						, {title:"금액", name:"COST_PRICE", type:"number", colWidth:"13"}
+						, {title:"발생일", name:"COST_DATE", type:"date", colWidth:"20"}
 						, {title : "수정", name: "modify", filter:function(data, rowData, ridx, cidx, $this){
 		                    return `<a href="/profitCost/costUpdateForm?COST_SEQ=${rowData.COST_SEQ}" class="btn btn-outline-primary btn-sm">수정</a>`
 		                }, colWidth:"10"}
 						,
-						{title : "삭제", name: "DEL", colWidth:"7", filter:function(data, rowData, ridx, cidx, $this) {
+						{title : "삭제", name: "DEL", colWidth:"10", filter:function(data, rowData, ridx, cidx, $this) {
 							return `<a class="btn btn-outline-danger btn-sm" onclick="cost.deleteRow(${ridx})">삭제</a>`
 						}}
 						],

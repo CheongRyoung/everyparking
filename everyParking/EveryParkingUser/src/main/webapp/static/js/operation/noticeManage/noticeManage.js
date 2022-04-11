@@ -10,7 +10,7 @@ let noticeManagement = {
 	        this.gridOption = {
 	            cols : [
 	                {title : "", name: "NOTI_SEQ", type:"number", colWidth:"5", order: true},
-	                {title : "제목", name: "NOTI_TITLE", colWidth:"45", filter:function(data, rowData, ridx, cidx, $this) {
+	                {title : "제목", name: "NOTI_TITLE", colWidth:"40", filter:function(data, rowData, ridx, cidx, $this) {
 	                	return escapeHtml(rowData.NOTI_TITLE);}},
 	                {title : "작성자", name: "USER_NAME"},
 	                {title : "작성일", name: "REG_DATE", type:"date", colWidth:"22"},
@@ -29,9 +29,6 @@ let noticeManagement = {
 	$(function(){
 	    noticeManagement.initPage();
 	    dateJspForm();
-	    ajaxCall(
-
-	    )
 	})
 	
 	function onRowClick(num, obj){

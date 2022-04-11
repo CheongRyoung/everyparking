@@ -1,173 +1,262 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
-	<div class="col mx-3">
+		<div class="content">
 		<form action="/parkingManage/updateParkingInfo" onsubmit="return checkForm()" enctype="multipart/form-data" method="post" id="parkingInfoDetailForm" onsubmit="return parkingRevise.validForm()">
 			<input type="hidden" name="PARK_SEQ">
-			<!-- 실질적 내용 변경 구역-->
-			<div class="row">
-				<!-- top title-->
-				<div class="col text-start px-0">
-					<h1 style="font-weight: bold;">주차장 수정</h1>
-				</div>
-			</div>
-			<div class="row mt-4 backgroundColorwhite adminBorder borderBottom tab-content active" style="height: 600px;">
-				<!-- 테이블 구역 -->
-				<div class="col">
-					<div class="row mb-3">
-						<div class="col ms-5 mt-5 mb-4">
-							<h4 style="font-weight: bold;">Stage 1: 주차장에서 이용할 구역을 선택해 주세요</h4>
-						</div>
-						<div class="row mt-3">
-							<div class="col-4 px-0">
-								<img class="img-fluid" src="/img/image1.png">
-							</div>
-							<div class="col ms-1">
-								<c:forEach items="${ryList}" var="ry">
-								<div class="row mb-5">
-									<div class="col-4">
-										<input type="checkbox" name="SEC_TYPE" value=${ry.SUB_CODE }> ${ry.SUB_NAME } 구역
-									</div>
-									<div class="col">공용주차 공간입니다</div>
-								</div>
-								</c:forEach>
-							</div>
-						</div>
-						<div class="row me-4 pt-5 mt-5">
-							<div class="col-10 text-end d-gird">
-								<button type="button" class="btn btn-outline-primary" onclick="parkingRevise.nextStep()">다음단계</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<!-- top -->
+	        <div class="top">
+	          <div class="title">
+	            <h1> 주차장 수정 </h1>
+	            <span> 주차장 관리 > 주차장 홈 > 주차장 등록 </span>
+	          </div>
+	
+	        </div>
+	        <!-- // top -->		
+        <!-- mainCon -->
+        <div class="tab-content selected">
+        <div class="mainCon">
 
-			<div class="row mt-4 backgroundColorwhite adminBorder borderBottom tab-content"
-				 style="height: 600px;">
-				<!-- 테이블 구역 -->
-				<div class="col">
-					<div class="row mb-3">
-						<div class="col ms-5 mt-5 mb-4">
-							<h4 style="font-weight: bold;">Stage 2: 선택한 구역의 주차 가능 대수와 구역별
-								할인율을 입력해 주세요</h4>
-						</div>
-						<div class="row mt-3">
-							<div class="col-4 px-0">
-								<img class="img-fluid" src="/img/image1.png">
-							</div>
-							<div class="col ms-1">
-								<div class="row mb-5">
-									<div class="col-3">구분</div>
-									<div class="col">주차 가능 대수 입력</div>
-									<div class="col">할인율(숫자만 입력)</div>
-								</div>
-								<c:forEach items="${ryList}" var="ry">
-								<div class="row mb-5" id="SEC_TYPE_${ry.SUB_CODE }">
-									<div class="col-3">${ry.SUB_NAME } 구역</div>
-									<div class="col">
-										<input type="text" name="SEC_COUNT" placeholder="가능 대수" onkeypress="onlyNum();">
-									</div>
-									<div class="col">
-										<input type="text" name="SEC_DIS" placeholder="할인율(%)" onkeypress="onlyNum();">
-									</div>
-								</div>
-								</c:forEach>
-							</div>
-						</div>
-						<div class="row me-4 mt-4">
-							<div class="col-5 text-start d-gird">
-								<button type="button" class="btn btn-outline-primary" onclick="parkingRevise.prevStep()">이전단계</button>
-							</div>
-							<div class="col-5 text-end d-gird">
-								<button type="button" class="btn btn-outline-primary" onclick="parkingRevise.nextStep2()">다음단계</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 내용 -->
-			<div class="row mt-4 mb-3 backgroundColorwhite adminBorder borderBottom tab-content"
-			 style="height: 600px;">
-			<div class="col">
+          <!-- mainConWrap -->
+          <div class="mainConWrap">
 
-				<div class="row">
-					<div class="col ms-5 mt-5 mb-4">
-						<h4 style="font-weight: bold;">Stage 3: 주차장 정보를 입력해 주세요.</h4>
-					</div>
-				</div>
+            <!-- imgWrap -->
+            <div class="imgWrap">
+              <img src="/img/parkingLot.svg">
+            </div>
+            <!-- // imgWrap -->
 
-				<div class="row mt-3">
-					<div class="col-4 px-0">
-						<img id="thumbNail" class="img-fluid" src="/uploadImage/${imageFile.FILE_URL }${imageFile.FILE_CONV_NAME }">
-					</div>
+            <!-- step -->
+            <div class="step">
 
-					<div class="col ms-1">
-						<div class="row me-3">
-							<div class="col-4 mt-1">주차장명</div>
-							<div class="col">
-								<input type="text" placeholder="주차장 명을 입력해 주세요." name="PARK_NAME" style="width: 100%;">
-							</div>
-						</div>
-						<div class="row me-3 mt-3">
-							<div class="col-4 mt-1">주차장 위치</div>
-							<div class="col">
-								<input id="postcodeName" type="text" placeholder="클릭 후 주소를 입력해 주세요." name="PARK_ADDR1" style="width: 100%;" onclick="postcoderun()" readonly>
-								<input id="postcodeX"    type="hidden" name="PARK_ADDR_X">
-								<input id="postcodeY"    type="hidden" name="PARK_ADDR_Y">
-							</div>
-						</div>
+              <!-- step_2 -->
+              <div class="step_2">
 
-						<div class="row me-3 mt-3">
-							<div class="col-4 mt-1">주차장 위치 상세</div>
-							<div class="col">
-								<input type="text" placeholder="입구 위치 등을 작성해 주세요." style="width: 100%;" name="PARK_ADDR2">
-							</div>
-						</div>
-						<div class="row me-3 mt-3">
-							<div class="col-4 mt-1">주차 비용</div>
-							<div class="col">
-								<input type="text" name="PARK_PRICE" placeholder="할인율 적용전 시간 당 비용을 입력해주세요." onkeypress="onlyNum();" style="width: 100%;">
-							</div>
-						</div>
-						<div class="row me-3 mt-3">
-							<div class="col-4 mt-1">주차장 설명</div>
-							<div class="col">
-								<textarea rows="3" cols="45" placeholder="주차장을 설명해 주세요." name="PARK_CONT" style="width:100%;"></textarea>
-							</div>
-						</div>
-						<div class="row me-3 mt-3">
-							<div class="col-4 mt-1">전화번호</div>
-							<div class="col">
-								<input type="text" name="PARK_CALL_NUM" placeholder="주차장 전화번호를 입력해주세요." style="width: 100%;">
-							</div>
-						</div>						
-						<div class="row me-3 mt-3">
-							<div class="col-4 mt-1">문의시간</div>
-							<div class="col">OPEN : 
-								<input class="inputTime" type="time" name="PARK_OPEN">
-							</div>					
-							<div class="col">CLOSE :
-								<input class="inputTime" type="time" name="PARK_CLOSE">
-							</div>						
-						</div>
-						<div class="row me-3 mt-3">
-							<div class="col-4 mt-1">이미지 업로드</div>
-							<div class="col">
-								<input id="inputThumbnail" type="file" name="profile" style="width: 100%;">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row me-4 mt-4">
-					<div class="col-5 text-start d-gird">
-						<button type="button" class="btn btn-outline-primary" onclick="parkingRevise.prevStep()">이전단계</button>
-					</div>
-					<div class="col-5 text-end d-gird">
-						<button type="submit" class="btn btn-outline-primary" onclick="checkForm()">수정 완료</button>
-					</div>
-				</div>
-			</div>
-		</div>
+              <!-- stepTitle -->
+              <div class="stepTitle">
+                <span> STEP 01 </span>
+                <h2> 주차장에서 이용할 구역을 선택해주세요. </h2>
+              </div>
+              <!-- // stepTitle -->
+
+              <!-- stepConWrap -->
+              <div class="stepConWrap">
+                <c:forEach items="${ryList}" var="ry" varStatus="i">
+                <div class="checkList">
+                  <label for="chk${i.count}">
+                    <input type="checkbox" id="chk${i.count}" name="SEC_TYPE" value=${ry.SUB_CODE }> ${ry.SUB_NAME } 구역
+                  </label>
+                  <p> 다른 구역을 제외한 남은 공용주차 구역입니다. </p>
+                </div>
+                </c:forEach>
+              </div>
+              <!-- // stepConWrap -->
+
+              </div>
+              <!-- // step_2 -->
+
+              <!-- rightBottomBtn -->
+              <div class="rightBottomBtn stepBtn">
+                <button type="button" onclick="parkingRevise.nextStep()"> 다음 단계 </button>
+              </div>
+              <!-- // rightBottomBtn -->
+
+            </div>
+            <!-- // step -->
+
+          </div>
+          <!-- // mainConWrap -->
+
+        </div>
+        <!-- // mainCon -->
+        </div>
+		<div class="tab-content">
+        <div class="mainCon">
+
+          <!-- mainConWrap -->
+          <div class="mainConWrap">
+
+            <!-- imgWrap -->
+            <div class="imgWrap">
+              <img src="/img/parkingLot.svg">
+            </div>
+            <!-- // imgWrap -->
+
+            <!-- step -->
+            <div class="step">
+
+              <!-- stepCon -->
+              <div class="stepCon">
+
+                <!-- stepTitle -->
+                <div class="stepTitle">
+                  <span> STEP 02 </span>
+                  <h2> 선택한 구역의 주차 가능 대수와 구역별 할인률을 입력해주세요. </h2>
+                </div>
+                <!-- // stepTitle -->
+
+                <!-- stepConWrap -->
+                <div class="stepConWrap">
+                  
+                  <!-- tableWrap_2 -->
+                  <div class="tableWrap_2">
+
+                    <!-- table -->
+                    <table class="table">
+                      <colgroup>
+                        <col style="width:24%;">
+                        <col style="width:38%;">
+                        <col style="width:38%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th> 구분 </th>
+                          <th> 주차 가능 대수 입력 </th>
+                          <th> 할인률 <span> ( 숫자만 입력 ) </span> </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <c:forEach items="${ryList}" var="ry">
+                        <tr id="SEC_TYPE_${ry.SUB_CODE }">
+                          <th> ${ry.SUB_NAME } 구역 </th>
+                          <td> <input class="input_2" name="SEC_COUNT" type="text" onkeypress="onlyNum();" placeholder="가능 대수"> </td>
+                          <td> <input class="input_2" name="SEC_DIS" type="text" onkeypress="onlyNum();" placeholder="할인율(%)"> </td>
+                        </tr>
+                      </c:forEach>
+                      </tbody>
+                    </table>
+                    <!-- // table -->
+
+                  </div>
+                  <!-- // tableWrap_2 -->
+
+                </div>
+                <!-- // stepConWrap -->
+
+              </div>
+              <!-- //stepCon -->
+
+                <!-- rightBottomBtn -->
+                <div class="rightBottomBtn">
+                  <button type="button" onclick="parkingRevise.prevStep()"> 이전 단계 </button>
+                  <button type="button" onclick="parkingRevise.nextStep2()"> 다음 단계 </button>
+                </div>
+                <!-- // rightBottomBtn -->
+              
+            </div>
+            <!-- // step -->
+
+          </div>
+          <!-- // mainConWrap -->
+
+        </div>
+        </div>
+        
+        <div class="tab-content">
+        <div class="mainCon">
+
+          <!-- mainConWrap -->
+          <div class="mainConWrap">
+
+            <!-- imgWrap -->
+            <div class="imgWrap" style="width: 550px;">
+              <img src="/uploadImage/${imageFile.FILE_URL }${imageFile.FILE_CONV_NAME }" id="thumbNail" onerror="this.src='../img/parkingLot.svg'">
+            </div>
+            <!-- // imgWrap -->
+
+            <!-- step -->
+            <div class="step">
+
+              <!-- step_2 -->
+              <div class="step_2">
+
+                <div class="stepTitle">
+                  <span> STEP 03 </span>
+                  <h2> 주차장 정보를 입력해주세요. </h2>
+                </div>
+
+                <!-- stepConWrap -->
+                <div class="stepConWrap bgClear">
+                  
+                  <!-- tableWrap_3 -->
+                  <div class="tableWrap_3">
+
+                    <!-- table -->
+                    <table class="table">
+                      <colgroup>
+                        <col style="width:25%;">
+                        <col style="width:75%;">
+                      </colgroup>
+                      <tr>
+                        <th> 주차장명 </th>
+                        <td> <input name="PARK_NAME" class="input_2" type="text" placeholder="주차장 이름을 입력해주세요."> </td>
+                      </tr>
+                      <tr>
+                        <th> 주차장 위치 </th>
+                        <td> 
+                          <input id="postcodeName" name="PARK_ADDR1" class="input_2" type="text" placeholder="클릭하여 주소를 입력해주세요."  onclick="postcoderun()" readonly>
+                          <input id="postcodeX" type="hidden" name="PARK_ADDR_X">
+                          <input id="postcodeY" type="hidden" name="PARK_ADDR_Y">
+                        </td>
+                      </tr>
+                      <tr>
+                        <th> 주차장 위치 상세 </th>
+                        <td> <input class="input_2" type="text" name="PARK_ADDR2" placeholder="입구 위치 등을 작성해주세요."> </td>
+                      </tr>
+                      <tr>
+                        <th> 주차 비용 </th>
+                        <td> <input class="input_2" name="PARK_PRICE" type="text" placeholder="할인율 적용 전 시간 당 비용을 입력해주세요." onkeypress="onlyNum();"> </td>
+                      </tr>
+                      <tr>
+                        <th> 전화 번호 </th>
+                        <td> <input class="input_2" name="PARK_PRICE" type="text" placeholder="주차장 전화번호를 입력해주세요." name="PARK_CALL_NUM"> </td>
+                      </tr>
+                      <tr>
+                        <th> 주차장 설명 </th>
+                        <td> <textarea rows="7" placeholder="주차장을 설명해주세요." name="PARK_CONT"></textarea> </td>
+                      </tr>
+                      <tr>
+                        <th> 문의시간 </th>
+                        <td>
+                          <div class="mainCon-TopWrap" style="align-items: center;">
+                          <span>OPEN&nbsp;&nbsp;</span><input class="input_2" type="time" name="PARK_OPEN" placeholder="입구 위치 등을 작성해주세요."> 
+                          <spen>CLOSE&nbsp;&nbsp;</spen><input class="input_2" type="time" name="PARK_CLOSE" placeholder="입구 위치 등을 작성해주세요.">
+                        </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th> 이미지 업로드 </th>
+                        <td>
+                          <label for="file">파일 선택</label>
+                          <input id="file" class="input_2" type="file" name="profile">
+                          <input class="input_2 upload-name" type="text">
+                        </td>
+                      </tr>
+                    </table>
+                    <!-- // table -->
+
+                  </div>
+                  <!-- // tableWrap_3 -->
+                </div>
+                <!-- // stepConWrap -->
+	              <!-- rightBottomBtn -->
+	              <div class="rightBottomBtn">
+	                <button type="button" onclick="parkingRevise.prevStep()"> 이전 단계 </button>
+	                <button type="submit" onclick="checkForm()"> 수정하기 </button>
+	              </div>
+	              <!-- // rightBottomBtn -->       
+              <!-- step -->
+              </div>
+       
+              
+            </div>
+            <!-- // step -->
+
+          </div>
+          <!-- // mainConWrap -->
+
+        </div>
+        </div>
 		</form>
 	</div>
 

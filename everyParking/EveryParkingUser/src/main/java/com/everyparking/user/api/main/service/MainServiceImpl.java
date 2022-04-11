@@ -32,7 +32,6 @@ public class MainServiceImpl implements MainService {
 			data.put("sectionList", mainDao.selectSectionList(data));
 			list.add(data);
 		}
-		
 		return list;
 	}
 	

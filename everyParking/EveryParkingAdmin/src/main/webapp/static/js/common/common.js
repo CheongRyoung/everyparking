@@ -360,38 +360,36 @@ Common = function(){
         		btn2 = option.btn2;
         }
         var modalHtml=``;
-        modalHtml+=`<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">`;
-        modalHtml+=`  <div class="modal-dialog">`;
-        modalHtml+=`    <div class="modal-content">`;
-        modalHtml+=`      <div class="modal-header">`;
-        modalHtml+=`        <h5 class="modal-title" id="confirmModalLabel"><i class="bi bi-dash-circle"></i> ${title}</h5>`;
-        modalHtml+=`        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>`;
-        modalHtml+=`      </div>`;
-        modalHtml+=`      <div class="modal-body" id="confirmModalContent">`;
-        modalHtml+=`        ${message}`;
-        modalHtml+=`      </div>`;
-        modalHtml+=`      <div class="modal-footer">`;
-        modalHtml+=`        <button id="Y" type="button" class="btn btn-danger">${btn1}</button>`;
-        modalHtml+=`        <button id="N" type="button" class="btn btn-secondary" data-bs-dismiss="modal">${btn2}</button>`;
-        modalHtml+=`      </div>`;
+        modalHtml+=`<div class="popWrap01">`;
+        modalHtml+=`  <div class="popBg">`;
+        modalHtml+=`    <span class="blind">${title}</span>`;
+        modalHtml+=`  </div>`;
+        modalHtml+=`  <div class="delPopup">`;
+        modalHtml+=`    <div class="popTitle">`;
+        modalHtml+=`    	<img src="/img/popup.svg">`;
+        modalHtml+=`      	<h3> ${title} </h3>`;
         modalHtml+=`    </div>`;
+        modalHtml+=`    <p> ${message} </p>`;
+        modalHtml+=`    <div class="popBtn">`;
+        modalHtml+=`      <button id="N" type="button" class="canselBtn">${btn2}</button>`;
+        modalHtml+=`      <button id="Y" type="button" class="delBtn">${btn1}</button>`;
         modalHtml+=`  </div>`;
         modalHtml+=`</div>`;
+        modalHtml+=`</div>`;
         $("body").append(modalHtml);
-        this.confirmModal = $('#confirmModal')
-        this.confirmModal.modal('show');
-        var modal = bootstrap.Modal.getOrCreateInstance(this.confirmModal[0])
-        modal.show()
+        this.confirmModal = $('.popWrap01')
+        document.querySelector('.popWrap01').style.display = "block";
 
         var that =this;
-        this.confirmModal.find("#Y").off().click(function(){
-        	modal.hide();
+        this.confirmModal.find("#Y").click(function(){
+        	document.querySelector('.popWrap01').style.display = "none";
         	if(typeof okCallbk == 'function'){
         		okCallbk();
         	}
+        	
         });
-         this.confirmModal.find("#N,.btn-close").off().click(function(){
-         	modal.hide();
+         this.confirmModal.find("#N").click(function(){
+         	document.querySelector('.popWrap01').style.display = "none";
              if(typeof cancelCallbk == 'function'){
             	 cancelCallbk();
              }
@@ -413,31 +411,28 @@ Common = function(){
         		btn = option.btn;
         }
         var modalHtml=``;
-        modalHtml+=`<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">`;
-        modalHtml+=`  <div class="modal-dialog">`;
-        modalHtml+=`    <div class="modal-content">`;
-        modalHtml+=`      <div class="modal-header">`;
-        modalHtml+=`        <h5 class="modal-title" id="alertModalLabel"><i class="bi bi-dash-circle"></i> 확인 </h5>`;
-        modalHtml+=`        <button type="button" class="btn-close"></button>`;
-        modalHtml+=`      </div>`;
-        modalHtml+=`      <div class="modal-body" id="alertModalContent">`;
-        modalHtml+=`        ${message}`;
-        modalHtml+=`      </div>`;
-        modalHtml+=`      <div class="modal-footer">`;
-        modalHtml+=`        <button id="Y" type="button" class="btn btn-danger">${btn}</button>`;
-        modalHtml+=`      </div>`;
+        modalHtml+=`<div class="popWrap02">`;
+        modalHtml+=`  <div class="popBg">`;
+        modalHtml+=`    <span class="blind"></span>`;
+        modalHtml+=`  </div>`;
+        modalHtml+=`  <div class="delPopup">`;
+        modalHtml+=`    <div class="popTitle">`;
+        modalHtml+=`    	<img src="/img/popup.svg">`;
+        modalHtml+=`      	<h3></h3>`;
         modalHtml+=`    </div>`;
+        modalHtml+=`    <p> ${message} </p>`;
+        modalHtml+=`    <div class="popBtn">`;
+        modalHtml+=`      <button id="O" type="button" class="delBtn">${btn}</button>`;
         modalHtml+=`  </div>`;
         modalHtml+=`</div>`;
+        modalHtml+=`</div>`;
         $("body").append(modalHtml);
-        this.alertModal = $('#alertModal')
-        this.alertModal.modal('show');
-        var modal = bootstrap.Modal.getOrCreateInstance(this.alertModal[0])
-        modal.show();
+        this.alertModal = $('.popWrap02')
+        document.querySelector('.popWrap02').style.display = "block";
 
         var that =this;
-        this.alertModal.find("#Y,.btn-close").off().click(function(){
-        	modal.hide();
+        this.alertModal.find("#O").off().click(function(){
+            document.querySelector('.popWrap02').style.display = "none";
         	if(typeof callbk == 'function'){
         		callbk();
         	}

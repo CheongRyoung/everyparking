@@ -64,8 +64,8 @@
                     <div class="row py-4">
                         <div class="col-5"></div>
                         <div class="col btnBox">
-                            <button type="submit" class="insertBtn btn btn-primary">수정</button>
-                            <button class="cancelBtn btn btn-primary" onclick="javascript:history.back();">취소</button>
+                            <button type="submit" class="longBtn" style="width:5.5rem;">수정</button>
+                            <button class="cancelBtn" onclick="javascript:history.back();" style="height:2.5rem; border-radius:0.5rem;">취소</button>
                         </div>
                     </div>
                 </form>

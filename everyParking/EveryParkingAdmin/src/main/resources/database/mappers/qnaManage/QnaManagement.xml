@@ -47,7 +47,14 @@
 		and pq.USER_SEQ = pu.USER_SEQ 
 		order by pq.QNA_SEQ asc
 	</select>
-		
+
+	<update id="deleteQna" parameterType="INT">
+		UPDATE p_qna SET
+			USE_YN = 'N'
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = NOW()
+		WHERE QNA_SEQ = #{QNA_SEQ}
+	</update>
 	
 	<update id="qnaReadCount">
 		UPDATE p_qna SET
@@ -125,8 +132,16 @@
 			USE_YN = 'N'
 			, MOD_SEQ = #{MOD_SEQ}
 			, MOD_DATE = NOW()
-		WHERE QNAC_SEQ = #{QNAC_SEQ}
+		WHERE GQNA_NUM = #{QNAC_SEQ}
 	</update>	
+	
+	<update id="deleteReply" parameterType="int">
+		UPDATE p_qnacomment SET
+			USE_YN = 'N'
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = NOW()
+		WHERE QNAC_SEQ = #{QNAC_SEQ}
+	</update>		
 	
 	<update id="updateComment" parameterType="hashMap">
 		UPDATE p_qnacomment SET

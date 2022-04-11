@@ -175,6 +175,14 @@
 			USE_YN = 'N'
 			, MOD_SEQ = #{MOD_SEQ}
 			, MOD_DATE = NOW()
+		WHERE GQNA_NUM = #{QNAC_SEQ}
+	</update>
+	
+	<update id="deleteReply" parameterType="int">
+		UPDATE p_qnacomment SET
+			USE_YN = 'N'
+			, MOD_SEQ = #{MOD_SEQ}
+			, MOD_DATE = NOW()
 		WHERE QNAC_SEQ = #{QNAC_SEQ}
 	</update>	
 	

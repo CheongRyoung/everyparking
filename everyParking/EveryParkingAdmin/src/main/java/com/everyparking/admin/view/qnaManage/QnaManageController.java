@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.everyparking.admin.api.qnaManage.service.QnaService;
 import com.everyparking.admin.framework.common.controller.BaseController;
@@ -37,5 +38,7 @@ public class QnaManageController extends BaseController{
 		
 		return "/qnaManage/readQnaPage";
 	}
+
+
 	
 }

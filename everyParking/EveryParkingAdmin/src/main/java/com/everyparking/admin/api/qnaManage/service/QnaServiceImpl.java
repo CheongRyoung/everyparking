@@ -62,6 +62,12 @@ public class QnaServiceImpl implements QnaService{
 	}
 
 	@Override
+	public int deleteReply(int QNAC_SEQ) throws Exception {
+		return qnadao.deleteReply(QNAC_SEQ);
+	}
+	
+	
+	@Override
 	public int updateComment(HashMap<String, Object> params) throws Exception {
 		return qnadao.updateComment(params);
 	}
@@ -76,5 +82,11 @@ public class QnaServiceImpl implements QnaService{
 		HashMap<String, Object> nextPrev = qnadao.getNextPrev(QNA_SEQ);
 		return nextPrev;
 	}
+	
+	@Override
+	public int deleteQna(int QNA_SEQ) throws Exception {
+		return qnadao.deleteQna(QNA_SEQ);
+	}
+
 
 }

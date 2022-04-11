@@ -5,7 +5,7 @@ let parkingZone = {
         let $this = this;
         this.gridOption = {
             cols : [
-                {title : "#", name: "PARK_SEQ", type:"number", colWidth:"10", order: true},
+                {title : "번호", name: "PARK_SEQ", type:"number", colWidth:"10", order: true},
                 {title : "주차장명", name: "PARK_NAME", colWidth:"20" },
                 {title : "주차장 주소", name: "PARK_ADDR1"},
                 {title : "수정", name: "modify", filter:function(data, rowData, ridx, cidx, $this){
@@ -13,7 +13,7 @@ let parkingZone = {
                     return `<a href="/parkingManage/parkingRevise?PARK_SEQ=${rowData.PARK_SEQ}" class="btn btn-outline-primary btn-sm">수정</a>`
                 }, colWidth:"10"},
                 {title : "삭제", name: "PARK_SEQ", filter:function(data, rowData, ridx, cidx, $this) {
-                    return `<a class="btn btn-outline-danger btn-sm" onclick="">삭제</a>`
+                    return `<a class="btn btn-outline-danger btn-sm" onclick="parkingZone.deleteRow(${ridx})">삭제</a>`
                 }, colWidth:"10"},
             ],
             pagingEl : '#pagingBlock2',

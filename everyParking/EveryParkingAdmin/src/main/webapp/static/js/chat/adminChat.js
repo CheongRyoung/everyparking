@@ -85,12 +85,12 @@ function refreshComment(){
 				   userChatColBox.appendChild(userContentRowBox);
 				   
 				   var userContentColBox = document.createElement("div");
-				   userContentColBox.setAttribute("class", "col px-3 py-2 contentBox");
+				   userContentColBox.setAttribute("class", "px-3 py-2 contentBox");
 				   userContentColBox.innerText = chat.CHAT_CONT;
 				   userContentRowBox.appendChild(userContentColBox);
 				   
 					var adminDate = document.createElement("div");
-					adminDate.setAttribute("class", "col chatDate");
+					adminDate.setAttribute("class", "chatDate mx-2");
 					if(chat.CHAT_AMPM == 'AM'){
 						adminDate.innerText = "오전 " + chat.CHAT_TIME;
 					} else {
@@ -117,7 +117,7 @@ function refreshComment(){
 				   adminChatColBox.appendChild(adminContentRowBox);
 				   
 				   var adminDateBox = document.createElement("div");
-				   adminDateBox.setAttribute("class", "col chatDate");
+				   adminDateBox.setAttribute("class", "chatDate mx-2");
 				   adminDateBox.innerText = chat.CHATDATE;
 				   if(chat.CHAT_AMPM == 'AM'){
 					   adminDateBox.innerText = "오전 " + chat.CHAT_TIME;
@@ -127,7 +127,7 @@ function refreshComment(){
 				   adminContentRowBox.appendChild(adminDateBox);
 				   
 				   var adminContentBox = document.createElement("div");
-				   adminContentBox.setAttribute("class", "col py-2 contentAdminBox");
+				   adminContentBox.setAttribute("class", "px-3 py-2 contentAdminBox");
 				   adminContentBox.setAttribute("style", "background-color:#f1f1f1");
 				   adminContentBox.innerText = chat.CHAT_CONT;
 				   adminContentRowBox.appendChild(adminContentBox);
@@ -166,13 +166,13 @@ function changeLock(){
 	
 	var lockIcon = document.getElementById("lockIcon");
 	
-	if(lockIcon.classList.contains('bi-lock')){
-		lockIcon.classList.remove('bi-lock');
-		lockIcon.classList.add('bi-unlock');
+	if(lockIcon.classList.contains('lock')){
+		lockIcon.classList.remove('lock');
+		lockIcon.classList.add('unlock');
 		scrollLock = false;
 	} else {
-		lockIcon.classList.remove('bi-unlock');
-		lockIcon.classList.add('bi-lock');		
+		lockIcon.classList.remove('unlock');
+		lockIcon.classList.add('lock');		
 		scrollLock = true;
 	}
 }

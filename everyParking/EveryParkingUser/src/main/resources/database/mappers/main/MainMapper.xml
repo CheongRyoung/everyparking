@@ -241,6 +241,7 @@
 		WHERE 1=1
 		AND pu.USER_SEQ = pr.USER_SEQ 
 		AND pr.RU_TYPE = ps.SUB_CODE
+		AND pr.USE_YN = 'Y'
 		AND pu.USER_SEQ = #{USER_SEQ}
 	</select>
 	

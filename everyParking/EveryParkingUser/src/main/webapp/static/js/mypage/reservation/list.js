@@ -74,7 +74,7 @@ let list = {
 						html += `            </div>`;
 						html += `        </div>`;
 						html += `        <div class="row mt-3" style="border-top : solid 1px rgba(0, 0, 0, 11%);">`;
-						html += `            <div class="col buyDate d-grid p-0" style="border-right: rgba(0, 0, 0, 11%) solid 1px;">`;
+						html += `            <div class="col buyDate d-grid p-0">`;
 						if(item.USE_YN == 'Y'){
 							if(item.RESE_END > new Date().getTime() )
 								html += `                <button class="btn" onclick="list.cancelReservation(${item.RESE_SEQ})">예약취소</button>`;

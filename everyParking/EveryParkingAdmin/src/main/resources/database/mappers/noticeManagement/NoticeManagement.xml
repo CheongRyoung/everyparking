@@ -44,7 +44,7 @@
 			, #{MOD_DATE}
 			, #{NOTE}
 			, #{FILE_SEQ}
-			, 0
+			, #{NOTI_COUNT}
 		)
 	</insert>
 	

@@ -62,14 +62,14 @@ let noticeManagement = {
 	            cols : [
 	                {title : "번호", name: "NOTI_SEQ", type:"number", colWidth:"10", order: true},
 	                {title : "공지사항 제목", name: "NOTI_TITLE", filter:function(data, rowData, ridx, cidx, $this) {
-	                	return `<a href="/noticeManagement/readNoticePage?NOTI_SEQ=` + rowData.NOTI_SEQ + `">`+ escapeHtml(rowData.NOTI_TITLE); +`</a>`}},
+	                	return `<p onclick="onTitleClick(` + rowData.NOTI_SEQ + `)">`+ escapeHtml(rowData.NOTI_TITLE); +`</p>`}},
 	                {title : "작성자", name: "USER_NAME", colWidth:"10"},
 	                {title : "등록일", name: "REG_DATE", type:"date", colWidth:"20"},
 	                {title : "수정", name: "modify", filter:function(data, rowData, ridx, cidx, $this){
-	                    return `<button class="btn btn-outline-primary btn-sm" onclick = "noticeManagement.updateNotice(${ridx})">수정</button>`
+	                    return `<a href = "/noticeManagement/noticeUpdateForm?NOTI_SEQ=`+ rowData.NOTI_SEQ +`">수정</a>`
 	                }, colWidth:"10"},
 	                {title : "삭제", name: "NOTI_SEQ", filter:function(data, rowData, ridx, cidx, $this) {
-	                    return `<button class="btn btn-outline-danger btn-sm" onclick="noticeManagement.deleteNotice(${ridx})">삭제</button>`
+	                    return `<a onclick="noticeManagement.deleteNotice(${ridx})">삭제</a>`
 	                }, colWidth:"10"}
 	            ],
 	            pagingEl : '#pagingBlock3',
@@ -204,7 +204,7 @@ let noticeManagement = {
 
 	    )
 	})
-	function onRowClick(num, obj){
-		location.href = "/noticeManagement/readNoticePage?NOTI_SEQ="+ obj.childNodes[0].innerText;
+	function onTitleClick(noticeNum){
+		location.href = "/noticeManagement/readNoticePage?NOTI_SEQ="+ noticeNum;
     }
 

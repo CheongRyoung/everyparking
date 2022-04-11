@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="container-fluid">
+<div class="container-fluid" style="background-image: url('/img/mainBackground.png');">
     <header>
         <div class="row headerBox py-2 px-0">
             <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5" onclick="history.back();" style="cursor:pointer;"></i></div>
@@ -14,7 +14,7 @@
         <!-- 수정 해야되는 부분-->
         <div class="row my-5" style="margin-top: auto;">
             <div class="col">
-                <div class="row joinBox" style="margin: auto;">
+                <div class="row" style="margin: auto;">
                     <div class="col">
                         <div class="row my-3">
                             <div class="col text-center">
@@ -25,7 +25,7 @@
                             <div class="col">
                             	<form id="rgs" action="./registerProcess" method="post">
 								    <div class="row mb-1">
-								        <div class="col"><span>이메일</span></div>
+								        <div class="col"><span>ID</span></div>
 								        <!-- 
 								        <div class="col text-end">
 								        	<button type="button" class="btn btn-secondary"">이메일 중복확인</button>

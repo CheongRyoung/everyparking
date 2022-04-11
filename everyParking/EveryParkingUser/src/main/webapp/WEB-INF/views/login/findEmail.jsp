@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="container-fluid">
+<div class="container-fluid" style="background-image: url('/img/mainBackground.png');">
     <header>
         <div class="row headerBox px-0 mb-5">
             <div class="col-1 px-0 pt-1"><i class="bi bi-arrow-left fs-5" onclick="location.href='/login/loginPage'" style="cursor:pointer;"></i></div>
             <div class="col px-0">
-                <h5 class="title">이메일 찾기</h5>
+                <h5 class="title">ID 찾기</h5>
             </div>
             <div class="col-1 px-0"></div>
         </div>
@@ -13,7 +13,7 @@
     <main>
         <div class="row" style="margin: auto">
             <div class="col">
-                <div class="row joinBox" style="margin: auto;">
+                <div class="row" style="margin: auto;">
                     <div class="col">
                         <div class="row my-3">
                             <div class="col text-center">
@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="col">
                                 <form action="./findEmailProcess" method="post" name="findMail">
-                                    <div class="form-floating mt-2">
+                                    <div class="form-floating my-2">
                                         <input type="text" class="form-control" id="USER_NAME" placeholder="이름" name="USER_NAME">
                                         <label for="floatingInput">이름</label>
                                     </div>
@@ -34,7 +34,7 @@
                                 
                                     <div class="row mb-5 mt-4 pb-4">
                                         <div class="col d-grid">
-                                            <button type="submit" class="longBtn">이메일 찾기</button>
+                                            <button type="submit" class="longBtn">ID 찾기</button>
                                             
                                             <c:if test="${check == 1}">
                                                 <script type="text/javascript">
@@ -45,7 +45,7 @@
                                             </c:if>
                                             
                                             <c:if test="${check == 0}">
-                                                <label class="mt-3 mb-2">찾으시는 이메일은 " ${USER_MAIL} " 입니다.</label>
+                                                <label class="mt-3 mb-2">찾으시는 ID는 <br>" ${USER_MAIL} "<br>입니다.</label>
                                                 <button class="longBtn" onclick="endFindEmail(); return false;">확인</button>
                                             </c:if>
                                         </div>

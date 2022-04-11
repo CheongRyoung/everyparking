@@ -119,7 +119,7 @@
 							   , PARK_OPEN = #{PARK_OPEN}
 							   , PARK_CLOSE = #{PARK_CLOSE}
 							   , PARK_PRICE = #{PARK_PRICE}
-							   <if test='FILE_SEQ != null and FILE_SEQ.equals("")'>
+							   <if test='FILE_SEQ != null and !FILE_SEQ.equals("")'>
 							   , FILE_SEQ = #{FILE_SEQ}
 							   </if>
 							   , MOD_SEQ = #{MOD_SEQ}
@@ -152,10 +152,10 @@
 		FROM p_section
 		WHERE 1=1
 		AND USE_YN = 'Y'
-		<if test='secSeqs==null or secSeqs.equals("")'>
+		<if test='PARK_SEQ !=null and !PARK_SEQ.equals("")'>
 			AND PARK_SEQ = #{PARK_SEQ}
 		</if>
-		<if test='secSeqs!= null and !secSeqs.equals("")'>
+		<if test='secSeqs != null and !secSeqs.equals("")'>
 			AND SEC_SEQ NOT IN (${secSeqs})
 		</if>
 	</select>
@@ -230,8 +230,8 @@
 	<delete id="deleteSection" parameterType="hashMap">
 		update p_section set
 			USE_YN = 'N'
-						   , MOD_SEQ = #{ MOD_SEQ }
-						   , MOD_DATE = NOW()
+			, MOD_SEQ = #{ MOD_SEQ }
+			, MOD_DATE = NOW()
 		WHERE SEC_TYPE = #{SEC_TYPE}
 		  AND SEC_SEQ = #{SEC_SEQ}
 	</delete>

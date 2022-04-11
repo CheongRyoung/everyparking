@@ -6,7 +6,8 @@ window.onload = function(){
 
     function getSectionInfo() {
         if(blockFormData){
-            var params = {'PARK_SEQ': blockParkSelect.value, "daterange": blockParkDate.value};
+        	blockParkDate.innerText = blockParkDate.innerText.replaceAll("00", "")
+            var params = {'PARK_SEQ': blockParkSelect.value, "daterange": blockParkDate.innerText};
             params.PARK_SEQ = blockParkSelect.value;
             params.daterange = blockParkDate.innerText;
             ajaxCall('/parkingBlock/getSectionInfo', params, function(data) {
@@ -15,28 +16,23 @@ window.onload = function(){
                 secList.forEach((item, index) => {
                     if(item.SEC_COUNT - item.SEC_USE <= 0) {
                         let SEChtml = ``;
-                        SEChtml += `<div class="row mb-1">`;
-                        SEChtml += `    <div class="col">`;
-                        SEChtml += `        <p> ${item.SUB_NAME}</p>`;
-                        SEChtml += `    </div>`;
-                        SEChtml += `    <div class="col">`;
-                        SEChtml += `        <p>만차입니다</p>`;
-                        SEChtml += `    </div>`;
+                        SEChtml += `<div class="mainCon-TopWrap" style="align-items: center; margin-bottom: 10px;">`;
+                        SEChtml += `    <span>${item.SUB_NAME}&nbsp;&nbsp;</span><span> 만차입니다</span> `;
                         SEChtml += `</div>`;
                         $("#selectSection").append(SEChtml);
                     } else {
                         let SEChtml = ``;
-                        SEChtml += `<div class="row mb-1">`;
-                        SEChtml += `    <div class="col">`;
+                        SEChtml += `<div class="mainCon-TopWrap" style="align-items: center; margin-bottom: 10px;">`;
+                        SEChtml += `    <span style="flex-grow: 1; width:30%;">`;
                         SEChtml += `        <input type="radio" value=${item.SEC_SEQ} name="SEC_SEQ"> ${item.SUB_NAME}`;
-                        SEChtml += `    </div>`;
-                        SEChtml += `    <div class="col">`;
-                        SEChtml += `        <select  class="form-select INSERT_COUNT" disabled>`;
+                        SEChtml += `    </span>`;
+                        SEChtml += `    <span style="flex-grow: 1;">`;
+                        SEChtml += `        <select class="INSERT_COUNT input_2" disabled>`;
                         for(let i=1; i<=(item.SEC_COUNT - item.SEC_USE); i++) {
                             SEChtml += `<option value=${i}> ${i} 칸 </option>`;
                         }
                         SEChtml += `</select>`;
-                        SEChtml += `    </div>`;
+                        SEChtml += `    </span>`;
                         SEChtml += `</div>`;
                         $("#selectSection").append(SEChtml);
                     }
@@ -77,6 +73,8 @@ function blockRegister() {
     const selectNodes = document.querySelectorAll('.INSERT_COUNT');
     params.append('INSERT_COUNT', selectNodes[selectIndex].value);
 
+    
+    
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if(xhr.readyState==4 && xhr.status==200) {
@@ -93,4 +91,9 @@ function blockRegister() {
     xhr.open('post', '/parkingBlock/insertBlock');
     // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(params);
+}
+
+function inputChange(obj) {
+	obj.value = obj.value.replaceAll("00", "")
+	obj.value = obj.value.replaceAll(":", "시")
 }

@@ -58,8 +58,8 @@ let parkingRevise = {
     prevStep:function(){
     	
         this.step--;
-        $('.tab-content.active').removeClass('active');
-        $(`.tab-content:eq(${this.step})`).addClass('active');
+        $('.tab-content.selected').removeClass('selected');
+        $(`.tab-content:eq(${this.step})`).addClass('selected');
         this.chkSection();
     },
     
@@ -73,8 +73,8 @@ let parkingRevise = {
     	
         this.step++;
         
-        $('.tab-content.active').removeClass('active');
-        $(`.tab-content:eq(${this.step})`).addClass('active');
+        $('.tab-content.selected').removeClass('selected');
+        $(`.tab-content:eq(${this.step})`).addClass('selected');
         
         this.chkSection();
     },
@@ -120,8 +120,8 @@ let parkingRevise = {
 
         this.step++;
         
-        $('.tab-content.active').removeClass('active');
-        $(`.tab-content:eq(${this.step})`).addClass('active');
+        $('.tab-content.selected').removeClass('selected');
+        $(`.tab-content:eq(${this.step})`).addClass('selected');
     },
       
     
@@ -176,7 +176,7 @@ function checkForm(){
  * 이미지 미리보기&숫자만 입력 
  * 작성자 : 전지나
  */
-const inputThumbnail = document.getElementById("inputThumbnail");
+const inputThumbnail = document.getElementById("file");
 const thumbNail = document.getElementById("thumbNail");
 function readImage(event) {
 	  var urlsrc = URL.createObjectURL(event.target.files[0]);

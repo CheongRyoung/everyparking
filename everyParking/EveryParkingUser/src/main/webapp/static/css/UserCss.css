@@ -163,6 +163,13 @@ p {
     background-color:#3E4AB8;
     color:white;
 }
+.downloadBtn{
+	border-radius:0.5rem;
+	border: none;
+    background-color:#3E4AB8;
+    color:white;
+}
+
 .redButtonBox{
     background-color: tomato;
     border-radius: 0.5rem;
@@ -212,7 +219,6 @@ p {
 .bi-arrow-left{padding-left:0.6rem; vertical-align: -webkit-baseline-middle; font-weight:bold;}
 .bi-chevron-down{margin-left: 0.2rem;font-size: 0.9rem; cursor:pointer;}
 .title{text-align:center; font-size:1.2rem; margin-top:0.6rem; font-weight:bold; color:black;}
-.topBox{background-color: #fff;}
 .buyDetailLineBox{border-bottom: 0.6rem solid #eeeeee;}
 .usageBox{position: relative;background-color:#fff;box-shadow: 1px 2px 4px 0 rgb(117 121 125 / 10%), 0 0 1px 0 rgb(113 117 121 / 3%); border: solid 0.1rem rgba(0, 0, 0, 11%);border-radius: 0.5rem;}
 .parkingSpot{font-weight:bold;font-size:1rem;}
@@ -227,7 +233,7 @@ p {
 .addressInfo p{color: #808080;padding: 0.2rem 0.5rem; font-weight: 300;font-size: 0.8rem;}
 .show{display:block; margin-top: 0.1rem;}
 ul, li{list-style: none;}
-.headerBox{height:3.2rem;align-content: center; color:black; border-bottom: 0.15rem solid #3E4AB8;}
+.headerBox{height:3.2rem;align-content: center; color:black; border-bottom: 0.15rem solid #3E4AB8; background-color:white;}
 .insertBtn{width:5.5rem;height:2.3rem;border:none;background-color: #1187CF; color: #fff;}
 .insertBtn:hover{background-color: #3e8391}
 .cancelBtn{width:5.5rem;height:2.3rem;border:none;background-color: #949a9b; color:white;}

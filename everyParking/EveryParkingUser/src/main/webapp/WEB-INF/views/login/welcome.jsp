@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="container-fluid">
-    <div class="row joinBox mx-auto mt-5">
+<div class="container-fluid" style="background-image: url('/img/mainBackground.png');">
+    <div class="row mx-auto mt-5">
         <div class="col">
             <div class="row my-4">
                 <div class="col text-center">

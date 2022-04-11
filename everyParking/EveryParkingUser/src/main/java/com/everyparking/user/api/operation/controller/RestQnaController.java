@@ -95,6 +95,22 @@ public class RestQnaController extends BaseController {
 		}
 		return mav;
 	}
+	
+	@RequestMapping("/deleteReply")
+	public ModelAndView deleteReply(HttpServletRequest request
+									, @RequestParam HashMap<String, Object> params
+									, int QNAC_SEQ) throws Exception{
+		ModelAndView mav = super.createMav();
+		try {
+			SessionUtil.setCreator(request, params);
+			mav = super.createMav(qnaservice.deleteReply(QNAC_SEQ));
+			super.setMessage(mav, Ajax.UPDATE.TEXT+"."+Ajax.TYPE_SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			super.setMessage(mav, Ajax.UPDATE.TEXT+"."+Ajax.TYPE_FAIL);
+		}
+		return mav;
+	}
 
 	
 	@RequestMapping("/insertQna")

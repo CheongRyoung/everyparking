@@ -117,7 +117,6 @@ public class ParkingInfoServiceImpl implements ParkingInfoService{
             }
             i++;
         }
-
         if(!secSeqs.equals("")) {   /* 신규/ 수정 된 애들이 존재하니? */
             HashMap<String, Object> params3 = new HashMap<>();
             params3.put("PARK_SEQ", PARK_SEQ);

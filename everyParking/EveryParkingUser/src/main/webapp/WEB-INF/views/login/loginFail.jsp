@@ -7,8 +7,11 @@
 
 
 <script>
-	alert("로그인 정보가 올바르지 않습니다.");
-	location.href = "/login/loginPage";
+window.onload=function(){
+	cmm.alert("로그인 정보가 올바르지 않습니다.", function(){
+		location.href="/login/loginPage";
+	})
+};
 </script>
 </body>
 </html>

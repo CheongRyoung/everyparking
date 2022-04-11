@@ -22,6 +22,8 @@ public interface QnaDao {
 	
 	public int insertReply(HashMap<String, Object> params) throws Exception;
 	
+	public int deleteReply(int QNAC_SEQ) throws Exception;	
+	
 	public int insertQna(HashMap<String, Object> params) throws Exception;
 	
 	public int updateQna(HashMap<String, Object> params) throws Exception;

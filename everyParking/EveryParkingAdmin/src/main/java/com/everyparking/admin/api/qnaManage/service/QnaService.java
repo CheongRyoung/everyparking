@@ -23,7 +23,11 @@ public interface QnaService {
 
 	public List<HashMap<String, Object>> getCommentList(int QNA_SEQ) throws Exception;
 	
+	public int deleteQna(int QNA_SEQ) throws Exception;	
+	
 	public int deleteComment(int QNAC_SEQ) throws Exception;
+	
+	public int deleteReply(int QNAC_SEQ) throws Exception;	
 		
 	public int updateComment(HashMap<String, Object> params) throws Exception;
 

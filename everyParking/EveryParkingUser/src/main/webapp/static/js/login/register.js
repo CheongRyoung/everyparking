@@ -68,7 +68,7 @@ $("#rgsbtn").on("click",function(){
     
     var emailregex = emailregex.exec(email);
     if(emailregex == null){
-        cmm.alert("이메일양식을 다시 확인해주세요");
+        cmm.alert("ID양식을 다시 확인해주세요");
         return;
     }
     var pwregex = pwregex.exec(pw);
@@ -90,7 +90,7 @@ $("#rgsbtn").on("click",function(){
     
 
     if(isConFirmed == false){
-    	cmm.alert("이메일 중복을 확인해주세요.");
+    	cmm.alert("ID 중복을 확인해주세요.");
     	return;
     }
     if(document.querySelector('input[value="RY02"]:checked')) {
@@ -140,17 +140,17 @@ function confirmEmail(){
 
             if(data.result == true){
                 isConFirmed = false;
-                confirmAlertBox.innerText = "이미 존재하는 이메일입니다.";
+                confirmAlertBox.innerText = "이미 존재하는 ID입니다.";
                 confirmAlertBox.style.color = "red";
             } else {
                 isConFirmed = true;
-                confirmAlertBox.innerText = "사용 가능한 이메일입니다.";
+                confirmAlertBox.innerText = "사용 가능한 ID입니다.";
                 confirmAlertBox.style.color = "blue";
             }    
             
             if(!regex.exec($("#inputEmail").val())) {
             	isConFirmed = false;
-            	confirmAlertBox.innerText = "올바른 이메일이 아닙니다.";
+            	confirmAlertBox.innerText = "올바른 ID가 아닙니다.";
                 confirmAlertBox.style.color = "red";
             } 
 

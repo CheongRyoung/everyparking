@@ -53,7 +53,7 @@
                     </div>
                     <div class="row pt-4">
                         <div class="col">
-                        	<button class="cancelBtn" style="float:right; width:5.5rem;" onclick="history.back();">취소</button>
+                        	<button class="cancelBtn" style="float:right; width:5.5rem; height:2.5rem; border-radius:0.5rem;" onclick="history.back();">취소</button>
                             <button type="submit" class="longBtn" style="width:5.5rem; margin-right:0.2rem; float:right;">등록</button>
                         </div>
                     </div>

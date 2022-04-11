@@ -88,6 +88,7 @@ public class MainRestController extends BaseController {
     	ModelAndView mav = super.createMav();
     	try {
     		SessionUtil.setCreator(request, params);
+    		mainService.updateUserCoupon(params);
     		mav = super.createMav(mainService.insertReservation(params));
     	}catch (Exception e) {
     		logger.error(e.getMessage());

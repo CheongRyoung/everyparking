@@ -301,7 +301,7 @@ function showRese(PARK_SEQ){
     if((parkingData.data.reviewList).length == 0){
     	averageReviewBox.innerText = "0.0점";
     }else{
-    	averageReviewBox.innerText = averageData;
+    	averageReviewBox.innerText = averageData.toFixed(1);
     }
     averageData = 0;
     
@@ -375,18 +375,16 @@ function beforeReservation(){
 	params.PARK_SEQ = parkSeq;
 	params.daterange = reservationDate.value;
 	
-	dateX = reservationDate.value.substr(0, 13).concat(':00:00');
-	dateY = reservationDate.value.substr(17, 13).concat(':00:00');
+	dateX = moment(reservationDate.value.substr(0, 13).concat(':00:00'));
+	dateY = moment(reservationDate.value.substr(17, 13).concat(':00:00'));
 
 	dateX = new Date(dateX);
 	dateY = new Date(dateY);
 
 	finalTime = ((dateY-dateX) / 1000 / 60 / 60 );
 	
-	price = parkPrice.innerText;
-	
+	price = parseInt(parkPrice.innerText);
 	priceByTime = finalTime * price;
-	
 	
 	ajaxCall("/main/selectSectionInfoForRese", params, function(data){
 		var modalHtml = ``;
@@ -512,13 +510,19 @@ function beforeReservation(){
 	    modalHtml +=`        </div>`;
 	    modalHtml +=`    </div>`;
 	    modalHtml +=`</div>`;
-	    modalHtml +=`<div class="row headerBox mb-4" onclick="payment()" style="background-color:#3E4AB8;">`;
-	    modalHtml +=`    <div class="col d-none text-center" id="showPrice">`;
-	    modalHtml +=`        <span class="title" style="color:white;">총 </span><span id="payPrice" class="title" style="color:white;"></span><span class="title" style="color:white;"> 원</span>`;
+	    modalHtml +=`<div class="row mt-3 mb-4" onclick="payment()" style="height:2.5rem;">`;
+	    modalHtml +=`    <div class="col-1"></div>`;
+	    modalHtml +=`	 <div class="col">`;
+	    modalHtml +=`		 <div class="row" style="background-color:#3E4AB8; border-radius:0.5rem; height:2.5rem; align-content:center;">`;
+	    modalHtml +=`    		 <div class="col d-none text-center" id="showPrice">`;
+	    modalHtml +=`        		 <span class="title" style="color:white;">총 </span><span id="payPrice" class="title" style="color:white;"></span><span class="title" style="color:white;"> 원</span>`;
+	    modalHtml +=`	 		 </div>`;
+	    modalHtml +=`    		 <div class="col text-center">`;
+	    modalHtml +=`		 		 <span class="title" style="color:white;">결제하기</span>`;
+	    modalHtml +=`    		 </div>`;
+	    modalHtml +=`		 </div>`;
 	    modalHtml +=`	 </div>`;
-	    modalHtml +=`    <div class="col text-center">`;
-	    modalHtml +=`		 <span class="title" style="color:white;">결제하기</span>`;
-	    modalHtml +=`    </div>`;
+	    modalHtml +=`    <div class="col-1"></div>`;
 	    modalHtml +=`</div>`;
 	    $('#remainCount').append(modalHtml);
 		modalHtml = ``;
@@ -533,7 +537,7 @@ function beforeReservation(){
 };
 
 // 우대사항 선택 박스 선택하면 금액 계산
-function selectBox(value, priceByTime){
+function selectBox(value, priceByTime2222){
 	if(value.length > 0){
 		value = parseInt(value);
 		
@@ -545,9 +549,8 @@ function selectBox(value, priceByTime){
 	}
 }
 
-//쿠폰박스 선택하면  총금액 - 쿠폰금액을 계산
+// 쿠폰박스 선택하면  총금액 - 쿠폰금액을 계산
 function selectCouponBox(value){
-	
 	if(value > 0){
 		
 		console.log(value);
@@ -565,7 +568,7 @@ function selectCouponBox(value){
 }
 
 function payment(){
-	
+	var paymentUrl = '/order/pay';
 	var secSeq1 = document.querySelector('select > option:checked');
 	var secSeq = secSeq1.getAttribute('value2');
 	
@@ -595,7 +598,10 @@ function payment(){
 	params.append('daterange' , reservationDate.value);
 	params.append('item' , parkNameBox.innerText + " " +secSeq1.innerText + "구역");
 	params.append('PUB_SEQ' , couponSeq);
-
+	
+	if(params.get('RESE_PRICE') == 0) {
+		paymentUrl = "/main/insertReservation"
+	}
 	if(!checkRegister()){
 		return;
 	}
@@ -604,11 +610,15 @@ function payment(){
 	let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if(xhr.readyState==4 && xhr.status==200) {
-            let data = JSON.parse(xhr.responseText);
-			location.href = data.next_redirect_pc_url
+        	if(params.get('RESE_PRICE') == 0) {
+        		location.href = "/main/reservationComplete"
+        	} else {
+                let data = JSON.parse(xhr.responseText);
+    			location.href = data.next_redirect_pc_url
+        	}
         }
     }
-    xhr.open('post', '/order/pay');
+    xhr.open('post', paymentUrl);
     // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     
     xhr.send(params);

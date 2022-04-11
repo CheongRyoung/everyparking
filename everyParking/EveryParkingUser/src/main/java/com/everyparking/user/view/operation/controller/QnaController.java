@@ -41,12 +41,6 @@ public class QnaController {
         return new ModelAndView("/operation/qna/reply");
     }
     
-	@RequestMapping("/deleteQna")
-	public ModelAndView deleteQna(int QNA_SEQ) throws Exception{
-		qnaService.deleteQna(QNA_SEQ);
-    	return new ModelAndView("redirect:./list");
-	}
-
 
     @RequestMapping("/write")
     public ModelAndView write() {

@@ -45,6 +45,11 @@
                         <span style="font-weight: bold;">조회수 </span>
                         <span>${qna.QNA_COUNT}</span>
                     </div>
+                    <div class="col-2">
+		                <c:if test="${!empty qna.FILE_SEQ}">                    
+		                    <a href="/downloadFile/${qna.FILE_SEQ}"><button class="btn downloadBtn"><i class="bi bi-download"></i></button></a>
+	                    </c:if>                                
+                    </div>
                 </div>
 			<c:if test="${!empty sessionUser && sessionUser.USER_SEQ == qna.USER_SEQ }">             
                 <div class="row">
@@ -65,7 +70,7 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-5">
-                        <a href="./list"><button class="cancelBtn">목록</button></a>
+                        <a href="./list"><button class="cancelBtn" style="height:2.5rem; border-radius:0.5rem;">목록</button></a>
                     </div>
                     <div class="col d-flex justify-content-end">
 	                <c:if test="${!empty qnaMove.QNA_NEXT}">                

@@ -20,22 +20,22 @@ $("#couponBtn").on("click",function(){
 	
 	
 	if(CouName == ""){
-		alert("쿠폰명을 입력해주세요.");
+		cmm.alert("쿠폰명을 입력해주세요.");
 		return false;
 	}
 	
 	if(CouFile == ""){
-		alert("이미지를 넣어주세요.");
+		cmm.alert("이미지를 넣어주세요.");
 		return false;
 	}
 	
 	if(CouPrice == ""){
-		alert("쿠폰 가격을 입력해주세요.");
+		cmm.alert("쿠폰 가격을 입력해주세요.");
 		return false;
 	}
 	
 	if(CouCount == ""){
-		alert("쿠폰 발행수를 입력해주세요.");
+		cmm.alert("쿠폰 발행수를 입력해주세요.");
 		return false;
 	}
 	

@@ -201,6 +201,20 @@ let qnaManage = {
 			})
 		}
 	)}
+
+	function deleteReply(commentNum){
+		
+		cmm.confirm('삭제', '삭제하시겠습니까', null, function(){
+			ajaxCall("/operation/QNA/deleteReply?QNAC_SEQ=" + commentNum, null, function(data){
+				cmm.alert(data.message, function(){
+					if (data.code == 'S') {
+						location.reload();
+					}
+				})
+			})
+		}
+	)};
+
 	
 	// 댓글 출력	
 	function getCommentList(){
@@ -235,6 +249,8 @@ let qnaManage = {
 
 		
 		ajaxCall("/operation/QNA/getCommentList?QNA_SEQ=" + qnaSeq, null,function(data){
+			
+			console.log(data);
 
 			// 댓글이 4개 이상일 때와 이하일 때를 구분해 놓았습니다.
 			if(data.length <= 4){
@@ -266,7 +282,7 @@ let qnaManage = {
 										            <div class="row mb-3" style="padding-left: 12px;">
 										               <div class="input-group">
 										                  <input type="hidden" name="QNAC_SEQ" value="`+ data[i].QNAC_SEQ +`">
-										                  <textarea name="QNAC_CONT" id="updateCont" rows="3" class="form-control" style="border-right: none; resize: none;"></textarea>
+										                  <textarea name="QNAC_CONT" id="updateCont`+data[i].QNAC_SEQ+`" rows="3" class="form-control" style="border-right: none; resize: none;"></textarea>
 										               </div>                
 										            </div>            
 											      </div>
@@ -285,138 +301,9 @@ let qnaManage = {
 					cmtUpdate = "";
 					cmtUpdateModal = "";
 				}
-				// 대댓글 위치 잡기
-				if (data[i].GQNA_DEP == 1) {
-					reply = `<div class = "col-1">
-								<a class = "commentBtn"><i class="bi bi-arrow-return-right"></i></a>
-							 </div>`;
-					replyWidth = `<div class = "col-1">
-								  </div>`;
-				} else {
-					reply = "";
-					replyWidth = "";
-				}
-				
 				//대댓글 작성 링크
 				if (sessionInfo != undefined) {
 					replyIcon = `<a class = "commentBtn" onclick="replyModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil"></i><a>`;
-					replyModal = `
-						<div class="modal fade" id="replyModal`+ data[i].QNAC_SEQ +`" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="replyModalLabel">답글 입력</h5>
-						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						      <form action="/operation/QNA/insertReply" method="post" onsubmit="insertReply(`+ data[i].QNAC_SEQ +`)">
-						      <div class="modal-body">
-					            <div class="row mb-3" style="padding-left: 12px;">
-					               <div class="input-group">
-									  <input type="hidden" name="QNA_SEQ" value="`+ data[i].QNA_SEQ +`">
-					                  <input type="hidden" name="GQNA_NUM" value="`+ data[i].QNAC_SEQ +`">
-					                  <input type="hidden" name="QNAC_SEQ" value="`+ data[i].QNAC_SEQ +`">
-					                  <textarea name="QNAC_CONT" id="replyCont `+ data[i].QNAC_SEQ +`" rows="3" class="form-control" style="border-right: none; resize: none;"></textarea>
-					               </div>                
-					            </div>            
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						        <button type="submit" class="btn btn-primary">작성 완료</button>
-						      </div>
-						      </form>
-						    </div>
-						  </div>
-						</div>					
-					`;
-				} else {
-					replyIcon = "";
-					replyModal = "";
-				}
-				
-				// 댓글 메인 출력 부분
-				cmt += `
-	                <div class="row mt-2" style="margin: 1px;">
-	                `+ replyWidth +`	                
-	                    <div class="col d-flex justify-content-between">
-	                        <span class="mainContentSubSubNg">`+data[i].USER_NAME+`</span>
-	                        <span class="mainContentSubSubNg">`+ date +`</span>
-	                    </div>
-	                </div>
-	                <div class="row my-2 pb-1" style="margin: 1px;">
-  	                `+ reply +`
-	                    <div class="col">
-	                        <span class="commentContentNg">`+data[i].QNAC_CONT+`</span>
-	                        <div class="d-flex justify-content-end">
-	                        `+ replyIcon +`
-       	                    `+ cmtUpdate +`
-       	                    </div>
-	                    </div>
-	                </div>
-	                `+cmtUpdateModal+`
-	                `+ replyModal +`
-				`;
-			}
-
-		} 
-		// 4개 이상일 때
-		else {
-			for (var i = 0; i < 4; i++) {
-				// 시간 출력 설정
-				var dateFormat = data[i].REG_DATE;
-				var date = moment(dateFormat).format('YY-MM-DD HH:mm');
-
-				// 수정,삭제 작성 부분
-				if (sessionInfo != undefined && sessionInfo.userName == data[i].USER_NAME) {
-					cmtUpdate = `
-			                        <a class="commentBtn" onclick ="updateModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil-square"></i></a>
-			                        <a class="commentBtn" onclick ="deleteComment(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-trash-fill"></i></a>
-	                        	`;
-					cmtUpdateModal = `
-						<div class="modal fade" id="updateModal`+ data[i].QNAC_SEQ +`" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="updateModalLabel">댓글 수정</h5>
-						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						      <form id="commentDetail`+ data[i].QNAC_SEQ +`">
-						      <div class="modal-body">
-					            <div class="row mb-3" style="padding-left: 12px;">
-					               <div class="input-group">
-					                  <input type="hidden" name="QNAC_SEQ" value="`+ data[i].QNAC_SEQ +`">
-					                  <textarea name="QNAC_CONT" id="updateCont" rows="3" class="form-control" style="border-right: none; resize: none;"></textarea>
-					               </div>                
-					            </div>            
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						        <button type="button" class="btn btn-primary" onclick="updateComment(`+ data[i].QNAC_SEQ +`)">수정</button>
-						      </div>
-						      </form>
-						    </div>
-						  </div>
-						</div>
-
-				 `;
-				} else {
-					cmtUpdate = "";
-					cmtUpdateModal = "";
-				}
-				// 대댓글 위치 잡기
-				if (data[i].GQNA_DEP == 1) {
-					reply = `<div class = "col-1">
-								<a class = "commentBtn"><i class="bi bi-arrow-return-right"></i></a>
-							 </div>`;
-					replyWidth = `<div class = "col-1">
-								  </div>`;
-				} else {
-					reply = "";
-					replyWidth = "";
-				}
-				
-				//대댓글 작성 링크
-				if (sessionInfo != undefined) {
-				replyIcon = `<a class = "commentBtn" onclick = "replyModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil"></i><a>`;
 					replyModal = `
 						<div class="modal fade" id="replyModal`+ data[i].QNAC_SEQ +`" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
@@ -450,6 +337,158 @@ let qnaManage = {
 					replyModal = "";
 				}
 				
+				// 대댓글 위치 잡기
+				if (data[i].GQNA_DEP == 1) {
+					cmtUpdate = "";
+					
+					reply = `<div class = "col-1">
+								<a class = "commentBtn"><i class="bi bi-arrow-return-right"></i></a>
+							 </div>`;
+					replyWidth = `<div class = "col-1">
+								  </div>`;
+					
+					cmtUpdate = `
+	                    <a class="commentBtn" onclick ="updateModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil-square"></i></a>
+	                    <a class="commentBtn" onclick ="deleteReply(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-trash-fill"></i></a>
+	            	`;
+					
+					replyIcon = "";
+					replyModal = "";
+
+				} else {
+					reply = "";
+					replyWidth = "";
+				}
+				
+				// 댓글 메인 출력 부분
+				cmt += `
+	                <div class="row mt-2" style="margin: 1px;">
+	                `+ replyWidth +`	                
+	                    <div class="col d-flex justify-content-between">
+	                        <span class="mainContentSubSubNg">`+data[i].USER_NAME+`</span>
+	                        <span class="mainContentSubSubNg">`+ date +`</span>
+	                    </div>
+	                </div>
+	                <div class="row my-2 pb-1" style="margin: 1px;">
+  	                `+ reply +`
+	                    <div class="col">
+	                        <span class="commentContentNg">`+data[i].QNAC_CONT+`</span>
+	                        <div class="d-flex justify-content-end">
+	                        `+ replyIcon +`
+       	                    `+ cmtUpdate +`
+       	                    </div>
+	                    </div>
+	                </div>
+	                `+cmtUpdateModal+`
+	                `+ replyModal +`
+				`;
+			}
+			}
+		// 4개 이상일 때
+		else {
+			for (var i = 0; i < 4; i++){
+
+			// 시간 출력 설정
+			var dateFormat = data[i].REG_DATE;
+			var date = moment(dateFormat).format('YY-MM-DD HH:mm');
+
+			// 수정,삭제 작성 부분
+			if (sessionInfo != undefined && sessionInfo.userName == data[i].USER_NAME) {				
+				cmtUpdate = `
+		                        <a class="commentBtn" onclick ="updateModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil-square"></i></a>
+		                        <a class="commentBtn" onclick ="deleteComment(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-trash-fill"></i></a>
+                        	`;
+				cmtUpdateModal = `
+										<div class="modal fade" id="updateModal`+ data[i].QNAC_SEQ +`" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <h5 class="modal-title" id="updateModalLabel">댓글 수정</h5>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div>
+										      <form id="commentDetail`+ data[i].QNAC_SEQ +`">
+										      <div class="modal-body">
+									            <div class="row mb-3" style="padding-left: 12px;">
+									               <div class="input-group">
+									                  <input type="hidden" name="QNAC_SEQ" value="`+ data[i].QNAC_SEQ +`">
+									                  <textarea name="QNAC_CONT" id="updateCont`+data[i].QNAC_SEQ+`" rows="3" class="form-control" style="border-right: none; resize: none;"></textarea>
+									               </div>                
+									            </div>            
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+										        <button type="button" class="btn btn-primary" onclick="updateComment(`+ data[i].QNAC_SEQ +`)">수정</button>
+										      </div>
+										      </form>
+										    </div>
+										  </div>
+										</div>
+
+								 `;
+				
+			} else{
+				cmtUpdate = "";
+				cmtUpdateModal = "";
+			}
+			//대댓글 작성 링크
+			if (sessionInfo != undefined) {
+				replyIcon = `<a class = "commentBtn" onclick="replyModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil"></i><a>`;
+				replyModal = `
+					<div class="modal fade" id="replyModal`+ data[i].QNAC_SEQ +`" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="replyModalLabel">답글 입력</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <form action="/operation/QNA/insertReply" method="post" onsubmit="insertReply(`+ data[i].QNAC_SEQ +`)">
+					      <div class="modal-body">
+				            <div class="row mb-3" style="padding-left: 12px;">
+				               <div class="input-group">
+								  <input type="hidden" name="QNA_SEQ" value="`+ data[i].QNA_SEQ +`">
+				                  <input type="hidden" name="GQNA_NUM" value="`+ data[i].QNAC_SEQ +`">
+				                  <input type="hidden" name="QNAC_SEQ" value="`+ data[i].QNAC_SEQ +`">
+				                  <textarea name="QNAC_CONT" id="replyCont`+ data[i].QNAC_SEQ +`" rows="3" class="form-control" style="border-right: none; resize: none;"></textarea>
+				               </div>                
+				            </div>            
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					        <button type="submit" class="btn btn-primary">작성 완료</button>
+					      </div>
+					      </form>
+					    </div>
+					  </div>
+					</div>					
+				`;
+			} else {
+				replyIcon = "";
+				replyModal = "";
+			}
+			
+			// 대댓글 위치 잡기
+			if (data[i].GQNA_DEP == 1) {
+				cmtUpdate = "";
+				
+				reply = `<div class = "col-1">
+							<a class = "commentBtn"><i class="bi bi-arrow-return-right"></i></a>
+						 </div>`;
+				replyWidth = `<div class = "col-1">
+							  </div>`;
+				
+				cmtUpdate = `
+                    <a class="commentBtn" onclick ="updateModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil-square"></i></a>
+                    <a class="commentBtn" onclick ="deleteReply(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-trash-fill"></i></a>
+            	`;
+				
+				replyIcon = "";
+				replyModal = "";
+
+			} else {
+				reply = "";
+				replyWidth = "";
+			}
+			
 				// 댓글 메인 출력 부분
 				cmt += `
 	                <div class="row mt-2" style="margin: 1px;">
@@ -476,63 +515,53 @@ let qnaManage = {
 			
 			// 4개 이상인 경우 더보기 누르면 출력됩니다.
 			for(var i = 4; i < data.length; i++){
-				
+				console.log(data);		
+				// 시간 출력 설정
 				var dateFormat = data[i].REG_DATE;
 				var date = moment(dateFormat).format('YY-MM-DD HH:mm');
-
+				
 				// 수정,삭제 작성 부분
-				if (sessionInfo != undefined && sessionInfo.userName == data[i].USER_NAME) {
+				if (sessionInfo != undefined && sessionInfo.userName == data[i].USER_NAME) {				
 					cmtUpdate = `
 			                        <a class="commentBtn" onclick ="updateModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil-square"></i></a>
 			                        <a class="commentBtn" onclick ="deleteComment(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-trash-fill"></i></a>
 	                        	`;
 					cmtUpdateModal = `
-						<div class="modal fade" id="updateModal`+ data[i].QNAC_SEQ +`" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="updateModalLabel">댓글 수정</h5>
-						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						      <form id="commentDetail`+ data[i].QNAC_SEQ +`">
-						      <div class="modal-body">
-					            <div class="row mb-3" style="padding-left: 12px;">
-					               <div class="input-group">
-					                  <input type="hidden" name="QNAC_SEQ" value="`+ data[i].QNAC_SEQ +`">
-					                  <textarea name="QNAC_CONT" id="updateCont" rows="3" class="form-control" style="border-right: none; resize: none;"></textarea>
-					               </div>                
-					            </div>            
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						        <button type="button" class="btn btn-primary" onclick="updateComment(`+ data[i].QNAC_SEQ +`)">수정</button>
-						      </div>
-						      </form>
-						    </div>
-						  </div>
-						</div>
+											<div class="modal fade" id="updateModal`+ data[i].QNAC_SEQ +`" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+											  <div class="modal-dialog">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <h5 class="modal-title" id="updateModalLabel">댓글 수정</h5>
+											        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											      </div>
+											      <form id="commentDetail`+ data[i].QNAC_SEQ +`">
+											      <div class="modal-body">
+										            <div class="row mb-3" style="padding-left: 12px;">
+										               <div class="input-group">
+										                  <input type="hidden" name="QNAC_SEQ" value="`+ data[i].QNAC_SEQ +`">
+										                  <textarea name="QNAC_CONT" id="updateCont`+data[i].QNAC_SEQ+`" rows="3" class="form-control" style="border-right: none; resize: none;"></textarea>
+										               </div>                
+										            </div>            
+											      </div>
+											      <div class="modal-footer">
+											        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+											        <button type="button" class="btn btn-primary" onclick="updateComment(`+ data[i].QNAC_SEQ +`)">수정</button>
+											      </div>
+											      </form>
+											    </div>
+											  </div>
+											</div>
 
-				 `;
-				} else {
+									 `;
+					
+				} else{
 					cmtUpdate = "";
 					cmtUpdateModal = "";
 				}
-				// 대댓글 위치 잡기
-				if (data[i].GQNA_DEP == 1) {
-					reply = `<div class = "col-1">
-								<a class = "commentBtn"><i class="bi bi-arrow-return-right"></i></a>
-							 </div>`;
-					replyWidth = `<div class = "col-1">
-								  </div>`;
-				} else {
-					reply = "";
-					replyWidth = "";
-				}
-				
 				//대댓글 작성 링크
 				if (sessionInfo != undefined) {
-					replyIcon = `<a class = "commentBtn" onclick ="replyModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil"></i><a>`;
-					replyModal =`
+					replyIcon = `<a class = "commentBtn" onclick="replyModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil"></i><a>`;
+					replyModal = `
 						<div class="modal fade" id="replyModal`+ data[i].QNAC_SEQ +`" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
 						    <div class="modal-content">
@@ -563,6 +592,29 @@ let qnaManage = {
 				} else {
 					replyIcon = "";
 					replyModal = "";
+				}
+				
+				// 대댓글 위치 잡기
+				if (data[i].GQNA_DEP == 1) {
+					cmtUpdate = "";
+					
+					reply = `<div class = "col-1">
+								<a class = "commentBtn"><i class="bi bi-arrow-return-right"></i></a>
+							 </div>`;
+					replyWidth = `<div class = "col-1">
+								  </div>`;
+					
+					cmtUpdate = `
+	                    <a class="commentBtn" onclick ="updateModal(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-pencil-square"></i></a>
+	                    <a class="commentBtn" onclick ="deleteReply(`+ data[i].QNAC_SEQ +`)"><i class="bi bi-trash-fill"></i></a>
+	            	`;
+					
+					replyIcon = "";
+					replyModal = "";
+
+				} else {
+					reply = "";
+					replyWidth = "";
 				}
 				
 				// 댓글 메인 출력 부분
@@ -635,13 +687,11 @@ function getSessionInfo(){
 //qna 정보 가져오기
 
 $(function(){
-	getSessionInfo();
-	console.log(sessionInfo);
-	
-	dateJspForm();
     qnaManage.initPage();
+	getSessionInfo();
+	console.log(sessionInfo);	
+	dateJspForm();
     getCommentList();
-    console.log(escapeHtml(`"<a class = "commentBtn"><i class="bi bi-arrow-return-right"></i></a>"`));
 })
 
 function dateJspForm(){
@@ -667,6 +717,6 @@ $('#commentCont').keyup(function(e){
 	} 
 	if (content.length > 40) {
 		$(this).val($(this).val().substring(0, 40)); 
-		alert('글자수는 40자까지 입력 가능합니다.'); 
+		cmm.alert('글자수는 40자까지 입력 가능합니다.'); 
 	}
 })

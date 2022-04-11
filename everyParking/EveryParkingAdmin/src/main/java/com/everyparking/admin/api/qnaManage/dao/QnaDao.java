@@ -20,11 +20,15 @@ public interface QnaDao {
 	
 	public int answerQna(int QNA_SEQ) throws Exception;
 	
+	public int deleteQna(int QNA_SEQ) throws Exception;
+	
 	public int insertComment(HashMap<String, Object> params) throws Exception;
 	
 	public int insertReply(HashMap<String, Object> params) throws Exception;
 	
 	public int deleteComment(int QNAC_SEQ) throws Exception;
+	
+	public int deleteReply(int QNAC_SEQ) throws Exception;
 		
 	public int updateComment(HashMap<String, Object> params ) throws Exception;
 	

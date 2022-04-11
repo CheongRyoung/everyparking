@@ -56,8 +56,6 @@ public class ProfitCostController extends BaseController {
     public String insertCost(HttpServletRequest request, Model model, @RequestParam HashMap<String,Object> params) throws Exception {
     	SessionUtil.setCreator(request, params);
         String num = String.valueOf(params.get("COST_PRICE"));
-
-        System.out.print(num.replaceAll(",", ""));
         params.put("COST_PRICE", num.replaceAll(",", ""));
     	costManageService.insertCost(params);
         return "redirect:/profitCost/costTable";
@@ -75,6 +73,8 @@ public class ProfitCostController extends BaseController {
     @RequestMapping("/updateCost")
     public String updateCost(HttpServletRequest request, Model model, @RequestParam HashMap<String,Object> params) throws Exception {
     	SessionUtil.setCreator(request, params);
+        String num = String.valueOf(params.get("COST_PRICE"));
+        params.put("COST_PRICE", num.replaceAll(",", ""));
     	costManageService.updateCost(params);
         return "redirect:/profitCost/costTable";
     }
@@ -87,7 +87,7 @@ public class ProfitCostController extends BaseController {
     	model.addAttribute("list", parkingInfoService.selectListParkingInfo(data));
     	
     	
-        return "/profitCost/profitTable";
+        return "/profitCost/profitTable(new)";
     }
 
     @RequestMapping("/profitChart")
@@ -96,6 +96,6 @@ public class ProfitCostController extends BaseController {
     	model.addAttribute("list", parkingInfoService.selectListParkingInfo(data));
     	model.addAttribute("yearList", profitCostService.selectSearchYear());
     	
-        return "/profitCost/profitChart";
+        return "/profitCost/profitChart(new)";
     }
 }
