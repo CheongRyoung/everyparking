@@ -160,7 +160,7 @@
 
             <!-- imgWrap -->
             <div class="imgWrap" style="width: 550px;">
-              <img src="/uploadImage/${imageFile.FILE_URL }${imageFile.FILE_CONV_NAME }" id="thumbNail" onerror="this.src='../img/parkingLot.svg'">
+              <img src="/uploadImage/${imageFile.FILE_URL }${imageFile.FILE_CONV_NAME }" id="thumbNail" onerror="this.src='../img/parkingLot.svg'" style="width: 550px;">
             </div>
             <!-- // imgWrap -->
 

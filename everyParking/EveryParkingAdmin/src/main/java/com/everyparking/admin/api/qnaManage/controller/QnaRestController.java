@@ -60,6 +60,7 @@ public class QnaRestController extends BaseController {
 		ModelAndView mav = super.createMav();
 		try {
 			mav = super.createMav(qnaservice.deleteQna(QNA_SEQ));
+			super.setMessage(mav, Ajax.DELETE.TEXT+"."+Ajax.TYPE_SUCCESS);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

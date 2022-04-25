@@ -30,25 +30,23 @@
             <div class="dropDownBoxWrap">
 
               <!-- dropDownBox01 -->
-              <form class="dropDownBox01" id="dateAndSeq" style="display:flex; flex-direction:row;">
-                <select id="parkSeqBox" name="PARK_SEQ" class="form-select" aria-label="Default select example" onchange="selectParkSeq()">
-					<option value="" selected>주차장 선택</option>
+              <form class="dropDownBox01">
+                  <select onchange="searchGrid('#costTable', this.value)">
+					<option selected>전체</option>
 					<c:forEach items="${list}" var="data">
 						<option value="${data.PARK_SEQ}">${data.PARK_NAME}</option>
 					</c:forEach>
+					<!-- 예약 기간 검색 변수 아마 따로 계산 값으로? -->
 				</select>
+                </form>
               <!-- // dropDownBox01 -->
 
               <!-- calenderWrap -->
-              <div class="dropDownBox01" style="margin-left:10px;">
-                  <select id="searchYearBox" name="SEARCHYEAR" onchange="selectParkSeq()">
-					<option value="" selected>연도 선택</option>
-					<c:forEach items="${yearList }" var="year">
-						<option value="${year.yearData }">${year.yearData }년</option>
-					</c:forEach>
-				</select>
-              </div>
-			</form>
+             <div class="calendarWrap">
+                  <input name="daterange" class="datepicker02" type="text" id='datepickerN'>
+                  <span class="calendar"></span> 
+                </div>
+                <button class="calendarSearch" type="submit" onclick="searchDate();"> 검색 </button>
               <!-- // calenderWrap --> 
 
             </div>
@@ -84,7 +82,7 @@
 
             </div>
             <!-- // tableWrap -->
-           
+           <div id="pagingBlock2" class="page"></div>
 
         </div>
         <!-- // mainCon -->

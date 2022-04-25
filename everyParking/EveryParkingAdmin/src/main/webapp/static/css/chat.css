@@ -1,4 +1,4 @@
-#chatContentBox{margin:auto;align-content:baseline;height:80%;overflow-y:scroll; overflow-x:visible;background-color:white;}
+#chatContentBox{border:1px solid lightgray;margin:auto;align-content:baseline;height:80%;overflow-y:scroll; overflow-x:visible;background-color:white;max-height:800px;}
 #reciverInput{border:1px solid silver;}
 #commentInput{border:1px solid silver;}
 .sendBox{resize:none;}

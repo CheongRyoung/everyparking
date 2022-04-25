@@ -13,7 +13,7 @@
 
           <!-- topBtn -->
           <button class="topBtn">
-            <a href=""> 비용 등록 </a>
+            <a href="/profitCost/costInsertForm"> 비용 등록 </a>
           </button>
            <!-- // topBtn -->
 

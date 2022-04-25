@@ -1,5 +1,9 @@
 package com.everyparking.admin.api.parkingBlock.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +42,28 @@ public class ParkingBlockServiceImpl implements ParkingBlockService {
 	}
 
 	@Override
-	public List<HashMap<String, Object>> getSectionInfo(HashMap<String, Object> params) {
-		return parkingBlockDao.getSectionInfo(params);
+	public List<HashMap<String, Object>> getSectionInfo(HashMap<String, Object> params) throws ParseException {
+		List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String,Object>>();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		for(HashMap<String, Object> temp :  parkingBlockDao.getSectionInfo(params)) {
+			temp.put("daterange", params.get("daterange"));
+			List<HashMap<String, Object>> useList = parkingBlockDao.getSectionUseList(temp);
+			int useCount = useList.size();
+			for(HashMap<String, Object> useMap : useList){
+				Date useDate = formatter.parse(String.valueOf(useMap.get("END")));
+				long end = useDate.getTime();
+				
+				for(HashMap<String, Object> compareMap : parkingBlockDao.getSectionUseList(temp)) {
+					Date start = formatter.parse(String.valueOf(useMap.get("START")));
+					if( end < start.getTime()) {
+						useCount--;
+					}
+				}
+			}
+			temp.put("SEC_USE", useCount);
+			resultList.add(temp);
+		}
+		return resultList;
 	}
 
 	@Override

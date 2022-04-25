@@ -12,7 +12,7 @@
 
           <!-- topBtn -->
           <button class="topBtn">
-            <a href=""> 비용 등록 </a>
+            <a href="/profitCost/costInsertForm"> 비용 등록 </a>
           </button>
            <!-- // topBtn -->
 
@@ -57,7 +57,8 @@
             <!-- mainCon-TopBtnWrap -->
             <div class="mainCon-TopBtnWrap">
               <ul>
-             
+                <li class="listIcon" onclick="location.href='/profitCost/profitTable'"></li>
+                <li class="chartIcon act" onclick="location.href='/profitCost/profitChart'"></li>
               </ul>
             </div>
             <!-- mainCon-TopBtnWrap -->

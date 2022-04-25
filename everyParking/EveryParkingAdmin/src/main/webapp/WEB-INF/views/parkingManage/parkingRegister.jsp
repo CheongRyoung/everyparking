@@ -159,7 +159,7 @@
 
             <!-- imgWrap -->
             <div class="imgWrap" style="width: 550px;">
-              <img src="/img/parkingLot.svg" id="thumbNail">
+              <img src="/img/parkingLot.svg" id="thumbNail" style="width: 550px;">
             </div>
             <!-- // imgWrap -->
 

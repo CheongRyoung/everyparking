@@ -18,8 +18,8 @@
                 <img src="/img/logo2.png" alt="우리의 주차장 로고" class="loginLogo">
                 <!-- loginForm -->
                 <form action="/login/loginProcess" method="post">
-                    <input name="USER_MAIL" type="text" placeholder="ID" class="input" id="" required autofocus>
-                    <input name="USER_PW" type="password" placeholder="password" class="input" id="" required>
+                    <input name="USER_MAIL" type="text" placeholder="ID" class="input" id="" required autofocus value="admin@admin.com">
+                    <input name="USER_PW" type="password" placeholder="password" class="input" id="" required value="!Parking6">
                     <div class="flex flexSB loginLinkBox">
                         <span><a href=""> ID 찾기 </a></span>
                         <span><a href=""> PW 찾기 </a></span>

@@ -23,7 +23,7 @@
 	   				<div class="col" id="appendBox">
 	   				</div>
 	   			</div> 
-	   			<div class="row px-2" style="margin:auto;">
+	   			<div class="row" style="margin:auto;padding-top:20px;">
 	   				<div class="col-3 my-2 dropDownBox01" style="align-self: center">
 	   					<select id="reciverInput" name="CHAT_RECIV" class="form-select" aria-label="Default select example" style="line-height:20px">
 	   					<option value="">유저 선택</option>
@@ -33,17 +33,17 @@
 						</select>
 	   				</div>
 	   				<div class="col my-2"></div>
-	   				<div class="col-2">
-	   					<div class="row">
+	   				<div class="col-1">
+	   					<div class="row py-3">
 	   						<div class="col-8"></div>
-	   						<div class="col">
+	   						<div class="col py-2">
 	   							<div class="unlock" id="lockIcon" onclick="changeLock();"></div>
 	   						</div>
 	   					</div>
 	   				</div>
 	   			</div>
-	   			<div id="chatCommentBox" class="row px-2">
-	   					<textarea id="commentInput" class="form-control sendBox" name="CHAT_CONT" rows="1" placeholder="답변할 내용을 입력해주세요." style="line-height:35px; flex-grow: 1; margin-right: 10px;"></textarea>
+	   			<div id="chatCommentBox" class="row">
+	   					<textarea id="commentInput" class="form-control sendBox" name="CHAT_CONT" rows="1" placeholder="답변할 내용을 입력해주세요." style="line-height:30px; flex-grow: 1; font-size:medium; margin-right: 10px;padding:0.8rem;border-radius:0.3rem;"></textarea>
 	   					<button type="button" class="topBtn btn-warning" onclick="writeCommentProcess()">보내기</button>
 	   			</div>
 			</div>

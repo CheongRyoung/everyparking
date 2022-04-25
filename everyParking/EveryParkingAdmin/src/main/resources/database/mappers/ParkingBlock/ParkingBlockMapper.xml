@@ -61,52 +61,46 @@
     </update>
 
 	<select id="getSectionInfo" parameterType="hashMap" resultType="hashMap">
+	/* section 정보 가져오기  */
 		SELECT SEC_SEQ,
-		SEC_TYPE,
-		sub.SUB_NAME,
-		SEC_COUNT,
-		IFNULL(useSec, 0) AS SEC_USE,
-		final.USE_YN
-		FROM (SELECT sec.SEC_SEQ,
-		sec.SEC_TYPE,
-		sec.SEC_COUNT,
-		useSec,
-		tion.USE_YN
-		FROM (SELECT SEC_SEQ,
-		COUNT(SEC_SEQ) AS useSec,
-		USE_YN
-		FROM (select
-		SEC_SEQ
-		, DATE_FORMAT(BLO_START, '%Y-%m-%d %T') as START
-		, DATE_FORMAT(BLO_END, '%Y-%m-%d %T') as END
-		, USE_YN
-		FROM p_block
-		WHERE USE_YN = 'Y'
-		UNION ALL
-		SELECT
-		SEC_SEQ
-		, DATE_FORMAT(RESE_START, '%Y-%m-%d %T') as START
-		, DATE_FORMAT(RESE_END, '%Y-%m-%d %T') as END
-		, USE_YN
-		FROM p_reservation
-		WHERE USE_YN = 'Y') AS plus
-		WHERE 1=1
-		AND (STR_TO_DATE((Concat(LEFT(#{daterange}, 13), ':00:01')), '%Y-%m-%d %T') BETWEEN START AND END
-		OR STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T') BETWEEN START AND END)
-		GROUP BY SEC_SEQ) AS tion
-		RIGHT JOIN p_section AS sec
-		ON sec.SEC_SEQ = tion.SEC_SEQ
-		WHERE 1=1
-		AND sec.USE_YN = 'Y'
+		     SEC_TYPE,
+		     SUB_NAME,
+		     SEC_COUNT,
+		     0 AS SEC_USE,
+		     ps.USE_YN
+		FROM p_section ps
+		JOIN p_subcode pc
+		ON SEC_TYPE = SUB_CODE
+		WHERE 1 = 1
+		AND ps.USE_YN = 'Y'
 		<if test='PARK_SEQ != null and !PARK_SEQ.equals("")'>
-			AND sec.PARK_SEQ = #{PARK_SEQ}
-		</if>) AS final
-		JOIN p_subcode AS sub
-		ON final.SEC_TYPE = sub.SUB_CODE
-		<if test='SEC_SEQ != null and !SEC_SEQ.equals("")'>
-			WHERE SEC_SEQ = #{SEC_SEQ}
+			AND ps.PARK_SEQ = #{PARK_SEQ}
 		</if>
 	</select>
+	
+	<select id="getSectionUseList" resultType="hashMap" parameterType="hashMap">
+		SELECT *
+		FROM (select
+		          SEC_SEQ
+		           , DATE_FORMAT(BLO_START, '%Y-%m-%d %T') as START
+		           , DATE_FORMAT(BLO_END, '%Y-%m-%d %T') as END
+		           , USE_YN
+		      FROM p_block
+		      WHERE USE_YN = 'Y'
+		      UNION ALL
+		      SELECT
+		          SEC_SEQ
+		           , DATE_FORMAT(RESE_START, '%Y-%m-%d %T') as START
+		           , DATE_FORMAT(RESE_END, '%Y-%m-%d %T') as END
+		           , USE_YN
+		      FROM p_reservation
+		      WHERE USE_YN = 'Y') a
+		WHERE 1 = 1
+		AND (STR_TO_DATE((Concat(LEFT(#{daterange}, 13), ':00:01')), '%Y-%m-%d %T') BETWEEN START AND END
+		OR STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T') BETWEEN START AND END)
+		AND SEC_SEQ = #{SEC_SEQ}
+	</select>
+	
 
 	<insert id="insertBlock" parameterType="java.util.List">
 

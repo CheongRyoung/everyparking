@@ -34,21 +34,22 @@
 
                 <!-- dropDownBox01 -->
                 <form class="dropDownBox01">
-                  <select>
-                    <option value="none"> 전체 </option>
-                    <option value="none"> 전체 </option>
-                    <option value="none"> 전체 </option>
-                    <option value="none"> 전체 </option>
-                  </select>
+                  <select onchange="searchGrid('#userHistory', this.value)">
+					<option selected>전체</option>
+					<c:forEach items="${list}" var="data">
+						<option value="${data.PARK_SEQ}">${data.PARK_NAME}</option>
+					</c:forEach>
+					<!-- 예약 기간 검색 변수 아마 따로 계산 값으로? -->
+				</select>
                 </form>
                 <!-- // dropDownBox01 -->
 
                 <!-- calenderWrap -->
                 <div class="calendarWrap">
-                  <input name="dates" class="datepicker02" type="text">
+                  <input name="daterange" class="datepicker02" type="text" id='datepickerN'>
                   <span class="calendar"></span> 
                 </div>
-                <button class="calendarSearch" type="submit"> 검색 </button>
+                <button class="calendarSearch" type="submit" onclick="searchDate();"> 검색 </button>
                 <!-- // calenderWrap --> 
 
               </div>
@@ -76,13 +77,14 @@
 
             </div>
             <!-- // tableWrap -->
+            <div id="pagingBlock2" class="page"></div>
 
           </div>
           <!-- // main -->
 
           <!-- rightBottomBtn -->
           <div class="rightBottomBtn">
-            <button type="button"> 엑셀 다운로드 </button>
+            <button type="button" onclick="excelDown('#userHistory', '/excel/userHistory')"> 엑셀 다운로드 </button>
           </div>
           <!-- // rightBottomBtn -->          
 
