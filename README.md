@@ -4,7 +4,7 @@
 ![그림2](https://user-images.githubusercontent.com/93980966/165083169-80d6bd33-028b-433a-bca4-740f456e8ea6.jpg)
 
 # 소스코드
-# 설명: 정렬된 예약기간을 가져와서 kanList의 배열에 long 배열을 담아준다. 그리고 다음 회차때 예약기간의 시작시간이 기존 배열의 종료시간보다 크면 같은 칸을 쓰는 것으로 간주해 바꿔준다. 그렇지 않으면 시간이 중복됨으로 long 배열을 생성해서 kanList에 add작업을 수행한다. 그러면 결론 적으로 칸별로 예약시간을 나열할 수 있다
+설명: 정렬된 예약기간을 가져와서 kanList의 배열에 long 배열을 담아준다. 그리고 다음 회차때 예약기간의 시작시간이 기존 배열의 종료시간보다 크면 같은 칸을 쓰는 것으로 간주해 바꿔준다. 그렇지 않으면 시간이 중복됨으로 long 배열을 생성해서 kanList에 add작업을 수행한다. 그러면 결론 적으로 칸별로 예약시간을 나열할 수 있다
 	public List<HashMap<String, Object>> getSectionInfo(HashMap<String, Object> params) throws ParseException {
 		List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String,Object>>();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
