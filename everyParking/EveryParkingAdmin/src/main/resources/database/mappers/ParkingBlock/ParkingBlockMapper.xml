@@ -99,6 +99,7 @@
 		AND (STR_TO_DATE((Concat(LEFT(#{daterange}, 13), ':00:01')), '%Y-%m-%d %T') BETWEEN START AND END
 		OR STR_TO_DATE((substring(#{daterange}, 18, 13)), '%Y-%m-%d %T') BETWEEN START AND END)
 		AND SEC_SEQ = #{SEC_SEQ}
+		ORDER BY START ASC
 	</select>
 	
 

@@ -48,19 +48,36 @@ public class ParkingBlockServiceImpl implements ParkingBlockService {
 		for(HashMap<String, Object> temp :  parkingBlockDao.getSectionInfo(params)) {
 			temp.put("daterange", params.get("daterange"));
 			List<HashMap<String, Object>> useList = parkingBlockDao.getSectionUseList(temp);
-			int useCount = useList.size();
-			for(HashMap<String, Object> useMap : useList){
-				Date useDate = formatter.parse(String.valueOf(useMap.get("END")));
-				long end = useDate.getTime();
-				
-				for(HashMap<String, Object> compareMap : parkingBlockDao.getSectionUseList(temp)) {
-					Date start = formatter.parse(String.valueOf(useMap.get("START")));
-					if( end < start.getTime()) {
-						useCount--;
+			ArrayList<long[]> kanList = null;
+			if(useList.size() > 0) {
+				for(HashMap<String, Object> useMap : useList){
+					Date startDate = formatter.parse(String.valueOf(useMap.get("START")));
+					Date endDate = formatter.parse(String.valueOf(useMap.get("END")));
+					long start = startDate.getTime();
+					long end = endDate.getTime();
+					if (kanList == null) {
+						long[] tt = {start, end};
+						kanList = new ArrayList<long[]>();
+						kanList.add(tt);
+					} else {
+						boolean check = true;
+						int kanSize = kanList.size();
+						for(int i=0; i<kanList.size(); i++) {
+							if(kanList.get(i)[1] < start) {
+								long[] tt = {start, end};
+								kanList.set(i, tt);
+								check = false;
+								break;
+							}
+						}
+						if(check) {
+							long[] tt = {start, end};
+							kanList.add(tt);
+						}
 					}
 				}
+				temp.put("SEC_USE", kanList.size());
 			}
-			temp.put("SEC_USE", useCount);
 			resultList.add(temp);
 		}
 		return resultList;
