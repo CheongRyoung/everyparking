@@ -1,7 +1,7 @@
 # EP
 # ver 1.1
 # 주차장 차단 시간 로직변경
-![로직 설명](https://user-images.githubusercontent.com/93980966/165082528-0f9cbbda-6840-4efa-a04f-45df82eb185d.png)
+![그림2](https://user-images.githubusercontent.com/93980966/165083169-80d6bd33-028b-433a-bca4-740f456e8ea6.jpg)
 
 # 소스코드
 	public List<HashMap<String, Object>> getSectionInfo(HashMap<String, Object> params) throws ParseException {
